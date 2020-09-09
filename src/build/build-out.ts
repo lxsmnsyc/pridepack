@@ -24,13 +24,10 @@
 import fs from 'fs-extra';
 import { OUTPUT_SUFFIX as DEV_SUFFIX } from './build-development';
 import { OUTPUT_SUFFIX as PROD_SUFFIX } from './build-production';
-import { startBenchmark, endBenchmark } from '../utils/get-benchmark';
 import PACKAGE_NAME from '../utils/get-package-name';
 import CONFIG_WITH_CWD from '../utils/read-config-with-cwd';
 
 export default async function buildOut(): Promise<void> {
-  const baseTime = startBenchmark('Creating outfile');
-
   const baseLine = `module.exports = require('./${PACKAGE_NAME}`;
   const contents = `
 if (process.env.NODE_ENV === 'production') {
@@ -41,5 +38,4 @@ if (process.env.NODE_ENV === 'production') {
   `;
 
   await fs.outputFile(CONFIG_WITH_CWD.outFile, contents);
-  endBenchmark('Outfile Build', baseTime);
 }
