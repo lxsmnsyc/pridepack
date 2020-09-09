@@ -22,6 +22,7 @@
  * SOFTWARE.
  */
 
+import path from 'path';
 import fs from 'fs';
 import { CompilerOptions, TypeAcquisition } from 'typescript';
 import config from './read-config';
@@ -41,7 +42,7 @@ function readTSConfig(): Partial<TsConfig> {
   const cwd = process.cwd();
 
   // Get config file path
-  const filepath = `${cwd}/${config.tsconfig}`;
+  const filepath = path.join(cwd, config.tsconfig);
 
   // Read config
   const result = fs.readFileSync(filepath);

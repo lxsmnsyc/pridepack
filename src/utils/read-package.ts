@@ -21,6 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+import path from 'path';
 import fs from 'fs';
 import { IPackageJson } from 'package-json-type';
 
@@ -29,7 +30,7 @@ function readPackage(): IPackageJson {
   const cwd = process.cwd();
 
   // Get config file path
-  const filepath = `${cwd}/package.json`;
+  const filepath = path.join(cwd, 'package.json');
 
   // Read config
   const result = fs.readFileSync(filepath);

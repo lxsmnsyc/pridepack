@@ -21,6 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+import path from 'path';
 import fs from 'fs';
 import DEFAULT_CONFIG, { PridepackConfig } from './default-config';
 
@@ -31,7 +32,7 @@ function readConfig(): PridepackConfig {
   const cwd = process.cwd();
 
   // Get config file path
-  const filepath = `${cwd}/${CONFIG_NAME}`;
+  const filepath = path.join(cwd, CONFIG_NAME);
 
   // Check if config exists
   if (fs.existsSync(filepath)) {

@@ -21,6 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+import path from 'path';
 import { PridepackBaseConfig } from './default-config';
 import CONFIG from './read-config';
 
@@ -28,11 +29,11 @@ function readConfigWithCWD(): PridepackBaseConfig {
   const cwd = process.cwd();
 
   return {
-    srcDir: `${cwd}/${CONFIG.srcDir}`,
-    srcFile: `${cwd}/${CONFIG.srcDir}/${CONFIG.srcFile}`,
-    outDir: `${cwd}/${CONFIG.outDir}`,
-    outFile: `${cwd}/${CONFIG.outDir}/${CONFIG.outFile}`,
-    tsconfig: `${cwd}/${CONFIG.tsconfig}`,
+    srcDir: path.join(cwd, CONFIG.srcDir),
+    srcFile: path.join(cwd, CONFIG.srcDir, CONFIG.outFile),
+    outDir: path.join(cwd, CONFIG.outDir),
+    outFile: path.join(cwd, CONFIG.outDir, CONFIG.outFile),
+    tsconfig: path.join(cwd, CONFIG.tsconfig),
   };
 }
 

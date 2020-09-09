@@ -21,6 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+import path from 'path';
 import esbuild from 'esbuild';
 import CONFIG_WITH_CWD from '../utils/read-config-with-cwd';
 import PACKAGE_NAME from '../utils/get-package-name';
@@ -32,7 +33,10 @@ export const OUTPUT_SUFFIX = 'development';
 
 export default async function buildDevelopment(): Promise<void> {
   // get outfile
-  const outfile = `${CONFIG_WITH_CWD.outDir}/${PACKAGE_NAME}.${OUTPUT_SUFFIX}.js`;
+  const outfile = path.join(
+    CONFIG_WITH_CWD.outDir,
+    `${PACKAGE_NAME}.${OUTPUT_SUFFIX}.js`,
+  );
   // run esbuild
   await esbuild.build({
     entryPoints: [

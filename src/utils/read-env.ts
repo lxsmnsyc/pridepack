@@ -21,6 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+import path from 'path';
 import fs from 'fs';
 import dotenv from 'dotenv';
 
@@ -34,12 +35,12 @@ function readEnv(isProduction: boolean): Partial<Record<string, string>> {
   try {
     return dotenv.parse(
       isProduction
-        ? fs.readFileSync(`${cwd}/${ENV_PRODUCTION}`)
-        : fs.readFileSync(`${cwd}/${ENV_DEVELOPMENT}`),
+        ? fs.readFileSync(path.join(cwd, ENV_PRODUCTION))
+        : fs.readFileSync(path.join(cwd, ENV_DEVELOPMENT)),
     );
   } catch (err) {
     try {
-      return dotenv.parse(fs.readFileSync(`${cwd}/${ENV}`));
+      return dotenv.parse(fs.readFileSync(path.join(cwd, ENV)));
     } catch (err2) {
       return {};
     }
