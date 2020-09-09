@@ -21,20 +21,26 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-import fs from 'fs';
-import { IPackageJson } from 'package-json-type';
-import getPackagePath from './get-package-path';
+import path from 'path';
+import fs from 'fs-extra';
 
-let PACKAGE: IPackageJson;
-
-export default function readPackage(): IPackageJson {
-  if (PACKAGE) {
-    return PACKAGE;
-  }
-  // Read config
-  const result = fs.readFileSync(getPackagePath());
-
-  // Parse config to object
-  PACKAGE = JSON.parse(result.toString()) as IPackageJson;
-  return PACKAGE;
+export default async function copyFromTemplate(
+  template: string,
+  name: string,
+  target: string,
+  newName = target,
+): Promise<void> {
+  const sourceFile = path.resolve(
+    __dirname,
+    '..',
+    'templates',
+    template,
+    target,
+  );
+  const targetFile = path.resolve(
+    process.cwd(),
+    name,
+    newName,
+  );
+  await fs.copy(sourceFile, targetFile);
 }
