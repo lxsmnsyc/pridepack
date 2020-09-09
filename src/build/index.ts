@@ -24,18 +24,18 @@
 import fs from 'fs-extra';
 import { Listr } from 'listr2';
 import buildESM from './build-esm';
-import CONFIG_WITH_CWD from '../utils/read-config-with-cwd';
 import buildDevelopment from './build-development';
 import buildProduction from './build-production';
 import buildOut from './build-out';
 import { startBenchmark, endBenchmark } from '../utils/get-benchmark';
 import compileTypes from '../check/compile-types';
+import readConfigWithCWD from '../utils/read-config-with-cwd';
 
 export default function build(): void {
   const tasks = new Listr([
     {
       title: 'Cleaning out directory',
-      task: () => fs.remove(CONFIG_WITH_CWD.outDir),
+      task: () => fs.remove(readConfigWithCWD().outDir),
     },
     {
       title: 'Compiling source',
