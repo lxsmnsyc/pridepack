@@ -3,6 +3,7 @@ import yargs from 'yargs';
 import build from './build';
 import init from './init';
 import check from './check';
+import create from './create';
 
 const { argv } = yargs
   .usage('Usage: $0 <command>')
@@ -50,6 +51,9 @@ switch (argv._[0]) {
     init(argv.template);
     break;
   case 'create':
+    if (argv.name) {
+      create(argv.name, argv.template);
+    }
     break;
   case 'build':
     build();
