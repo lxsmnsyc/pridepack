@@ -42,7 +42,7 @@ function readTSConfig(): Partial<TsConfig> {
   const cwd = process.cwd();
 
   // Get config file path
-  const filepath = path.join(cwd, config.tsconfig);
+  const filepath = path.resolve(path.join(cwd, config.tsconfig));
 
   // Read config
   const result = fs.readFileSync(filepath);

@@ -29,11 +29,11 @@ function readConfigWithCWD(): PridepackBaseConfig {
   const cwd = process.cwd();
 
   return {
-    srcDir: path.join(cwd, CONFIG.srcDir),
-    srcFile: path.join(cwd, CONFIG.srcDir, CONFIG.srcFile),
-    outDir: path.join(cwd, CONFIG.outDir),
-    outFile: path.join(cwd, CONFIG.outDir, CONFIG.outFile),
-    tsconfig: path.join(cwd, CONFIG.tsconfig),
+    srcDir: path.resolve(path.join(cwd, CONFIG.srcDir)),
+    srcFile: path.resolve(path.join(cwd, CONFIG.srcDir, CONFIG.srcFile)),
+    outDir: path.resolve(path.join(cwd, CONFIG.outDir)),
+    outFile: path.resolve(path.join(cwd, CONFIG.outDir, CONFIG.outFile)),
+    tsconfig: path.resolve(path.join(cwd, CONFIG.tsconfig)),
   };
 }
 

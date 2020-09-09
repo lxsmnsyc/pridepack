@@ -33,10 +33,10 @@ export const OUTPUT_SUFFIX = 'development';
 
 export default async function buildDevelopment(): Promise<void> {
   // get outfile
-  const outfile = path.join(
+  const outfile = path.resolve(path.join(
     CONFIG_WITH_CWD.outDir,
     `${PACKAGE_NAME}.${OUTPUT_SUFFIX}.js`,
-  );
+  ));
   // run esbuild
   await esbuild.build({
     entryPoints: [

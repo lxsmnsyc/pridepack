@@ -30,7 +30,7 @@ function readPackage(): IPackageJson {
   const cwd = process.cwd();
 
   // Get config file path
-  const filepath = path.join(cwd, 'package.json');
+  const filepath = path.resolve(path.join(cwd, 'package.json'));
 
   // Read config
   const result = fs.readFileSync(filepath);

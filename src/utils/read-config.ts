@@ -32,7 +32,7 @@ function readConfig(): PridepackConfig {
   const cwd = process.cwd();
 
   // Get config file path
-  const filepath = path.join(cwd, CONFIG_NAME);
+  const filepath = path.resolve(path.join(cwd, CONFIG_NAME));
 
   // Check if config exists
   if (fs.existsSync(filepath)) {
