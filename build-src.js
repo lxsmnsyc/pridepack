@@ -19,5 +19,6 @@ esbuild.buildSync({
     "yargs",
     "listr2",
     "execa",
+    "eslint"
   ],
 });
