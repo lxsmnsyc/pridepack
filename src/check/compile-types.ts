@@ -26,12 +26,13 @@ import { CompilerOptions, createCompilerHost, createProgram } from 'typescript';
 import TSCONFIG from '../utils/read-tsconfig';
 import CONFIG_WITH_CWD from '../utils/read-config-with-cwd';
 
-export default function compileTypes(): void {
+export default function compileTypes(noEmit = true): void {
   const baseConfig: CompilerOptions = {
     ...TSCONFIG.compilerOptions,
     outDir: CONFIG_WITH_CWD.outDir,
     emitDeclarationOnly: true,
     moduleResolution: 2,
+    noEmit,
   };
   // Create a Program with an in-memory emit
   const host = createCompilerHost(baseConfig);

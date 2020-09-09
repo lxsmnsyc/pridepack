@@ -21,58 +21,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-import fs from 'fs-extra';
 import { Listr } from 'listr2';
-import buildESM from './build-esm';
-import CONFIG_WITH_CWD from '../utils/read-config-with-cwd';
-import buildDevelopment from './build-development';
-import buildProduction from './build-production';
-import buildOut from './build-out';
 import { startBenchmark, endBenchmark } from '../utils/get-benchmark';
-import compileTypes from '../check/compile-types';
+import compileTypes from './compile-types';
 
-export default function build(): void {
-  const tasks = new Listr([
+export default function check(): void {
+  const task = new Listr([
     {
-      title: 'Cleaning out directory',
-      task: () => fs.remove(CONFIG_WITH_CWD.outDir),
-    },
-    {
-      title: 'Compiling source',
-      task: () => compileTypes(false),
-    },
-    {
-      title: 'Building source',
-      task: () => new Listr(
-        [
-          {
-            title: 'Building CommonJS',
-            task: () => new Listr([
-              {
-                title: 'Building CommonJS Development output',
-                task: buildDevelopment,
-              },
-              {
-                title: 'Building CommonJS Production output',
-                task: buildProduction,
-              },
-              {
-                title: 'Building CommonJS Entry Point',
-                task: buildOut,
-              },
-            ]),
-          },
-          {
-            title: 'Building ESM',
-            task: buildESM,
-          },
-        ],
-      ),
+      title: 'Checking types',
+      task: () => compileTypes(true),
     },
   ]);
 
   const time = startBenchmark('');
-  tasks.run().then(
+  task.run().then(
     () => {
       endBenchmark('Done in', time);
     },

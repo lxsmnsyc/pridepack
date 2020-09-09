@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 import yargs from 'yargs';
 import build from './build';
+import init from './init';
+import check from './check';
 
 const { argv } = yargs
   .usage('Usage: $0 <command>')
@@ -36,16 +38,24 @@ const { argv } = yargs
         })
     ),
   )
+  .command(
+    'check',
+    'Performs typechecking',
+  )
   .demandCommand(1)
   .help();
 
 switch (argv._[0]) {
+  case 'init':
+    init(argv.template);
+    break;
+  case 'create':
+    break;
   case 'build':
     build();
     break;
-  case 'init':
-    break;
-  case 'create':
+  case 'check':
+    check();
     break;
   case 'test':
     break;
