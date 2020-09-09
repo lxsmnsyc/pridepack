@@ -25,7 +25,7 @@
 import path from 'path';
 import fs from 'fs';
 import { CompilerOptions, TypeAcquisition } from 'typescript';
-import config from './read-config';
+import readConfig from './read-config';
 
 export interface TsConfig {
   compilerOptions: CompilerOptions;
@@ -37,20 +37,22 @@ export interface TsConfig {
   typeAcquisition: TypeAcquisition;
 }
 
-function readTSConfig(): Partial<TsConfig> {
+let TSCONFIG: Partial<TsConfig>;
+
+export default function readTSConfig(): Partial<TsConfig> {
+  if (TSCONFIG) {
+    return TSCONFIG;
+  }
   // Get working directory
   const cwd = process.cwd();
 
   // Get config file path
-  const filepath = path.resolve(path.join(cwd, config.tsconfig));
+  const filepath = path.resolve(path.join(cwd, readConfig().tsconfig));
 
   // Read config
   const result = fs.readFileSync(filepath);
 
   // Parse config to object
-  return JSON.parse(result.toString()) as Partial<TsConfig>;
+  TSCONFIG = JSON.parse(result.toString()) as Partial<TsConfig>;
+  return TSCONFIG;
 }
-
-const TSCONFIG = readTSConfig();
-
-export default TSCONFIG;

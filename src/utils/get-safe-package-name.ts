@@ -21,44 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-import path from 'path';
-import fs from 'fs';
-import DEFAULT_CONFIG, { PridepackConfig } from './default-config';
-
-export const CONFIG_NAME = '.pridepackrc';
-
-let CONFIG: PridepackConfig;
-
-export default function readConfig(): PridepackConfig {
-  if (CONFIG) {
-    return CONFIG;
-  }
-  // Get working directory
-  const cwd = process.cwd();
-
-  // Get config file path
-  const filepath = path.resolve(path.join(cwd, CONFIG_NAME));
-
-  // Check if config exists
-  if (fs.existsSync(filepath)) {
-    // Read config
-    const result = fs.readFileSync(filepath);
-
-    // Parse config to object
-    const customConfig = JSON.parse(result.toString()) as Partial<PridepackConfig>;
-
-    CONFIG = {
-      srcDir: customConfig.srcDir || DEFAULT_CONFIG.srcDir,
-      srcFile: customConfig.srcFile || DEFAULT_CONFIG.srcFile,
-      outDir: customConfig.outDir || DEFAULT_CONFIG.outDir,
-      outFile: customConfig.outFile || DEFAULT_CONFIG.outFile,
-      tsconfig: customConfig.tsconfig || DEFAULT_CONFIG.tsconfig,
-      target: customConfig.target || DEFAULT_CONFIG.target,
-    };
-  } else {
-    CONFIG = DEFAULT_CONFIG;
-  }
-
-  // Return default config
-  return CONFIG;
+export default function getSafePackageName(name: string): string {
+  return name
+    .toLowerCase()
+    .replace(/(^@.*\/)|((^[^a-zA-Z]+)|[^\w.-])|([^a-zA-Z0-9]+$)/g, '');
 }

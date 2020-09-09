@@ -23,20 +23,25 @@
  */
 import path from 'path';
 import { PridepackBaseConfig } from './default-config';
-import CONFIG from './read-config';
+import readConfig from './read-config';
 
-function readConfigWithCWD(): PridepackBaseConfig {
+let CONFIG_WITH_CWD: PridepackBaseConfig;
+
+export default function readConfigWithCWD(): PridepackBaseConfig {
+  if (CONFIG_WITH_CWD) {
+    return CONFIG_WITH_CWD;
+  }
+
   const cwd = process.cwd();
+  const config = readConfig();
 
-  return {
-    srcDir: path.resolve(path.join(cwd, CONFIG.srcDir)),
-    srcFile: path.resolve(path.join(cwd, CONFIG.srcDir, CONFIG.srcFile)),
-    outDir: path.resolve(path.join(cwd, CONFIG.outDir)),
-    outFile: path.resolve(path.join(cwd, CONFIG.outDir, CONFIG.outFile)),
-    tsconfig: path.resolve(path.join(cwd, CONFIG.tsconfig)),
+  CONFIG_WITH_CWD = {
+    srcDir: path.resolve(path.join(cwd, config.srcDir)),
+    srcFile: path.resolve(path.join(cwd, config.srcDir, config.srcFile)),
+    outDir: path.resolve(path.join(cwd, config.outDir)),
+    outFile: path.resolve(path.join(cwd, config.outDir, config.outFile)),
+    tsconfig: path.resolve(path.join(cwd, config.tsconfig)),
   };
+
+  return CONFIG_WITH_CWD;
 }
-
-const CONFIG_WITH_CWD = readConfigWithCWD();
-
-export default CONFIG_WITH_CWD;

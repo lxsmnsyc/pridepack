@@ -25,7 +25,12 @@ import path from 'path';
 import fs from 'fs';
 import { IPackageJson } from 'package-json-type';
 
-function readPackage(): IPackageJson {
+let PACKAGE: IPackageJson;
+
+export default function readPackage(): IPackageJson {
+  if (PACKAGE) {
+    return PACKAGE;
+  }
   // Get working directory
   const cwd = process.cwd();
 
@@ -36,9 +41,6 @@ function readPackage(): IPackageJson {
   const result = fs.readFileSync(filepath);
 
   // Parse config to object
-  return JSON.parse(result.toString()) as IPackageJson;
+  PACKAGE = JSON.parse(result.toString()) as IPackageJson;
+  return PACKAGE;
 }
-
-const PACKAGE = readPackage();
-
-export default PACKAGE;

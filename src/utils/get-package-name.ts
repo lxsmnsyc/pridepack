@@ -21,18 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+import readPackage from './read-package';
+import getSafePackageName from './get-safe-package-name';
 
-import PACKAGE from './read-package';
-
-function getPackageName() {
-  if (!PACKAGE.name) {
+export default function getPackageName(): string {
+  const { name } = readPackage();
+  if (!name) {
     throw new Error('Missing package name in package.json.');
   }
-  return PACKAGE.name
-    .toLowerCase()
-    .replace(/(^@.*\/)|((^[^a-zA-Z]+)|[^\w.-])|([^a-zA-Z0-9]+$)/g, '');
+  return getSafePackageName(name);
 }
-
-const PACKAGE_NAME = getPackageName();
-
-export default PACKAGE_NAME;

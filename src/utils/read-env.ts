@@ -29,7 +29,7 @@ const ENV = '.env';
 const ENV_PRODUCTION = '.env.production';
 const ENV_DEVELOPMENT = '.env.development';
 
-function readEnv(isProduction: boolean): Partial<Record<string, string>> {
+export default function readEnv(isProduction: boolean): Partial<Record<string, string>> {
   const cwd = process.cwd();
 
   try {
@@ -46,5 +46,3 @@ function readEnv(isProduction: boolean): Partial<Record<string, string>> {
     }
   }
 }
-
-export default readEnv;

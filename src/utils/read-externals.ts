@@ -22,15 +22,21 @@
  * SOFTWARE.
  */
 import { builtinModules } from 'module';
-import PACKAGE from './read-package';
+import readPackage from './read-package';
 
-function readExternals() {
+let EXTERNALS: string[];
+
+export default function readExternals(): string[] {
+  if (EXTERNALS) {
+    return EXTERNALS;
+  }
+
   const {
     dependencies,
     devDependencies,
     peerDependencies,
     optionalDependencies,
-  } = PACKAGE;
+  } = readPackage();
 
   const external = new Set<string>();
 
@@ -47,12 +53,10 @@ function readExternals() {
     external.add(key);
   });
 
-  return [
+  EXTERNALS = [
     ...builtinModules,
     ...Array.from(external),
   ];
+
+  return EXTERNALS;
 }
-
-const EXTERNALS = readExternals();
-
-export default EXTERNALS;
