@@ -22,19 +22,63 @@
  * SOFTWARE.
  */
 import fs from 'fs-extra';
-import { startBenchmark, endBenchmark } from '../utils/get-benchmark';
+import { Listr } from 'listr2';
 import compileTypes from './compile-types';
-import buildCJS from './build-cjs';
 import buildESM from './build-esm';
 import CONFIG_WITH_CWD from '../utils/read-config-with-cwd';
+import buildDevelopment from './build-development';
+import buildProduction from './build-production';
+import buildOut from './build-out';
+import { startBenchmark, endBenchmark } from '../utils/get-benchmark';
 
-export default async function build(): Promise<void> {
-  const baseTime = startBenchmark('Building package');
-  await fs.remove(`./${CONFIG_WITH_CWD.outDir}`);
-  compileTypes();
-  await Promise.all([
-    buildCJS(),
-    buildESM(),
+export default function build(): void {
+  const tasks = new Listr([
+    {
+      title: 'Cleaning out directory',
+      task: () => fs.remove(CONFIG_WITH_CWD.outDir),
+    },
+    {
+      title: 'Compiling source',
+      task: compileTypes,
+    },
+    {
+      title: 'Building source',
+      task: () => new Listr(
+        [
+          {
+            title: 'Building CommonJS',
+            task: () => new Listr([
+              {
+                title: 'Building CommonJS Development output',
+                task: buildDevelopment,
+              },
+              {
+                title: 'Building CommonJS Production output',
+                task: buildProduction,
+              },
+              {
+                title: 'Building CommonJS Entry Point',
+                task: buildOut,
+              },
+            ]),
+          },
+          {
+            title: 'Building ESM',
+            task: buildESM,
+          },
+        ],
+      ),
+    },
   ]);
-  endBenchmark('Build Time', baseTime);
+
+  const time = startBenchmark('');
+  tasks.run().then(
+    () => {
+      endBenchmark('Done in', time);
+    },
+    (err) => {
+      console.error(err);
+      process.exit(1);
+    },
+  );
 }

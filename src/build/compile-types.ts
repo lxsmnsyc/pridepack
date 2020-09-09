@@ -23,13 +23,10 @@
  */
 import fs from 'fs-extra';
 import { CompilerOptions, createCompilerHost, createProgram } from 'typescript';
-import { startBenchmark, endBenchmark } from '../utils/get-benchmark';
 import TSCONFIG from '../utils/read-tsconfig';
 import CONFIG_WITH_CWD from '../utils/read-config-with-cwd';
 
 export default function compileTypes(): void {
-  const compileTime = startBenchmark('Compiling source');
-
   const baseConfig: CompilerOptions = {
     ...TSCONFIG.compilerOptions,
     outDir: CONFIG_WITH_CWD.outDir,
@@ -40,7 +37,7 @@ export default function compileTypes(): void {
   const host = createCompilerHost(baseConfig);
 
   host.writeFile = (fileName, data) => {
-    fs.outputFileSync(`./${fileName}`, data);
+    fs.outputFileSync(fileName, data);
   };
 
   // Prepare and emit the d.ts files
@@ -50,5 +47,4 @@ export default function compileTypes(): void {
     host,
   );
   program.emit();
-  endBenchmark('Compile time', compileTime);
 }

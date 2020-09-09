@@ -27,7 +27,6 @@ export interface PridepackBaseConfig {
   srcFile: string;
   outDir: string;
   outFile: string;
-  outESMFile: string;
   tsconfig: string;
 }
 
@@ -42,7 +41,6 @@ const DEFAULT_CONFIG: PridepackConfig = {
   srcFile: 'index.ts',
   outDir: 'dist',
   outFile: 'index.js',
-  outESMFile: 'index.esm.js',
   target: 'esnext',
   tsconfig: 'tsconfig.json',
 };

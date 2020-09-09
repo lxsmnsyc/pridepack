@@ -22,20 +22,17 @@
  * SOFTWARE.
  */
 import esbuild from 'esbuild';
-import { startBenchmark, endBenchmark } from '../utils/get-benchmark';
 import PACKAGE_NAME from '../utils/get-package-name';
 import CONFIG_WITH_CWD from '../utils/read-config-with-cwd';
 import { PRODUCTION_ENV } from '../utils/read-env-defs';
 import EXTERNALS from '../utils/read-externals';
 import CONFIG from '../utils/read-config';
 
-export const OUTPUT_SUFFIX = 'production.cjs.min';
+export const OUTPUT_SUFFIX = 'production.min';
 
 export default async function buildProduction(): Promise<void> {
-  // Get starting base time
-  const baseTime = startBenchmark('Generating Production Build');
   // get outfile
-  const outfile = `${CONFIG_WITH_CWD.outDir}${PACKAGE_NAME}.${OUTPUT_SUFFIX}.js`;
+  const outfile = `${CONFIG_WITH_CWD.outDir}/${PACKAGE_NAME}.${OUTPUT_SUFFIX}.js`;
   // run esbuild
   await esbuild.build({
     entryPoints: [
@@ -56,5 +53,4 @@ export default async function buildProduction(): Promise<void> {
     jsxFactory: CONFIG.jsxFactory,
     jsxFragment: CONFIG.jsxFragment,
   });
-  endBenchmark('ESM Production Build', baseTime);
 }

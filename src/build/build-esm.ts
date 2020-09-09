@@ -21,17 +21,35 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-import { startBenchmark, endBenchmark } from '../utils/get-benchmark';
-import buildESMDevelopment from './build-esm-development';
-import buildESMProduction from './build-esm-production';
-import buildESMOut from './build-esm-out';
+import esbuild from 'esbuild';
+import CONFIG_WITH_CWD from '../utils/read-config-with-cwd';
+import PACKAGE_NAME from '../utils/get-package-name';
+import { DEVELOPMENT_ENV } from '../utils/read-env-defs';
+import EXTERNALS from '../utils/read-externals';
+import CONFIG from '../utils/read-config';
+
+export const OUTPUT_SUFFIX = 'esm';
 
 export default async function buildESM(): Promise<void> {
-  const baseTime = startBenchmark('Generating ESM Builds');
-  await Promise.all([
-    buildESMDevelopment(),
-    buildESMProduction(),
-    buildESMOut(),
-  ]);
-  endBenchmark('ESM Builds Total Time', baseTime);
+  // get outfile
+  const outfile = `${CONFIG_WITH_CWD.outDir}/${PACKAGE_NAME}.${OUTPUT_SUFFIX}.js`;
+  // run esbuild
+  await esbuild.build({
+    entryPoints: [
+      CONFIG_WITH_CWD.srcFile,
+    ],
+    outfile,
+    bundle: true,
+    minify: false,
+    format: 'esm',
+    sourcemap: true,
+    define: {
+      ...DEVELOPMENT_ENV,
+    },
+    external: EXTERNALS,
+    target: CONFIG.target,
+    tsconfig: CONFIG_WITH_CWD.tsconfig,
+    jsxFactory: CONFIG.jsxFactory,
+    jsxFragment: CONFIG.jsxFragment,
+  });
 }

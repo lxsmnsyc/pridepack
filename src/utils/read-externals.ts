@@ -21,6 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+import { builtinModules } from 'module';
 import PACKAGE from './read-package';
 
 function readExternals() {
@@ -46,7 +47,10 @@ function readExternals() {
     external.add(key);
   });
 
-  return Array.from(external);
+  return [
+    ...builtinModules,
+    ...Array.from(external),
+  ];
 }
 
 const EXTERNALS = readExternals();

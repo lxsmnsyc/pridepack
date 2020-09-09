@@ -29,6 +29,6 @@ export function startBenchmark(message: string): number {
 }
 
 export function endBenchmark(label: string, baseTime: number): void {
-  const measure = (performance.now() - baseTime).toFixed(2);
-  console.log(`${label}: ${measure}ms`);
+  const measure = ((performance.now() - baseTime) / 1000).toFixed(2);
+  console.log(`${label}: ${measure}s`);
 }

@@ -27,15 +27,12 @@ import PACKAGE_NAME from '../utils/get-package-name';
 import { DEVELOPMENT_ENV } from '../utils/read-env-defs';
 import CONFIG from '../utils/read-config';
 import EXTERNALS from '../utils/read-externals';
-import { startBenchmark, endBenchmark } from '../utils/get-benchmark';
 
-export const OUTPUT_SUFFIX = 'development.cjs';
+export const OUTPUT_SUFFIX = 'development';
 
 export default async function buildDevelopment(): Promise<void> {
-  // Get starting base time
-  const baseTime = startBenchmark('Generating Development Build');
   // get outfile
-  const outfile = `${CONFIG_WITH_CWD.outDir}${PACKAGE_NAME}.${OUTPUT_SUFFIX}.js`;
+  const outfile = `${CONFIG_WITH_CWD.outDir}/${PACKAGE_NAME}.${OUTPUT_SUFFIX}.js`;
   // run esbuild
   await esbuild.build({
     entryPoints: [
@@ -56,5 +53,4 @@ export default async function buildDevelopment(): Promise<void> {
     jsxFactory: CONFIG.jsxFactory,
     jsxFragment: CONFIG.jsxFragment,
   });
-  endBenchmark('Development Build', baseTime);
 }

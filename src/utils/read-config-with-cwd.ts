@@ -32,7 +32,6 @@ function readConfigWithCWD(): PridepackBaseConfig {
     srcFile: `${cwd}/${CONFIG.srcDir}/${CONFIG.srcFile}`,
     outDir: `${cwd}/${CONFIG.outDir}`,
     outFile: `${cwd}/${CONFIG.outDir}/${CONFIG.outFile}`,
-    outESMFile: `${cwd}/${CONFIG.outDir}/${CONFIG.outESMFile}`,
     tsconfig: `${cwd}/${CONFIG.tsconfig}`,
   };
 }

@@ -46,7 +46,6 @@ function readConfig(): PridepackConfig {
       srcFile: customConfig.srcFile || DEFAULT_CONFIG.srcFile,
       outDir: customConfig.outDir || DEFAULT_CONFIG.outDir,
       outFile: customConfig.outFile || DEFAULT_CONFIG.outFile,
-      outESMFile: customConfig.outESMFile || DEFAULT_CONFIG.outESMFile,
       tsconfig: customConfig.tsconfig || DEFAULT_CONFIG.tsconfig,
       target: customConfig.target || DEFAULT_CONFIG.target,
     };
