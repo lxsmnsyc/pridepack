@@ -6,6 +6,10 @@
   "author": "Alexis Munsayac <alexis.munsayac@gmail.com>",
   "license": "MIT",
   "private": false,
+  "files": [
+    "bin",
+    "src"
+  ],
   "bin": {
     "pridepack": "./bin/index.js"
   },
