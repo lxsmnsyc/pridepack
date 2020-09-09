@@ -30,7 +30,7 @@ function readConfigWithCWD(): PridepackBaseConfig {
 
   return {
     srcDir: path.join(cwd, CONFIG.srcDir),
-    srcFile: path.join(cwd, CONFIG.srcDir, CONFIG.outFile),
+    srcFile: path.join(cwd, CONFIG.srcDir, CONFIG.srcFile),
     outDir: path.join(cwd, CONFIG.outDir),
     outFile: path.join(cwd, CONFIG.outDir, CONFIG.outFile),
     tsconfig: path.join(cwd, CONFIG.tsconfig),
