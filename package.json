@@ -6,13 +6,17 @@
   "author": "Alexis Munsayac <alexis.munsayac@gmail.com>",
   "license": "MIT",
   "private": false,
+  "bin": {
+    "pridepack": "./bin/index.js"
+  },
   "scripts": {
     "build": "node build-src"
   },
   "dependencies": {
     "dotenv": "^8.2.0",
-    "esbuild": "^0.6.32",
+    "esbuild": "^0.6.33",
     "fs-extra": "^9.0.1",
+    "listr2": "^3.0.1",
     "package-json-type": "^1.0.3",
     "tslib": "^2.0.1",
     "typescript": "^4.0.2",

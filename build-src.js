@@ -16,6 +16,7 @@ esbuild.buildSync({
     "fs-extra",
     "tslib",
     "typescript",
-    "yargs"
+    "yargs",
+    "listr2",
   ],
 });
