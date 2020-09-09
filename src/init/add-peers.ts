@@ -4,8 +4,8 @@ import readPackage from '../utils/read-package';
 import getPackagePath from '../utils/get-package-path';
 import TEMPLATES from './templates';
 
-export default async function addPeers(template: string): Promise<void> {
-  const packageInfo = readPackage();
+export default async function addPeers(template: string, cwd = '.'): Promise<void> {
+  const packageInfo = readPackage(cwd);
   const peerDependencies: IDependencyMap = {};
 
   if (packageInfo.devDependencies) {
@@ -22,5 +22,5 @@ export default async function addPeers(template: string): Promise<void> {
     peerDependencies,
   };
 
-  await fs.outputFile(getPackagePath(), JSON.stringify(newInfo, null, 2));
+  await fs.outputFile(getPackagePath(cwd), JSON.stringify(newInfo, null, 2));
 }

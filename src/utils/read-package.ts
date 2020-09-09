@@ -21,20 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-import fs from 'fs';
+import fs from 'fs-extra';
 import { IPackageJson } from 'package-json-type';
 import getPackagePath from './get-package-path';
 
-let PACKAGE: IPackageJson;
-
-export default function readPackage(): IPackageJson {
-  if (PACKAGE) {
-    return PACKAGE;
-  }
-  // Read config
-  const result = fs.readFileSync(getPackagePath());
-
-  // Parse config to object
-  PACKAGE = JSON.parse(result.toString()) as IPackageJson;
-  return PACKAGE;
+export default function readPackage(cwd = '.'): IPackageJson {
+  return fs.readJSONSync(getPackagePath(cwd)) as IPackageJson;
 }

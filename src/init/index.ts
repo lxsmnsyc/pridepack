@@ -21,7 +21,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-import path from 'path';
 import { Listr } from 'listr2';
 import { installDevDeps, installDeps } from './install-deps';
 import { startBenchmark, endBenchmark } from '../utils/get-benchmark';

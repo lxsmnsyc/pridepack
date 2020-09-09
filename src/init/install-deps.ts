@@ -21,6 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+import path from 'path';
 import execa from 'execa';
 import getCMD, { CMD } from '../utils/get-cmd';
 import TEMPLATES from './templates';
@@ -47,7 +48,7 @@ function getDevDepsArgs(cmd: CMD, packages: string[]): string[] {
   }
 }
 
-export async function installDevDeps(template: string): Promise<void> {
+export async function installDevDeps(template: string, cwd = '.'): Promise<void> {
   const cmd = await getCMD();
   const { devDependencies, peerDependencies } = TEMPLATES[template];
   // Merge dev and peer
@@ -57,16 +58,20 @@ export async function installDevDeps(template: string): Promise<void> {
   ];
 
   if (allDeps.length > 1) {
-    await execa(cmd, getDevDepsArgs(cmd, allDeps));
+    await execa(cmd, getDevDepsArgs(cmd, allDeps), {
+      cwd: path.resolve(path.join(process.cwd(), cwd)),
+    });
   }
 }
 
-export async function installDeps(template: string): Promise<void> {
+export async function installDeps(template: string, cwd = '.'): Promise<void> {
   const cmd = await getCMD();
   const { dependencies } = TEMPLATES[template];
 
   // Run
   if (dependencies.length > 1) {
-    await execa(cmd, getDepsArgs(cmd, dependencies));
+    await execa(cmd, getDepsArgs(cmd, dependencies), {
+      cwd: path.resolve(path.join(process.cwd(), cwd)),
+    });
   }
 }
