@@ -23,13 +23,13 @@
  */
 import fs from 'fs-extra';
 import { CompilerOptions, createCompilerHost, createProgram } from 'typescript';
-import TSCONFIG from '../utils/read-tsconfig';
-import CONFIG_WITH_CWD from '../utils/read-config-with-cwd';
+import readTSConfig from '../utils/read-tsconfig';
+import readConfigWithCWD from '../utils/read-config-with-cwd';
 
 export default function compileTypes(noEmit = true): void {
   const baseConfig: CompilerOptions = {
-    ...TSCONFIG.compilerOptions,
-    outDir: CONFIG_WITH_CWD.outDir,
+    ...readTSConfig().compilerOptions,
+    outDir: readConfigWithCWD().outDir,
     emitDeclarationOnly: true,
     moduleResolution: 2,
     noEmit,
@@ -43,7 +43,7 @@ export default function compileTypes(noEmit = true): void {
 
   // Prepare and emit the d.ts files
   const program = createProgram(
-    [CONFIG_WITH_CWD.srcFile],
+    [readConfigWithCWD().srcFile],
     baseConfig,
     host,
   );
