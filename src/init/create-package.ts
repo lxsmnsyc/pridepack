@@ -24,6 +24,7 @@
 import path from 'path';
 import fs from 'fs-extra';
 import { IPackageJson } from 'package-json-type';
+import getSafePackageName from '../utils/get-safe-package-name';
 
 const BASE_PACKAGE: IPackageJson = {
   version: '0.0.0',
@@ -49,7 +50,7 @@ export default async function createPackage(name: string, target: string): Promi
   const packageInfo: IPackageJson = {
     ...BASE_PACKAGE,
     name,
-    module: `dist/${name}.esm.js`,
+    module: `dist/${getSafePackageName(name)}.esm.js`,
   };
   const packagePath = path.resolve(path.join(process.cwd(), target, 'package.json'));
   await fs.outputFile(packagePath, JSON.stringify(packageInfo, null, 2));
