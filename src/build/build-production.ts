@@ -23,24 +23,28 @@
  */
 import path from 'path';
 import esbuild from 'esbuild';
-import PACKAGE_NAME from '../utils/get-package-name';
-import CONFIG_WITH_CWD from '../utils/read-config-with-cwd';
 import { PRODUCTION_ENV } from '../utils/read-env-defs';
-import EXTERNALS from '../utils/read-externals';
-import CONFIG from '../utils/read-config';
+import readConfigWithCWD from '../utils/read-config-with-cwd';
+import getPackageName from '../utils/get-package-name';
+import readExternals from '../utils/read-externals';
+import readConfig from '../utils/read-config';
 
 export const OUTPUT_SUFFIX = 'production.min';
 
 export default async function buildProduction(): Promise<void> {
+  const packageName = getPackageName();
+  const config = readConfig();
+  const configCWD = readConfigWithCWD();
+  const externals = readExternals();
   // get outfile
   const outfile = path.resolve(path.join(
-    CONFIG_WITH_CWD.outDir,
-    `${PACKAGE_NAME}.${OUTPUT_SUFFIX}.js`,
+    configCWD.outDir,
+    `${packageName}.${OUTPUT_SUFFIX}.js`,
   ));
   // run esbuild
   await esbuild.build({
     entryPoints: [
-      CONFIG_WITH_CWD.srcFile,
+      configCWD.srcFile,
     ],
     outfile,
     bundle: true,
@@ -51,10 +55,10 @@ export default async function buildProduction(): Promise<void> {
       ...PRODUCTION_ENV,
       'process.env.NODE_ENV': '"production"',
     },
-    external: EXTERNALS,
-    target: CONFIG.target,
-    tsconfig: CONFIG_WITH_CWD.tsconfig,
-    jsxFactory: CONFIG.jsxFactory,
-    jsxFragment: CONFIG.jsxFragment,
+    external: externals,
+    target: config.target,
+    tsconfig: configCWD.tsconfig,
+    jsxFactory: config.jsxFactory,
+    jsxFragment: config.jsxFragment,
   });
 }

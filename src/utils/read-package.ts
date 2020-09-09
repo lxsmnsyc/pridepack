@@ -24,6 +24,7 @@
 import path from 'path';
 import fs from 'fs';
 import { IPackageJson } from 'package-json-type';
+import getPackagePath from './get-package-path';
 
 let PACKAGE: IPackageJson;
 
@@ -31,14 +32,8 @@ export default function readPackage(): IPackageJson {
   if (PACKAGE) {
     return PACKAGE;
   }
-  // Get working directory
-  const cwd = process.cwd();
-
-  // Get config file path
-  const filepath = path.resolve(path.join(cwd, 'package.json'));
-
   // Read config
-  const result = fs.readFileSync(filepath);
+  const result = fs.readFileSync(getPackagePath());
 
   // Parse config to object
   PACKAGE = JSON.parse(result.toString()) as IPackageJson;

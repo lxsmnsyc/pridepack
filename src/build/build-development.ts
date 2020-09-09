@@ -23,24 +23,28 @@
  */
 import path from 'path';
 import esbuild from 'esbuild';
-import CONFIG_WITH_CWD from '../utils/read-config-with-cwd';
-import PACKAGE_NAME from '../utils/get-package-name';
 import { DEVELOPMENT_ENV } from '../utils/read-env-defs';
-import CONFIG from '../utils/read-config';
-import EXTERNALS from '../utils/read-externals';
+import getPackageName from '../utils/get-package-name';
+import readConfig from '../utils/read-config';
+import readConfigWithCWD from '../utils/read-config-with-cwd';
+import readExternals from '../utils/read-externals';
 
 export const OUTPUT_SUFFIX = 'development';
 
 export default async function buildDevelopment(): Promise<void> {
+  const packageName = getPackageName();
+  const config = readConfig();
+  const configCWD = readConfigWithCWD();
+  const externals = readExternals();
   // get outfile
   const outfile = path.resolve(path.join(
-    CONFIG_WITH_CWD.outDir,
-    `${PACKAGE_NAME}.${OUTPUT_SUFFIX}.js`,
+    configCWD.outDir,
+    `${packageName}.${OUTPUT_SUFFIX}.js`,
   ));
   // run esbuild
   await esbuild.build({
     entryPoints: [
-      CONFIG_WITH_CWD.srcFile,
+      configCWD.srcFile,
     ],
     outfile,
     bundle: true,
@@ -51,10 +55,10 @@ export default async function buildDevelopment(): Promise<void> {
       ...DEVELOPMENT_ENV,
       'process.env.NODE_ENV': '"development"',
     },
-    external: EXTERNALS,
-    target: CONFIG.target,
-    tsconfig: CONFIG_WITH_CWD.tsconfig,
-    jsxFactory: CONFIG.jsxFactory,
-    jsxFragment: CONFIG.jsxFragment,
+    external: externals,
+    target: config.target,
+    tsconfig: configCWD.tsconfig,
+    jsxFactory: config.jsxFactory,
+    jsxFragment: config.jsxFragment,
   });
 }
