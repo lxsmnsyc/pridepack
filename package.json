@@ -15,6 +15,7 @@
   "dependencies": {
     "dotenv": "^8.2.0",
     "esbuild": "^0.6.33",
+    "execa": "^4.0.3",
     "fs-extra": "^9.0.1",
     "listr2": "^3.0.1",
     "package-json-type": "^1.0.3",

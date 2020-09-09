@@ -18,5 +18,6 @@ esbuild.buildSync({
     "typescript",
     "yargs",
     "listr2",
+    "execa",
   ],
 });
