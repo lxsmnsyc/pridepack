@@ -1,4 +1,4 @@
-module.exports = {
+{
   "env": {
     "es2021": true,
     "node": true
@@ -10,22 +10,22 @@ module.exports = {
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "plugin:import/errors",
     "plugin:import/warnings",
-    "plugin:import/typescript",
+    "plugin:import/typescript"
   ],
   "globals": {
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly"
   },
-  parser: '@typescript-eslint/parser',
-  parserOptions: {
-    project: './tsconfig.eslint.json',
-    ecmaVersion: 2018,
-    sourceType: 'module',
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./tsconfig.eslint.json",
+    "ecmaVersion": 2018,
+    "sourceType": "module"
   },
-  plugins: [
-    '@typescript-eslint',
+  "plugins": [
+    "@typescript-eslint"
   ],
-  settings: {
+  "settings": {
     "import/parsers": {
       "@typescript-eslint/parser": [".ts", ".tsx"]
     },
@@ -33,9 +33,6 @@ module.exports = {
       "typescript": {}
     }
   },
-  "plugins": [
-    "@typescript-eslint"
-  ],
   "rules": {
     "import/extensions": [
       "error",
@@ -48,6 +45,6 @@ module.exports = {
       }
     ],
     "import/no-unresolved": "error",
-    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-explicit-any": "off"
   }
-};
+}
