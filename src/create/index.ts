@@ -22,17 +22,17 @@
  * SOFTWARE.
  */
 import { Listr } from 'listr2';
-import { startBenchmark, endBenchmark } from '../utils/get-benchmark';
 import copyFromTemplate from '../utils/copy-from-template';
 import getSafePackageName from '../utils/get-safe-package-name';
 import createPackage from '../init/create-package';
 import { installDevDeps, installDeps } from '../init/install-deps';
 import addPeers from '../init/add-peers';
+import measureTask from '../utils/measure-task';
 
 export default function create(name: string, template: string): void {
   const safeName = getSafePackageName(name);
 
-  const tasks = new Listr([
+  measureTask(new Listr([
     {
       title: 'Generating from template',
       task: () => new Listr([
@@ -88,16 +88,5 @@ export default function create(name: string, template: string): void {
       title: 'Adding peer dependencies',
       task: () => addPeers(template, safeName),
     },
-  ]);
-
-  const time = startBenchmark('');
-  tasks.run().then(
-    () => {
-      endBenchmark('Done in', time);
-    },
-    (err) => {
-      console.error(err);
-      process.exit(1);
-    },
-  );
+  ]));
 }

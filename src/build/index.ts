@@ -27,12 +27,12 @@ import buildESM from './build-esm';
 import buildDevelopment from './build-development';
 import buildProduction from './build-production';
 import buildOut from './build-out';
-import { startBenchmark, endBenchmark } from '../utils/get-benchmark';
 import compileTypes from '../check/compile-types';
 import readConfigWithCWD from '../utils/read-config-with-cwd';
+import measureTask from '../utils/measure-task';
 
 export default function build(): void {
-  const tasks = new Listr([
+  measureTask(new Listr([
     {
       title: 'Cleaning out directory',
       task: () => fs.remove(readConfigWithCWD().outDir),
@@ -69,16 +69,5 @@ export default function build(): void {
         ],
       ),
     },
-  ]);
-
-  const time = startBenchmark('');
-  tasks.run().then(
-    () => {
-      endBenchmark('Done in', time);
-    },
-    (err) => {
-      console.error(err);
-      process.exit(1);
-    },
-  );
+  ]));
 }

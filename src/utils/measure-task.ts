@@ -22,14 +22,17 @@
  * SOFTWARE.
  */
 import { Listr } from 'listr2';
-import compileTypes from './compile-types';
-import measureTask from '../utils/measure-task';
+import { startBenchmark, endBenchmark } from './get-benchmark';
 
-export default function check(): void {
-  measureTask(new Listr([
-    {
-      title: 'Checking types',
-      task: () => compileTypes(true),
+export default function measureTask(task: Listr): void {
+  const time = startBenchmark('');
+  task.run().then(
+    () => {
+      endBenchmark('Done in', time);
     },
-  ]));
+    (err) => {
+      console.error(err);
+      process.exit(1);
+    },
+  );
 }

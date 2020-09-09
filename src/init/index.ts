@@ -23,14 +23,14 @@
  */
 import { Listr } from 'listr2';
 import { installDevDeps, installDeps } from './install-deps';
-import { startBenchmark, endBenchmark } from '../utils/get-benchmark';
 import getCWDName from '../utils/get-cwd-name';
 import addPeers from './add-peers';
 import createPackage from './create-package';
 import copyFromTemplate from '../utils/copy-from-template';
+import measureTask from '../utils/measure-task';
 
 export default function init(template: string): void {
-  const tasks = new Listr([
+  measureTask(new Listr([
     {
       title: 'Generating from template',
       task: () => new Listr([
@@ -86,16 +86,5 @@ export default function init(template: string): void {
       title: 'Adding peer dependencies',
       task: () => addPeers(template),
     },
-  ]);
-
-  const time = startBenchmark('');
-  tasks.run().then(
-    () => {
-      endBenchmark('Done in', time);
-    },
-    (err) => {
-      console.error(err);
-      process.exit(1);
-    },
-  );
+  ]));
 }
