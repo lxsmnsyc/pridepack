@@ -1,4 +1,3 @@
-/* @jsx h */
 import { h, VNode } from 'preact';
 
 export default function HelloWorld(): VNode {
