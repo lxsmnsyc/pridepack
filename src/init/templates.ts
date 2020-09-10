@@ -34,6 +34,7 @@ export interface Templates {
 
 const baseDevDependencies = [
   '@types/jest',
+  '@types/node',
   '@typescript-eslint/eslint-plugin',
   '@typescript-eslint/parser',
   'eslint',
