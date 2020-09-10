@@ -15,6 +15,7 @@
     "pridepack": "./bin/index.js"
   },
   "scripts": {
+    "prepublish": "yarn buid",
     "build": "node build-src"
   },
   "dependencies": {
