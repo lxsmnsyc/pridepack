@@ -48,7 +48,7 @@ export default function init(template: string): void {
         },
         {
           title: 'Generating .pridepackrc',
-          skip: template !== 'preact',
+          skip: () => template !== 'preact',
           task: () => copyFromTemplate(template, '.', '.pridepackrc'),
         },
         {
