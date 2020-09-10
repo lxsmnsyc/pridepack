@@ -51,7 +51,6 @@ export default async function buildProduction(): Promise<void> {
     minify: true,
     platform: 'node',
     sourcemap: true,
-    splitting: true,
     define: {
       ...PRODUCTION_ENV,
       'process.env.NODE_ENV': '"production"',

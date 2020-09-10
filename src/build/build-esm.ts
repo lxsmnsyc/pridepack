@@ -51,7 +51,6 @@ export default async function buildESM(): Promise<void> {
     minify: false,
     format: 'esm',
     sourcemap: true,
-    splitting: true,
     define: {
       ...DEVELOPMENT_ENV,
     },

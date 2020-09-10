@@ -51,7 +51,6 @@ export default async function buildDevelopment(): Promise<void> {
     minify: false,
     platform: 'node',
     sourcemap: true,
-    splitting: true,
     define: {
       ...DEVELOPMENT_ENV,
       'process.env.NODE_ENV': '"development"',
