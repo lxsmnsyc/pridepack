@@ -45,4 +45,4 @@ yarn global add pridepack
 
 ## License
 
-MIT © [lxsmnsyc](https://github.com/lxsmnsyc)
+MIT © [Lyon Software Technologies, Inc.](https://github.com/LyonInc)
