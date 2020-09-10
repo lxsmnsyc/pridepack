@@ -66,9 +66,11 @@ const TEMPLATES: Templates = {
     devDependencies: [
       ...baseDevDependencies,
       '@types/react',
+      'eslint-config-airbnb',
       'eslint-plugin-jsx-a11y',
       'eslint-plugin-react',
       'eslint-plugin-react-hooks',
+      '@testing-library/react',
     ],
   },
   preact: {
@@ -80,6 +82,7 @@ const TEMPLATES: Templates = {
     ],
     devDependencies: [
       ...baseDevDependencies,
+      'eslint-config-airbnb',
       'eslint-plugin-jsx-a11y',
       'eslint-plugin-preact',
     ],
