@@ -42,6 +42,8 @@ yarn global add pridepack
 - [ ] Built-in testing (using Jest)
 - [ ] Watch mode (for build and test)
 - [ ] Code-splitting (using ESBuild)
+- [ ] Test example for React template using [react-testing-library](https://github.com/testing-library/react-testing-library) and/or [react-hooks-testing-library](https://github.com/testing-library/react-hooks-testing-library)
+- [ ] Test example for Preact template using [preact-testing-library](https://github.com/testing-library/preact-testing-library) and/or [preact-hooks-testing-library](https://github.com/testing-library/preact-hooks-testing-library)
 
 ## License
 
