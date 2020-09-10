@@ -43,5 +43,16 @@
     "eslint-import-resolver-node": "^0.3.4",
     "eslint-import-resolver-typescript": "^2.3.0",
     "eslint-plugin-import": "^2.22.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "homepage": "https://github.com/LyonInc/pridepack",
+  "bugs": {
+    "url": "https://github.com/LyonInc/pridepack/issues"
+  },
+  "repository": {
+    "url": "https://github.com/LyonInc/pridepack.git",
+    "type": "git"
   }
 }
