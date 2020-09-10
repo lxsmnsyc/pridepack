@@ -47,6 +47,11 @@ export default function init(template: string): void {
           task: () => copyFromTemplate(template, '.', '.eslintrc'),
         },
         {
+          title: 'Generating .pridepacrc',
+          skip: template !== 'preact',
+          task: () => copyFromTemplate(template, '.', '.pridepackrc'),
+        },
+        {
           title: 'Generating tsconfig',
           task: () => new Listr([
             {
