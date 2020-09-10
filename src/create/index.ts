@@ -34,7 +34,7 @@ export default function create(name: string, template: string): void {
 
   measureTask(new Listr([
     {
-      title: `Generating package from template '${template}.'`,
+      title: `Generating package from template '${template}'.`,
       task: () => new Listr([
         {
           title: 'Generating package.json',

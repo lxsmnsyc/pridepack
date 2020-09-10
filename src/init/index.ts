@@ -32,7 +32,7 @@ import measureTask from '../utils/measure-task';
 export default function init(template: string): void {
   measureTask(new Listr([
     {
-      title: `Generating package from template '${template}.'`,
+      title: `Generating package from template '${template}'.`,
       task: () => new Listr([
         {
           title: 'Generating package.json.',
