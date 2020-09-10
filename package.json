@@ -1,6 +1,6 @@
 {
   "name": "pridepack",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "CLI for building TypeScript packages",
   "main": "index.js",
   "author": "Alexis Munsayac <alexis.munsayac@gmail.com>",
@@ -12,7 +12,7 @@
     "templates"
   ],
   "bin": {
-    "pridepack": "./bin"
+    "pridepack": "./bin/index.js"
   },
   "scripts": {
     "build": "node build-src"
