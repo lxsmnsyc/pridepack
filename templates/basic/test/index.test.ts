@@ -1,7 +1,7 @@
-import { add } from '../src';
+import add from '../src';
 
 describe('blah', () => {
   it('works', () => {
-    expect(sum(1, 1)).toEqual(2);
+    expect(add(1, 1)).toEqual(2);
   });
 });
