@@ -33,6 +33,7 @@ export interface Templates {
 }
 
 const baseDevDependencies = [
+  '@types/jest',
   '@typescript-eslint/eslint-plugin',
   '@typescript-eslint/parser',
   'eslint',
@@ -41,7 +42,7 @@ const baseDevDependencies = [
   'eslint-plugin-import',
   'tslib',
   'typescript',
-  // 'pridepack',
+  'pridepack',
 ];
 
 const TEMPLATES: Templates = {
