@@ -34,7 +34,7 @@ export default function create(name: string, template: string): void {
 
   measureTask(new Listr([
     {
-      title: 'Generating from template',
+      title: `Generating package from template '${template}.'`,
       task: () => new Listr([
         {
           title: 'Generating package.json',
@@ -47,6 +47,11 @@ export default function create(name: string, template: string): void {
         {
           title: 'Generating .eslintrc',
           task: () => copyFromTemplate(template, safeName, '.eslintrc'),
+        },
+        {
+          title: 'Generating .pridepackrc',
+          skip: template !== 'preact',
+          task: () => copyFromTemplate(template, '.', '.pridepackrc'),
         },
         {
           title: 'Generating tsconfig',
