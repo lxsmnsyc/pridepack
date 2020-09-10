@@ -32,22 +32,22 @@ import measureTask from '../utils/measure-task';
 export default function init(template: string): void {
   measureTask(new Listr([
     {
-      title: 'Generating from template',
+      title: `Generating package from template '${template}.'`,
       task: () => new Listr([
         {
-          title: 'Generating package.json',
+          title: 'Generating package.json.',
           task: () => createPackage(getCWDName(), '.'),
         },
         {
-          title: 'Generating .gitignore',
+          title: 'Generating .gitignore.',
           task: () => copyFromTemplate(template, '.', '_gitignore', '.gitignore'),
         },
         {
-          title: 'Generating .eslintrc',
+          title: 'Generating .eslintrc.',
           task: () => copyFromTemplate(template, '.', '.eslintrc'),
         },
         {
-          title: 'Generating .pridepacrc',
+          title: 'Generating .pridepackrc',
           skip: template !== 'preact',
           task: () => copyFromTemplate(template, '.', '.pridepackrc'),
         },
