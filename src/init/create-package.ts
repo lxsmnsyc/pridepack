@@ -39,7 +39,7 @@ const BASE_PACKAGE: IPackageJson = {
   },
   scripts: {
     build: 'pridepack build',
-    check: 'pridepack check',
+    'type-check': 'pridepack check',
     lint: 'pridepack lint',
     test: 'pridepack test',
   },
