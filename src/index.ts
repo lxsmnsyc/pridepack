@@ -31,6 +31,7 @@ import create from './create';
 import lint from './lint';
 
 const { argv } = yargs
+  .scriptName('pridepack')
   .usage('Usage: $0 <command> [options]')
   .command(
     'build',
