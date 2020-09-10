@@ -30,6 +30,7 @@ import readConfigWithCWD from '../utils/read-config-with-cwd';
 export default async function buildOut(): Promise<void> {
   const baseLine = `module.exports = require('./${getPackageName()}`;
   const contents = `
+'use strict';
 if (process.env.NODE_ENV === 'production') {
   ${baseLine}.${PROD_SUFFIX}.js')
 } else {
