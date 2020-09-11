@@ -51,10 +51,7 @@ export default function create(name: string, template: string): void {
         {
           title: 'Generating .pridepackrc',
           skip: () => template !== 'preact',
-          task: () => {
-            console.log('Skipping?', template, template !== 'preact');
-            return copyFromTemplate(template, safeName, '.pridepackrc');
-          },
+          task: () => copyFromTemplate(template, safeName, '.pridepackrc'),
         },
         {
           title: 'Generating tsconfig',
