@@ -23,6 +23,7 @@ export default function test(args: string[]): void {
           ...DEFAULT_JEST_CONFIG,
           ...config.jest,
         };
+
         // Map config to args
         return jest.run([
           ...args,

@@ -48,6 +48,7 @@ export default function readConfig(): PridepackConfig {
     const customConfig = JSON.parse(result.toString()) as Partial<PridepackConfig>;
 
     CONFIG = {
+      ...customConfig,
       srcDir: customConfig.srcDir || DEFAULT_CONFIG.srcDir,
       srcFile: customConfig.srcFile || DEFAULT_CONFIG.srcFile,
       outDir: customConfig.outDir || DEFAULT_CONFIG.outDir,
