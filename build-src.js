@@ -1,4 +1,5 @@
 const esbuild = require('esbuild');
+const packageJSON = require('./package.json');
 
 esbuild.buildSync({
   entryPoints: [
@@ -6,19 +7,9 @@ esbuild.buildSync({
   ],
   outfile: './bin/index.js',
   bundle: true,
-  minify: true,
+  minify: false,
   sourcemap: true,
   platform: 'node',
   tsconfig: './tsconfig.json',
-  external: [
-    "dotenv",
-    "esbuild",
-    "fs-extra",
-    "tslib",
-    "typescript",
-    "yargs",
-    "listr2",
-    "execa",
-    "eslint"
-  ],
+  external: Object.keys(packageJSON.dependencies),
 });
