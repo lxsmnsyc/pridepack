@@ -4,7 +4,7 @@
     "node": true
   },
   "extends": [
-    "plugin:preact/recommended",
+    "preact",
     "airbnb",
     "airbnb/hooks",
     "plugin:@typescript-eslint/eslint-recommended",

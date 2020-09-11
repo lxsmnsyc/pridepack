@@ -83,9 +83,9 @@ const TEMPLATES: Templates = {
     devDependencies: [
       ...baseDevDependencies,
       'eslint-config-airbnb',
+      'eslint-config-preact',
       'eslint-plugin-jsx-a11y',
       'eslint-plugin-react-hooks',
-      'eslint-plugin-preact',
     ],
   },
 };
