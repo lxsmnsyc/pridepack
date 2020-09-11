@@ -57,11 +57,13 @@ const TEMPLATES: Templates = {
     ],
     peerDependencies: [
       'react',
+      'react-dom',
     ],
     devDependencies: [
       ...baseDevDependencies,
       '@types/react',
       '@testing-library/react',
+      '@testing-library/jest-dom',
     ],
   },
   preact: {
@@ -73,6 +75,8 @@ const TEMPLATES: Templates = {
     ],
     devDependencies: [
       ...baseDevDependencies,
+      '@testing-library/preact',
+      '@testing-library/jest-dom',
     ],
   },
 };
