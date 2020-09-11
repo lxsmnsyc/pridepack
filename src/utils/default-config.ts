@@ -20,7 +20,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- */
+ */import { InitialOptions } from '@jest/types/build/Config';
 
 export interface PridepackBaseConfig {
   srcDir: string;
@@ -34,6 +34,7 @@ export interface PridepackConfig extends PridepackBaseConfig {
   target: string;
   jsxFactory?: string;
   jsxFragment?: string;
+  jest?: InitialOptions;
 }
 
 const DEFAULT_CONFIG: PridepackConfig = {
