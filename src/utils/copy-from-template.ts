@@ -37,10 +37,12 @@ export default async function copyFromTemplate(
     template,
     target,
   );
-  const targetFile = path.resolve(
-    process.cwd(),
-    name,
-    newName,
-  );
-  await fs.copy(sourceFile, targetFile);
+  if (fs.existsSync(sourceFile)) {
+    const targetFile = path.resolve(
+      process.cwd(),
+      name,
+      newName,
+    );
+    await fs.copy(sourceFile, targetFile);
+  }
 }
