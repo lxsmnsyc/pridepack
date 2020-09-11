@@ -1,10 +1,10 @@
-import { h, VNode } from 'preact';
+import React from 'react';
 
 export interface HelloProps {
   greeting: string;
 }
 
-export default function Hello({ greeting }: HelloProps): VNode {
+export default function Hello({ greeting }: HelloProps): JSX.Element {
   if (process.env.NODE_ENV !== 'production') {
     console.log('This code would not appear on production builds');
   }

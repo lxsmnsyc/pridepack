@@ -1,3 +1,4 @@
-import HelloWorld from './HelloWorld';
+import Hello from './Hello';
 
-export default HelloWorld;
+export { HelloProps } from './Hello';
+export default Hello;
