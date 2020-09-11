@@ -29,6 +29,7 @@ import init from './init';
 import check from './check';
 import create from './create';
 import lint from './lint';
+import test from './test';
 
 const { argv } = yargs
   .scriptName('pridepack')
@@ -70,6 +71,10 @@ const { argv } = yargs
     'Performs typechecking',
   )
   .command(
+    'test',
+    'Performs testing',
+  )
+  .command(
     'lint',
     'Performs linting',
     (args) => (
@@ -107,6 +112,7 @@ switch (argv._[0]) {
     check();
     break;
   case 'test':
+    test(process.argv.slice(3));
     break;
   case 'lint':
     lint({
