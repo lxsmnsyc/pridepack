@@ -19,13 +19,16 @@
     "build": "node build-src"
   },
   "dependencies": {
+    "@jest/types": "^26.3.0",
     "dotenv": "^8.2.0",
     "esbuild": "^0.6.33",
     "eslint": "^7.8.1",
     "execa": "^4.0.3",
     "fs-extra": "^9.0.1",
+    "jest": "^26.4.2",
     "listr2": "^3.0.1",
     "package-json-type": "^1.0.3",
+    "ts-jest": "^26.3.0",
     "tslib": "^2.0.1",
     "typescript": "^4.0.2",
     "yargs": "^15.4.1"
