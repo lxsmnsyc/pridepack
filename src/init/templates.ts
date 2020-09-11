@@ -35,12 +35,7 @@ export interface Templates {
 const baseDevDependencies = [
   '@types/jest',
   '@types/node',
-  '@typescript-eslint/eslint-plugin',
-  '@typescript-eslint/parser',
-  'eslint',
-  'eslint-import-resolver-node',
-  'eslint-import-resolver-typescript',
-  'eslint-plugin-import',
+  'eslint-config-lxsmnsyc',
   'tslib',
   'typescript',
   'pridepack',
@@ -53,7 +48,6 @@ const TEMPLATES: Templates = {
     peerDependencies: [],
     devDependencies: [
       ...baseDevDependencies,
-      'eslint-config-airbnb-base',
     ],
   },
   react: {
@@ -66,10 +60,6 @@ const TEMPLATES: Templates = {
     devDependencies: [
       ...baseDevDependencies,
       '@types/react',
-      'eslint-config-airbnb',
-      'eslint-plugin-jsx-a11y',
-      'eslint-plugin-react',
-      'eslint-plugin-react-hooks',
       '@testing-library/react',
     ],
   },
@@ -82,10 +72,6 @@ const TEMPLATES: Templates = {
     ],
     devDependencies: [
       ...baseDevDependencies,
-      'eslint-config-airbnb',
-      'eslint-config-preact',
-      'eslint-plugin-jsx-a11y',
-      'eslint-plugin-react-hooks',
     ],
   },
 };
