@@ -64,6 +64,8 @@ const TEMPLATES: Templates = {
       '@types/react',
       '@testing-library/react',
       '@testing-library/jest-dom',
+      '@testing-library/react-hooks',
+      'react-test-renderer',
     ],
   },
   preact: {
