@@ -79,6 +79,7 @@ const TEMPLATES: Templates = {
       ...baseDevDependencies,
       '@testing-library/preact',
       '@testing-library/jest-dom',
+      '@testing-library/preact-hooks',
     ],
   },
 };
