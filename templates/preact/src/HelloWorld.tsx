@@ -1,3 +1,4 @@
+/* @jsx h */
 import { h, VNode } from 'preact';
 
 export interface HelloProps {
