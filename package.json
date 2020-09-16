@@ -1,6 +1,6 @@
 {
   "name": "pridepack",
-  "version": "0.0.29",
+  "version": "0.0.30",
   "description": "CLI for building TypeScript packages",
   "main": "index.js",
   "author": "Alexis Munsayac <alexis.munsayac@gmail.com>",
@@ -21,7 +21,7 @@
   "dependencies": {
     "@jest/types": "^26.3.0",
     "dotenv": "^8.2.0",
-    "esbuild": "^0.6.33",
+    "esbuild": "^0.7.1",
     "eslint": "^7.8.1",
     "execa": "^4.0.3",
     "fs-extra": "^9.0.1",
@@ -40,7 +40,7 @@
     "@types/node": "^14.6.4",
     "@types/yargs": "^15.0.5",
     "eslint": "^7.8.1",
-    "eslint-config-lxsmnsyc": "^0.1.4"
+    "eslint-config-lxsmnsyc": "^0.1.17"
   },
   "publishConfig": {
     "access": "public"
