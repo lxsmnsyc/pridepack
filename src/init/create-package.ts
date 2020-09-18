@@ -38,6 +38,7 @@ const BASE_PACKAGE: IPackageJson = {
     node: '>=10',
   },
   scripts: {
+    prepublish: 'pridepack build',
     build: 'pridepack build',
     'type-check': 'pridepack check',
     lint: 'pridepack lint',
