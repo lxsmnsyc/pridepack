@@ -1,6 +1,6 @@
 {
   "name": "pridepack",
-  "version": "0.0.33",
+  "version": "0.0.34",
   "description": "CLI for building TypeScript packages",
   "main": "index.js",
   "author": "Alexis Munsayac <alexis.munsayac@gmail.com>",
