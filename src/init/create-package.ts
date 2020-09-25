@@ -42,7 +42,7 @@ const BASE_PACKAGE: IPackageJson = {
     build: 'pridepack build',
     'type-check': 'pridepack check',
     lint: 'pridepack lint',
-    test: 'pridepack test',
+    test: 'pridepack test --passWithNoTests',
   },
   license: 'MIT',
 };
