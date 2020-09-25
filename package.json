@@ -40,7 +40,7 @@
     "@types/node": "^14.11.2",
     "@types/yargs": "^15.0.7",
     "eslint": "^7.9.0",
-    "eslint-config-lxsmnsyc": "^0.1.17"
+    "eslint-config-lxsmnsyc": "^0.1.18"
   },
   "publishConfig": {
     "access": "public"
