@@ -1,6 +1,6 @@
 {
   "extends": [
-    "lxsmnsyc/typescript"
+    "lxsmnsyc/typescript/react"
   ],
   "parserOptions": {
     "project": "./tsconfig.eslint.json"
