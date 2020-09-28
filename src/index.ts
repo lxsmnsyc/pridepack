@@ -30,6 +30,8 @@ import check from './check';
 import create from './create';
 import lint from './lint';
 import test from './test';
+import clean from './clean';
+import watch from './watch';
 
 const { argv } = yargs
   .scriptName('pridepack')
@@ -71,6 +73,14 @@ const { argv } = yargs
     'Performs typechecking',
   )
   .command(
+    'watch',
+    'Opts-in to watch mode for building.',
+  )
+  .command(
+    'clean',
+    'Cleans output directory.',
+  )
+  .command(
     'test',
     'Performs testing',
   )
@@ -107,6 +117,12 @@ switch (argv._[0]) {
     break;
   case 'build':
     build();
+    break;
+  case 'clean':
+    clean();
+    break;
+  case 'watch':
+    watch();
     break;
   case 'check':
     check();
