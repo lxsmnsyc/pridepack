@@ -31,7 +31,7 @@ import readConfig from '../utils/read-config';
 
 export const OUTPUT_SUFFIX = 'production.min';
 
-export default async function buildProduction(): Promise<void> {
+export default async function buildProduction(silent = false): Promise<void> {
   const packageName = getPackageName();
   const config = readConfig();
   const configCWD = readConfigWithCWD();
@@ -60,5 +60,6 @@ export default async function buildProduction(): Promise<void> {
     tsconfig: configCWD.tsconfig,
     jsxFactory: config.jsxFactory,
     jsxFragment: config.jsxFragment,
+    logLevel: silent ? 'silent' : undefined
   });
 }

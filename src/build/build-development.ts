@@ -31,7 +31,7 @@ import readExternals from '../utils/read-externals';
 
 export const OUTPUT_SUFFIX = 'development';
 
-export default async function buildDevelopment(): Promise<void> {
+export default async function buildDevelopment(silent = false): Promise<void> {
   const packageName = getPackageName();
   const config = readConfig();
   const configCWD = readConfigWithCWD();
@@ -60,5 +60,6 @@ export default async function buildDevelopment(): Promise<void> {
     tsconfig: configCWD.tsconfig,
     jsxFactory: config.jsxFactory,
     jsxFragment: config.jsxFragment,
+    logLevel: silent ? 'silent' : undefined
   });
 }

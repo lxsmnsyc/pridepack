@@ -31,7 +31,7 @@ import readExternals from '../utils/read-externals';
 
 export const OUTPUT_SUFFIX = 'esm';
 
-export default async function buildESM(): Promise<void> {
+export default async function buildESM(silent = false): Promise<void> {
   const packageName = getPackageName();
   const config = readConfig();
   const configCWD = readConfigWithCWD();
@@ -59,5 +59,6 @@ export default async function buildESM(): Promise<void> {
     tsconfig: configCWD.tsconfig,
     jsxFactory: config.jsxFactory,
     jsxFragment: config.jsxFragment,
+    logLevel: silent ? 'silent' : undefined
   });
 }
