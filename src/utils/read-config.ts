@@ -25,7 +25,13 @@ import path from 'path';
 import fs from 'fs';
 import DEFAULT_CONFIG, { PridepackConfig } from './default-config';
 
-export const CONFIG_NAME = '.pridepackrc';
+export const CONFIG_NAMES = [
+  '.pridepackrc',
+  '.pridepack.json',
+  'pridepack.json',
+  'pridepack.config.json',
+  '.pridepack.config.json',
+];
 
 let CONFIG: PridepackConfig;
 
@@ -36,29 +42,32 @@ export default function readConfig(): PridepackConfig {
   // Get working directory
   const cwd = process.cwd();
 
-  // Get config file path
-  const filepath = path.resolve(path.join(cwd, CONFIG_NAME));
+  for (let i = 0; i < CONFIG_NAMES.length; i += 1) {// Get config file path
+    const filepath = path.resolve(path.join(cwd, CONFIG_NAMES[i]));
+  
+    // Check if config exists
+    if (fs.existsSync(filepath)) {
+      // Read config
+      const result = fs.readFileSync(filepath);
+  
+      // Parse config to object
+      const customConfig = JSON.parse(result.toString()) as Partial<PridepackConfig>;
+  
+      CONFIG = {
+        ...customConfig,
+        srcDir: customConfig.srcDir || DEFAULT_CONFIG.srcDir,
+        srcFile: customConfig.srcFile || DEFAULT_CONFIG.srcFile,
+        outDir: customConfig.outDir || DEFAULT_CONFIG.outDir,
+        outFile: customConfig.outFile || DEFAULT_CONFIG.outFile,
+        tsconfig: customConfig.tsconfig || DEFAULT_CONFIG.tsconfig,
+        target: customConfig.target || DEFAULT_CONFIG.target,
+      };
 
-  // Check if config exists
-  if (fs.existsSync(filepath)) {
-    // Read config
-    const result = fs.readFileSync(filepath);
-
-    // Parse config to object
-    const customConfig = JSON.parse(result.toString()) as Partial<PridepackConfig>;
-
-    CONFIG = {
-      ...customConfig,
-      srcDir: customConfig.srcDir || DEFAULT_CONFIG.srcDir,
-      srcFile: customConfig.srcFile || DEFAULT_CONFIG.srcFile,
-      outDir: customConfig.outDir || DEFAULT_CONFIG.outDir,
-      outFile: customConfig.outFile || DEFAULT_CONFIG.outFile,
-      tsconfig: customConfig.tsconfig || DEFAULT_CONFIG.tsconfig,
-      target: customConfig.target || DEFAULT_CONFIG.target,
-    };
-  } else {
-    CONFIG = DEFAULT_CONFIG;
+      return CONFIG;
+    }
   }
+  
+  CONFIG = DEFAULT_CONFIG;
 
   // Return default config
   return CONFIG;
