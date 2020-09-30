@@ -24,14 +24,11 @@
  * SOFTWARE.
  */
 import yargs from 'yargs';
-import build from './build';
-import init from './init';
 import check from './check';
-import create from './create';
 import lint from './lint';
 import test from './test';
-import clean from './clean';
 import watch from './watch';
+import renderProgram from './program/Program';
 
 const { argv } = yargs
   .scriptName('pridepack')
@@ -108,18 +105,14 @@ const { argv } = yargs
 
 switch (argv._[0]) {
   case 'init':
-    init(argv.template);
-    break;
-  case 'create':
-    if (argv.name) {
-      create(argv.name, argv.template);
-    }
-    break;
-  case 'build':
-    build();
-    break;
   case 'clean':
-    clean();
+  case 'create':
+  case 'build':
+    renderProgram(
+      argv._[0],
+      argv.template,
+      argv.name,
+    );
     break;
   case 'watch':
     watch();
