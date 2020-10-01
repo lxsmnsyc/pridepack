@@ -26,7 +26,6 @@
 import yargs from 'yargs';
 import lint from './lint';
 import test from './test';
-// import watch from './watch';
 import renderProgram from './program/Program';
 
 const { argv } = yargs
@@ -108,14 +107,12 @@ switch (argv._[0]) {
   case 'create':
   case 'build':
   case 'check':
+  case 'watch':
     renderProgram(
       argv._[0],
       argv.template,
       argv.name,
     );
-    break;
-  case 'watch':
-    // watch();
     break;
   case 'test':
     test(process.argv.slice(3));
