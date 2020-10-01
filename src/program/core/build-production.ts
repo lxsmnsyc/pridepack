@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 import path from 'path';
-import esbuild from 'esbuild';
+import esbuild, { BuildResult } from 'esbuild';
 import { PRODUCTION_ENV } from './read-env-defs';
 import readConfigWithCWD from './read-config-with-cwd';
 import getPackageName from './get-package-name';
@@ -31,7 +31,7 @@ import readConfig from './read-config';
 
 export const OUTPUT_SUFFIX = 'production.min';
 
-export default async function buildProduction(): Promise<void> {
+export default async function buildProduction(): Promise<BuildResult> {
   const packageName = await getPackageName();
   const config = readConfig();
   const configCWD = readConfigWithCWD();
@@ -42,7 +42,7 @@ export default async function buildProduction(): Promise<void> {
     `${packageName}.${OUTPUT_SUFFIX}.js`,
   ));
   // run esbuild
-  await esbuild.build({
+  return esbuild.build({
     entryPoints: [
       configCWD.srcFile,
     ],
