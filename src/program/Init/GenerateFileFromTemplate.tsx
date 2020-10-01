@@ -6,6 +6,7 @@ import useLoadableEvent, { LoadableEvent } from '../utils/hooks/useLoadableEvent
 
 // Core
 import copyFromTemplate from '../core/copy-from-template';
+import { pendingMessage, successMessage } from '../core/styled-messages';
 
 // Components
 import SuperDiagnosticMessage from '../utils/SuperDiagnosticMessage';
@@ -36,8 +37,8 @@ export default function GenerateFileFromTemplate(
   return (
     <SuperDiagnosticMessage
       status={data.status}
-      pending={`Generating '${targetFile}'...`}
-      success={`Generated '${targetFile}'.`}
+      pending={pendingMessage('Generating', `'${targetFile}'`)}
+      success={successMessage('Generated', `'${targetFile}'`)}
       failure={data.result ? data.result.message : undefined}
     />
   );

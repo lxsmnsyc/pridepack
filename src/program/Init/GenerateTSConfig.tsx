@@ -1,5 +1,6 @@
 import { Box, Spacer } from 'ink';
 import React from 'react';
+import { pendingMessage, successMessage } from '../core/styled-messages';
 
 // Hooks
 import { LoadableEvent, useLoadableRace } from '../utils/hooks/useLoadableEvent';
@@ -28,8 +29,8 @@ export default function GenerateTSConfig(
     <Box flexDirection="column">
       <SuperDiagnosticMessage
         status={status}
-        pending="Generating tsconfig files..."
-        success="Generated tsconfig files."
+        pending={pendingMessage('Generating', 'tsconfig files')}
+        success={successMessage('Generated', 'tsconfig files')}
       />
       <Spacer />
       <Box flexDirection="column" marginLeft={2}>

@@ -1,5 +1,6 @@
 import { Box, Spacer } from 'ink';
 import React from 'react';
+import { pendingMessage, successMessage } from '../core/styled-messages';
 
 // Hooks
 import { LoadableEvent, useLoadableRace } from '../utils/hooks/useLoadableEvent';
@@ -28,8 +29,8 @@ export default function GenerateBaseTemplate(
     <Box flexDirection="column">
       <SuperDiagnosticMessage
         status={status}
-        pending="Generating base template..."
-        success="Generated base template."
+        pending={pendingMessage('Generating', 'base template')}
+        success={successMessage('Generated', 'base template')}
       />
       <Spacer />
       <Box flexDirection="column" marginLeft={2}>

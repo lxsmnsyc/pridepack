@@ -6,6 +6,7 @@ import useLoadableEvent, { LoadableEvent } from '../utils/hooks/useLoadableEvent
 
 // Core
 import { installDeps } from '../core/install-deps';
+import { pendingMessage, successMessage } from '../core/styled-messages';
 
 // Components
 import SuperDiagnosticMessage from '../utils/SuperDiagnosticMessage';
@@ -28,8 +29,8 @@ export default function InstallDependencies(
   return (
     <SuperDiagnosticMessage
       status={data.status}
-      pending={`Installing dependencies...`}
-      success={`Installed dependencies.`}
+      pending={pendingMessage('Installing', 'dependencies')}
+      success={successMessage('Installed', 'dependencies')}
       failure={data.result ? data.result.message : undefined}
     />
   );

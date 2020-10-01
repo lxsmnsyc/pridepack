@@ -1,9 +1,12 @@
 import { Box, Spacer } from 'ink';
 import React from 'react';
-import getSafePackageName from '../core/get-safe-package-name';
 
 // Hooks
 import { LoadableEvent, useLoadableRace } from '../utils/hooks/useLoadableEvent';
+
+// Core
+import getSafePackageName from '../core/get-safe-package-name';
+import { pendingMessage, successMessage } from '../core/styled-messages';
 
 // Components
 import SuperDiagnosticMessage from '../utils/SuperDiagnosticMessage';
@@ -34,8 +37,8 @@ export default function ManageDependencies(
     <Box flexDirection="column">
       <SuperDiagnosticMessage
         status={status}
-        pending="Managing dependencies..."
-        success="Managed dependencies."
+        pending={pendingMessage('Managing', 'dependencies')}
+        success={successMessage('Managed', 'dependencies')}
       />
       <Spacer />
       <Box flexDirection="column" marginLeft={2}>

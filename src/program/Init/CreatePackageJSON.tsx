@@ -2,6 +2,7 @@ import React from 'react';
 
 // Core
 import createPackage from '../core/create-package';
+import { pendingMessage, successMessage } from '../core/styled-messages';
 
 // Hooks
 import useAsyncMemo from '../utils/hooks/useAsyncMemo';
@@ -28,8 +29,8 @@ export default function CreatePackageJSON(
   return (
     <SuperDiagnosticMessage
       status={data.status}
-      pending={`Generating 'package.json'...`}
-      success={`Generated 'package.json'.`}
+      pending={pendingMessage('Generating', "'package.json'")}
+      success={successMessage('Generated', "'package.json'")}
       failure={data.result ? data.result.message : undefined}
     />
   );

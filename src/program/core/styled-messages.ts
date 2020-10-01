@@ -24,17 +24,15 @@ export function successMessage(
   return `${base}.`;
 }
 
-type CommandOption = [string, string];
-
 export function commandTitle(
   command: string,
-  options: CommandOption[] = [],
+  ...options: string[]
 ): string {
   const base = `${chalk.magenta('pridepack')} ${chalk.magentaBright(command)}`;
 
   return options.reduce(
-    (acc, [key, value]) => (
-      `${acc} ${chalk.cyan(key) + (value == null ? '' : chalk.blue(value))}`
+    (acc, value) => (
+      `${acc} ${chalk.cyan(value)}`
     ),
     base,
   );

@@ -1,5 +1,6 @@
 import { Box, Spacer } from 'ink';
 import React from 'react';
+import { commandTitle } from '../core/styled-messages';
 
 // Hooks
 import { LoadableEvent, useLoadableRace } from '../utils/hooks/useLoadableEvent';
@@ -25,13 +26,15 @@ export default function InitPackage(
     onFailure,
   } = useLoadableRace(props, MAX_SUCCESS, [template]);
 
+  const title = commandTitle('init', template);
+
   return (
     <Box flexDirection="column">
       <SuperDiagnosticMessage
         status={status}
-        pending={`pridepack init ${template}`}
-        success={`pridepack init ${template}`}
-        failure={`pridepack init ${template}`}
+        pending={title}
+        success={title}
+        failure={title}
       />
       <Spacer />
       <Box flexDirection="column" marginLeft={2}>

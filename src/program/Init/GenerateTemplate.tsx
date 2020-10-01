@@ -3,7 +3,8 @@ import React from 'react';
 
 // Core
 import getSafePackageName from '../core/get-safe-package-name';
-import getCWDName from '../../utils/get-cwd-name';
+import getCWDName from '../core/get-cwd-name';
+import { pendingMessage, successMessage } from '../core/styled-messages';
 
 // Hooks
 import { LoadableEvent, useLoadableRace } from '../utils/hooks/useLoadableEvent';
@@ -39,8 +40,8 @@ export default function GenerateTemplate(
     <Box flexDirection="column">
       <SuperDiagnosticMessage
         status={status}
-        pending={`Generating template from '${template}'...`}
-        success={`Generated template from '${template}'.`}
+        pending={pendingMessage('Generating', `template from '${template}'`)}
+        success={successMessage('Generated', `template from '${template}'`)}
       />
       <Spacer />
       <Box flexDirection="column" marginLeft={2}>
