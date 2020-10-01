@@ -1,9 +1,9 @@
 import { CompilerOptions, convertCompilerOptionsFromJson } from 'typescript';
 import readTSConfig from './read-tsconfig';
 
-export default async function readValidCompilerOptions(): Promise<CompilerOptions> {
+export default function readValidCompilerOptions(): CompilerOptions {
   return convertCompilerOptionsFromJson(
-    (await readTSConfig()).compilerOptions,
+    readTSConfig().compilerOptions,
     process.cwd(),
   ).options;
 }

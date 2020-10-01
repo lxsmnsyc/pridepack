@@ -43,13 +43,13 @@ export function getTSConfigPath(): string {
   return path.resolve(path.join(process.cwd(), readConfig().tsconfig));
 }
 
-export default async function readTSConfig(): Promise<Partial<TsConfig>> {
+export default function readTSConfig(): Partial<TsConfig> {
   if (TSCONFIG) {
     return TSCONFIG;
   }
   
   // Read config
-  TSCONFIG = await fs.readJson(getTSConfigPath()) as Partial<TsConfig>;
+  TSCONFIG = fs.readJsonSync(getTSConfigPath()) as Partial<TsConfig>;
 
   return TSCONFIG;
 }
