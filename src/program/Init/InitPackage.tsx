@@ -29,7 +29,7 @@ export default function InitPackage(
   const title = commandTitle('init', template);
 
   return (
-    <Box flexDirection="column">
+    <Box flexDirection="column" marginLeft={2}>
       <SuperDiagnosticMessage
         status={status}
         pending={title}

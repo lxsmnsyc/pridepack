@@ -29,7 +29,7 @@ export default function Build(
   const title = commandTitle('build');
 
   return (
-    <Box flexDirection="column">
+    <Box flexDirection="column" marginLeft={2}>
       <SuperDiagnosticMessage
         status={status}
         pending={title}

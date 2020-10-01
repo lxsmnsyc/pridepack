@@ -30,7 +30,7 @@ export default function CreatePackage(
   const title = commandTitle('create', packageName, template);
 
   return (
-    <Box flexDirection="column">
+    <Box flexDirection="column" marginLeft={2}>
       <SuperDiagnosticMessage
         status={status}
         pending={title}
