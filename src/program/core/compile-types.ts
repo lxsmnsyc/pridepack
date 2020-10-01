@@ -43,7 +43,7 @@ export default async function compileTypes(noEmit = true): Promise<Diagnostic[]>
   const baseConfig: CompilerOptions = {
     ...await readValidCompilerOptions(),
     outDir: config.outDir,
-    emitDeclarationOnly: true,
+    emitDeclarationOnly: !noEmit,
     moduleResolution: 2,
     noEmit,
   };
