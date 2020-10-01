@@ -1,4 +1,4 @@
-import { TextProps, Text } from 'ink';
+import { TextProps, Text, Box } from 'ink';
 import Spinner from 'ink-spinner';
 import React, { FC } from 'react';
 
@@ -14,11 +14,13 @@ export default function IndefiniteMessage(
   { color, message, type }: IndefiniteMessageProps,
 ): JSX.Element {
   return (
-    <Text>
+    <Box>
       <Text color={color}>
         <Spinner type={type} />
+      </Text>
+      <Text>
         {` ${message}`}
       </Text>
-    </Text>
+    </Box>
   );
 }

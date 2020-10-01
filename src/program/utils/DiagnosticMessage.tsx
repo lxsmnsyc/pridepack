@@ -1,4 +1,4 @@
-import { Text, TextProps } from 'ink';
+import { Box, Text, TextProps } from 'ink';
 import React from 'react';
 import { DiagnosticCategory } from 'typescript';
 
@@ -40,13 +40,13 @@ export default function DiagnosticMessage(
   { category, message }: DiagnosticMessageProps,
 ): JSX.Element {
   return (
-    <Text>
+    <Box>
       <Text color={DIAGNOSTIC_DISPLAYS[category].color}>
         {DIAGNOSTIC_DISPLAYS[category].symbol}
       </Text>
       <Text>
         {` ${message}`}
       </Text>
-    </Text>
+    </Box>
   );
 }

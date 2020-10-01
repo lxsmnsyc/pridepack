@@ -7,8 +7,7 @@ import { AsyncStatus } from './hooks/useAsyncMemo';
 // Components
 import DiagnosticMessage from './DiagnosticMessage';
 import IndefiniteMessage from './IndefiniteMessage';
-
-const DEFAULT_FAILURE = 'Something went wrong...';
+import chalk from 'chalk';
 
 interface SuperDiagnosticMessageProps {
   status: AsyncStatus;
@@ -24,7 +23,7 @@ export default function SuperDiagnosticMessage(
     return (
       <DiagnosticMessage
         category={DiagnosticCategory.Message}
-        message={success}
+        message={chalk.green(success)}
       />
     );
   }
@@ -32,14 +31,14 @@ export default function SuperDiagnosticMessage(
     return (
       <DiagnosticMessage
         category={DiagnosticCategory.Error}
-        message={failure ?? DEFAULT_FAILURE}
+        message={chalk.red(failure ?? pending)}
       />
     )
   }
   return (
     <IndefiniteMessage
       color="yellow"
-      message={pending}
+      message={chalk.yellow(pending)}
       type="dots"
     />
   );
