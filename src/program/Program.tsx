@@ -5,6 +5,7 @@ import Check from './Check';
 import Clean from './Clean';
 import CreatePackage from './Init/CreatePackage'
 import InitPackage from './Init/InitPackage';
+import Watch from './Watch';
 
 export type ProgramCommand =
   | 'build'
@@ -48,6 +49,9 @@ function Program(
   }
   if (command === 'build') {
     return <Build />;
+  }
+  if (command === 'watch') {
+    return <Watch />;
   }
 
   return <></>
