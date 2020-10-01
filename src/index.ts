@@ -24,10 +24,9 @@
  * SOFTWARE.
  */
 import yargs from 'yargs';
-import check from './check';
 import lint from './lint';
 import test from './test';
-import watch from './watch';
+// import watch from './watch';
 import renderProgram from './program/Program';
 
 const { argv } = yargs
@@ -108,6 +107,7 @@ switch (argv._[0]) {
   case 'clean':
   case 'create':
   case 'build':
+  case 'check':
     renderProgram(
       argv._[0],
       argv.template,
@@ -115,10 +115,7 @@ switch (argv._[0]) {
     );
     break;
   case 'watch':
-    watch();
-    break;
-  case 'check':
-    check();
+    // watch();
     break;
   case 'test':
     test(process.argv.slice(3));
