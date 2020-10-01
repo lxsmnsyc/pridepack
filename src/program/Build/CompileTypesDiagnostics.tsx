@@ -11,7 +11,7 @@ export interface CompileTypesDiagnosticsProps {
   diagnostics: Diagnostic[];
 }
 
-function diagnosticToMessage(diagnostic: Diagnostic): string {
+export function diagnosticToMessage(diagnostic: Diagnostic): string {
   const baseMessage = flattenDiagnosticMessageText(diagnostic.messageText, '\n');
   if (diagnostic.file) {
     const { line, character } = diagnostic.file.getLineAndCharacterOfPosition(diagnostic.start!);
