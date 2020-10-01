@@ -6,6 +6,7 @@ import useAsyncMemo from '../utils/hooks/useAsyncMemo';
 
 // Core
 import readConfigWithCWD from '../core/read-config-with-cwd';
+import { commandTitle, pendingMessage, successMessage } from '../core/styled-messages';
 
 // Components
 import SuperDiagnosticMessage from '../utils/SuperDiagnosticMessage';
@@ -19,20 +20,22 @@ export default function Clean(): JSX.Element {
     [],
   );
 
+  const title = commandTitle('clean');
+
   return (
     <Box flexDirection="column" marginLeft={2}>
       <SuperDiagnosticMessage
         status={data.status}
-        pending="pridepack clean"
-        success="pridepack clean"
-        failure="pridepack clean"
+        pending={title}
+        success={title}
+        failure={title}
       />
       <Spacer />
       <Box flexDirection="column" marginLeft={2}>
         <SuperDiagnosticMessage
           status={data.status}
-          pending={`Cleaning output directory...`}
-          success={`Cleaned output directory.`}
+          pending={pendingMessage('Cleaning', 'output directory')}
+          success={successMessage('Cleaned', 'output directory')}
           failure={data.result ? data.result.message : undefined}
         />
       </Box>
