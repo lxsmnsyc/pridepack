@@ -1,6 +1,7 @@
 import { render } from 'ink';
 import React from 'react';
 import Build from './Build';
+import Check from './Check';
 import Clean from './Clean';
 import CreatePackage from './Init/CreatePackage'
 import InitPackage from './Init/InitPackage';
@@ -41,6 +42,9 @@ function Program(
   }
   if (command === 'clean') {
     return <Clean />;
+  }
+  if (command === 'check') {
+    return <Check />;
   }
   if (command === 'build') {
     return <Build />;
