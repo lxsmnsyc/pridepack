@@ -1,3 +1,4 @@
+import chalk from 'chalk';
 import React, { useEffect } from 'react';
 import { AsyncStatus } from './hooks/useAsyncMemo';
 import useConstant from './hooks/useConstant';
@@ -33,9 +34,9 @@ export default function Timer(
   return (
     <SuperDiagnosticMessage
       status={status}
-      pending={elapsed}
-      success={elapsed}
-      failure={elapsed}
+      pending={chalk.yellow(elapsed)}
+      success={chalk.green(elapsed)}
+      failure={chalk.red(elapsed)}
     />
   );
 }
