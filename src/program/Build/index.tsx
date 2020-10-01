@@ -1,5 +1,6 @@
 import { Box, Spacer } from 'ink';
 import React from 'react';
+import { commandTitle } from '../core/styled-messages';
 
 // Hooks
 import { LoadableEvent, useLoadableRace } from '../utils/hooks/useLoadableEvent';
@@ -7,16 +8,14 @@ import { LoadableEvent, useLoadableRace } from '../utils/hooks/useLoadableEvent'
 // Components
 import SuperDiagnosticMessage from '../utils/SuperDiagnosticMessage';
 import Timer from '../utils/Timer';
-import BuildDevelopment from './BuildDevelopment';
 import BuildEntry from './BuildEntry';
-import BuildESM from './BuildESM';
-import BuildProduction from './BuildProduction';
+import BuildOutput from './BuildOutput';
 import CompileTypes from './CompileTypes';
 
 export interface BuildProps extends LoadableEvent<void, undefined> {
 }
 
-const MAX_SUCCESS = 5;
+const MAX_SUCCESS = 3;
 
 export default function Build(
   props: BuildProps,
@@ -27,27 +26,19 @@ export default function Build(
     onFailure,
   } = useLoadableRace(props, MAX_SUCCESS, []);
 
+  const title = commandTitle('build');
+
   return (
     <Box flexDirection="column">
       <SuperDiagnosticMessage
         status={status}
-        pending="pridepack build"
-        success="pridepack build"
-        failure="pridepack build"
+        pending={title}
+        success={title}
+        failure={title}
       />
       <Spacer />
       <Box flexDirection="column" marginLeft={2}>
-        <BuildDevelopment
-          onFailure={onFailure}
-          onSuccess={onSuccess}
-        />
-        <Spacer />
-        <BuildProduction
-          onFailure={onFailure}
-          onSuccess={onSuccess}
-        />
-        <Spacer />
-        <BuildESM
+        <BuildOutput
           onFailure={onFailure}
           onSuccess={onSuccess}
         />

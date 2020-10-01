@@ -6,6 +6,7 @@ import useLoadableEvent, { LoadableEvent } from '../utils/hooks/useLoadableEvent
 
 // Core
 import buildEntry from '../core/build-entry';
+import { pendingMessage, successMessage } from '../core/styled-messages';
 
 // Components
 import SuperDiagnosticMessage from '../utils/SuperDiagnosticMessage';
@@ -26,8 +27,8 @@ export default function BuildEntry(
   return (
     <SuperDiagnosticMessage
       status={data.status}
-      pending="Building package entrypoint..."
-      success="Built package entrypoint."
+      pending={pendingMessage('Generating', 'package entrypoint')}
+      success={successMessage('Generated', 'package entrypoint')}
       failure={data.result ? data.result.message : undefined}
     />
   );
