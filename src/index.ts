@@ -24,8 +24,6 @@
  * SOFTWARE.
  */
 import yargs from 'yargs';
-import lint from './lint';
-import test from './test';
 import renderProgram from './program/Program';
 
 const { argv } = yargs
@@ -108,17 +106,12 @@ switch (argv._[0]) {
   case 'build':
   case 'check':
   case 'watch':
-    renderProgram(
-      argv._[0],
-      argv.template,
-      argv.name,
-    );
-    break;
   case 'test':
-    test(process.argv.slice(3));
-    break;
   case 'lint':
-    lint({
+    renderProgram({
+      command: argv._[0],
+      template: argv.template,
+      packageName: argv.name,
       fix: argv.fix,
       cache: argv.cache,
       files: argv.files as string[],

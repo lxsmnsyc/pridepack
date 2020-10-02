@@ -5,6 +5,8 @@ import Check from './Check';
 import Clean from './Clean';
 import CreatePackage from './Init/CreatePackage'
 import InitPackage from './Init/InitPackage';
+import Lint, { LintProps } from './Lint';
+import Test from './Test';
 import Watch from './Watch';
 
 export type ProgramCommand =
@@ -17,14 +19,21 @@ export type ProgramCommand =
   | 'check'
   | 'lint'
 
-export interface ProgramProps {
+export interface ProgramProps extends LintProps {
   command: ProgramCommand;
   template?: string;
   packageName?: string;
 }
 
 function Program(
-  { command, template, packageName }: ProgramProps,
+  {
+    command,
+    template,
+    packageName,
+    files,
+    fix,
+    cache,
+  }: ProgramProps,
 ) {
   if (command === 'create' && packageName) {
     return (
@@ -53,21 +62,19 @@ function Program(
   if (command === 'watch') {
     return <Watch />;
   }
+  if (command === 'test') {
+    return <Test />;
+  }
+  if (command === 'lint') {
+    return <Lint files={files} fix={fix} cache={cache} />;
+  }
 
   return <></>
 }
 
-export default function renderProgram(
-  command: ProgramCommand,
-  template?: string,
-  packageName?: string,
-) {
+export default function renderProgram(props: ProgramProps) {
   render((
-    <Program
-      command={command}
-      template={template}
-      packageName={packageName}
-    />
+    <Program {...props} />
   ), {
     patchConsole: true,
   });
