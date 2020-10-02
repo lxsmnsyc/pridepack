@@ -29,5 +29,11 @@ export function commandTitle(
 ): string {
   const base = `${chalk.magenta('pridepack')} ${chalk.magentaBright(command)}`;
 
-  return base + process.argv.slice(3).join(' ');
+  const args = process.argv.slice(3);
+
+  if (args.length > 0) {
+    return `${base} ${args.join(' ')}`;
+  }
+
+  return base;
 }
