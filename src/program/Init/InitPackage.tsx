@@ -26,7 +26,7 @@ export default function InitPackage(
     onFailure,
   } = useLoadableRace(props, MAX_SUCCESS, [template]);
 
-  const title = commandTitle('init', template);
+  const title = commandTitle('init');
 
   return (
     <Box flexDirection="column" marginLeft={2}>

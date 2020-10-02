@@ -27,7 +27,7 @@ export default function CreatePackage(
     onFailure,
   } = useLoadableRace(props, MAX_SUCCESS, [template]);
 
-  const title = commandTitle('create', packageName, template);
+  const title = commandTitle('create');
 
   return (
     <Box flexDirection="column" marginLeft={2}>
