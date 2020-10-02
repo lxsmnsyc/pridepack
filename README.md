@@ -12,8 +12,6 @@ npm install -g pridepack
 yarn global add pridepack
 ```
 
-### 🚧 WORK-IN-PROGRESS. 🚧
-
 ## Features
 
 - Extremely-fast package building: Using [ESBuild](https://github.com/evanw/esbuild), you can build your packages in just seconds.
