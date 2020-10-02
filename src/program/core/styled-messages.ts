@@ -25,15 +25,9 @@ export function successMessage(
 }
 
 export function commandTitle(
-  command: string,
-  ...options: string[]
+  command: string
 ): string {
   const base = `${chalk.magenta('pridepack')} ${chalk.magentaBright(command)}`;
 
-  return options.reduce(
-    (acc, value) => (
-      `${acc} ${chalk.cyan(value)}`
-    ),
-    base,
-  );
+  return base + process.argv.slice(3).join(' ');
 }
