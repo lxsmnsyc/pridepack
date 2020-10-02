@@ -64,6 +64,7 @@ export async function installDevDeps(template: string, cwd = '.'): Promise<void>
     await execa(cmd, getDevDepsArgs(cmd, allDeps), {
       cwd: path.resolve(path.join(process.cwd(), cwd)),
     });
+    await addPeers(template, cwd);
   }
 }
 
@@ -77,6 +78,5 @@ export async function installDeps(template: string, cwd = '.'): Promise<void> {
     await execa(cmd, getDepsArgs(cmd, dependencies), {
       cwd: path.resolve(path.join(process.cwd(), cwd)),
     });
-    await addPeers(template, cwd);
   }
 }
