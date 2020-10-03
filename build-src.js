@@ -12,4 +12,5 @@ esbuild.buildSync({
   platform: 'node',
   tsconfig: './tsconfig.json',
   external: Object.keys(packageJSON.dependencies),
+  target: "es2017",
 });
