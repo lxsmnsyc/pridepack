@@ -1,6 +1,6 @@
 {
   "name": "pridepack",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "CLI for building TypeScript packages",
   "main": "index.js",
   "author": "Alexis Munsayac <alexis.munsayac@gmail.com>",
@@ -19,32 +19,32 @@
     "build": "node build-src"
   },
   "dependencies": {
-    "@jest/types": "^26.3.0",
+    "@jest/types": "^26.5.2",
     "chalk": "^4.1.0",
     "dotenv": "^8.2.0",
     "esbuild": "^0.7.7",
-    "eslint": "^7.10.0",
+    "eslint": "^7.11.0",
     "execa": "^4.0.3",
     "fs-extra": "^9.0.1",
-    "ink": "^3.0.6",
+    "ink": "^3.0.7",
     "ink-spinner": "^4.0.1",
-    "jest": "^26.4.2",
+    "jest": "^26.5.3",
     "package-json-type": "^1.0.3",
     "react": "^16.13.1",
-    "ts-jest": "^26.4.0",
-    "tslib": "^2.0.1",
+    "ts-jest": "^26.4.1",
+    "tslib": "^2.0.3",
     "typescript": "^4.0.3",
     "yargs": "^16.0.3"
   },
   "devDependencies": {
     "@types/dotenv": "^8.2.0",
-    "@types/eslint": "^7.2.3",
-    "@types/fs-extra": "^9.0.1",
-    "@types/node": "^14.11.2",
-    "@types/react": "^16.9.49",
-    "@types/yargs": "^15.0.7",
-    "eslint": "^7.10.0",
-    "eslint-config-lxsmnsyc": "^0.1.18"
+    "@types/eslint": "^7.2.4",
+    "@types/fs-extra": "^9.0.2",
+    "@types/node": "^14.11.8",
+    "@types/react": "^16.9.52",
+    "@types/yargs": "^15.0.8",
+    "eslint": "^7.11.0",
+    "eslint-config-lxsmnsyc": "^0.1.19"
   },
   "publishConfig": {
     "access": "public"
