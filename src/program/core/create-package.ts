@@ -47,13 +47,21 @@ const BASE_PACKAGE: IPackageJson = {
     watch: 'pridepack watch',
   },
   license: 'MIT',
+  keywords: [
+    "pridepack"
+  ],
 };
 
 export default async function createPackage(name: string, target: string): Promise<void> {
+  const esmPath = `dist/${getSafePackageName(name)}.esm.js`;
   const packageInfo: IPackageJson = {
     ...BASE_PACKAGE,
     name,
-    module: `dist/${getSafePackageName(name)}.esm.js`,
+    module: esmPath,
+    exports: {
+      require: BASE_PACKAGE.main,
+      imports: esmPath,
+    },
   };
   const packagePath = path.resolve(path.join(process.cwd(), target, 'package.json'));
   await fs.outputFile(packagePath, JSON.stringify(packageInfo, null, 2));
