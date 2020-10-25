@@ -59,8 +59,8 @@ export default async function createPackage(name: string, target: string): Promi
     name,
     module: esmPath,
     exports: {
-      require: BASE_PACKAGE.main,
-      imports: esmPath,
+      require: `./${BASE_PACKAGE.main}`,
+      imports: `./${esmPath}`,
     },
   };
   const packagePath = path.resolve(path.join(process.cwd(), target, 'package.json'));
