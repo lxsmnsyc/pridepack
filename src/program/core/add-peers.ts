@@ -26,6 +26,7 @@ import { IDependencyMap } from 'package-json-type';
 import readPackage from './read-package';
 import getPackagePath from './get-package-path';
 import TEMPLATES from './templates';
+import { SCRIPTS } from './create-package';
 
 export default async function addPeers(template: string, cwd = '.'): Promise<void> {
   const packageInfo = await readPackage(cwd);
@@ -43,7 +44,10 @@ export default async function addPeers(template: string, cwd = '.'): Promise<voi
   const newInfo = {
     ...packageInfo,
     peerDependencies,
+    scripts: SCRIPTS,
   };
 
-  await fs.outputFile(getPackagePath(cwd), JSON.stringify(newInfo, null, 2));
+  await fs.outputJson(getPackagePath(cwd), newInfo, {
+    spaces: 2,
+  });
 }

@@ -26,6 +26,16 @@ import fs from 'fs-extra';
 import { IPackageJson } from 'package-json-type';
 import getSafePackageName from './get-safe-package-name';
 
+export const SCRIPTS = {
+  prepublish: 'pridepack build',
+  build: 'pridepack build',
+  'type-check': 'pridepack check',
+  lint: 'pridepack lint',
+  test: 'pridepack test --passWithNoTests',
+  clean: 'pridepack clean',
+  watch: 'pridepack watch',
+};
+
 const BASE_PACKAGE: IPackageJson = {
   version: '0.0.0',
   main: 'dist/index.js',
@@ -36,15 +46,6 @@ const BASE_PACKAGE: IPackageJson = {
   ],
   engines: {
     node: '>=10',
-  },
-  scripts: {
-    prepublish: 'pridepack build',
-    build: 'pridepack build',
-    'type-check': 'pridepack check',
-    lint: 'pridepack lint',
-    test: 'pridepack test --passWithNoTests',
-    clean: 'pridepack clean',
-    watch: 'pridepack watch',
   },
   license: 'MIT',
   keywords: [
@@ -64,5 +65,7 @@ export default async function createPackage(name: string, target: string): Promi
     },
   };
   const packagePath = path.resolve(path.join(process.cwd(), target, 'package.json'));
-  await fs.outputFile(packagePath, JSON.stringify(packageInfo, null, 2));
+  await fs.outputJSON(packagePath, packageInfo, {
+    spaces: 2,
+  });
 }
