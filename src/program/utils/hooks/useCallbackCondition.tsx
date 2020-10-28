@@ -25,11 +25,23 @@
  * @author Alexis Munsayac <alexis.munsayac@gmail.com>
  * @copyright Alexis Munsayac 2020
  */
-import { useReducer } from 'react';
+import { useRef } from 'react';
+import { defaultCompare, MemoCompare } from './useFreshLazyRef';
 
-/**
- * Force render a component manually
- */
-export default function useForceUpdate(): () => void {
-  return useReducer(() => ({}), () => ({}))[1];
+type AnyCallback = (...args: any[]) => any;
+
+export default function useCallbackCondition<T extends AnyCallback, R>(
+  supplier: T,
+  dependency: R,
+  shouldUpdate: MemoCompare<R> = defaultCompare,
+): T {
+  const value = useRef(supplier);
+  const prevDeps = useRef(dependency);
+
+  if (shouldUpdate(prevDeps.current, dependency)) {
+    value.current = supplier;
+    prevDeps.current = dependency;
+  }
+
+  return value.current;
 }

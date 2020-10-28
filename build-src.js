@@ -7,7 +7,7 @@ esbuild.buildSync({
   ],
   outfile: './bin/index.js',
   bundle: true,
-  minify: true,
+  minify: false,
   sourcemap: false,
   platform: 'node',
   tsconfig: './tsconfig.json',

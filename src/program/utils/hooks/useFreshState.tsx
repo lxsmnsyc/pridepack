@@ -25,15 +25,10 @@
  * @author Alexis Munsayac <alexis.munsayac@gmail.com>
  * @copyright Alexis Munsayac 2020
  */
-import {
-  DependencyList,
-  MutableRefObject,
-  useCallback,
-  useMemo,
-  useRef,
-  useEffect,
-} from 'react';
+import { useEffect, useRef } from 'react';
+import useConstantCallback from './useConstantCallback';
 import useForceUpdate from './useForceUpdate';
+import useFreshLazyRef, { defaultCompare, MemoCompare } from './useFreshLazyRef';
 
 export type RefreshStateInitialAction<T> = () => T;
 export type RefreshStateInitial<T> = T | RefreshStateInitialAction<T>;
@@ -54,18 +49,20 @@ function isRefreshStateAction<T>(
   return typeof state === 'function';
 }
 
-export default function useFreshState<T>(
+export default function useFreshState<T, R>(
   initialState: RefreshStateInitial<T>,
-  dependencies: DependencyList,
+  dependencies: R,
+  shouldUpdate: MemoCompare<R> = defaultCompare,
 ): [T, RefreshStateDispatch<T>] {
-  const stateRef = useMemo<MutableRefObject<T>>(() => ({
-    current: (
+  const stateRef = useFreshLazyRef<T, R>(
+    () => (
       isRefreshStateInitialAction(initialState)
         ? initialState()
         : initialState
     ),
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }), dependencies);
+    dependencies,
+    shouldUpdate,
+  );
 
   const forceUpdate = useForceUpdate();
 
@@ -78,21 +75,23 @@ export default function useFreshState<T>(
     };
   }, []);
 
-  const setState: RefreshStateDispatch<T> = useCallback((action) => {
-    if (alive.current) {
-      const { current } = stateRef;
-      const newState = (
-        isRefreshStateAction(action)
-          ? action(current)
-          : action
-      );
+  const setState: RefreshStateDispatch<T> = useConstantCallback(
+    (action) => {
+      if (alive.current) {
+        const { current } = stateRef;
+        const newState = (
+          isRefreshStateAction(action)
+            ? action(current)
+            : action
+        );
 
-      if (!Object.is(current, newState)) {
-        stateRef.current = newState;
-        forceUpdate();
+        if (!Object.is(current, newState)) {
+          stateRef.current = newState;
+          forceUpdate();
+        }
       }
-    }
-  }, [forceUpdate, stateRef]);
+    },
+  );
 
   return [stateRef.current, setState];
 }

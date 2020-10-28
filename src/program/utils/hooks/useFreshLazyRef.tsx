@@ -25,11 +25,39 @@
  * @author Alexis Munsayac <alexis.munsayac@gmail.com>
  * @copyright Alexis Munsayac 2020
  */
-import { useReducer } from 'react';
+import { DependencyList, MutableRefObject, useRef } from 'react';
+import useLazyRef from './useLazyRef';
 
-/**
- * Force render a component manually
- */
-export default function useForceUpdate(): () => void {
-  return useReducer(() => ({}), () => ({}))[1];
+export function defaultCompare<R>(a: R, b: R): boolean {
+  return !Object.is(a, b);
+}
+
+export function defaultCompareList(a: DependencyList, b: DependencyList): boolean {
+  if (a.length !== b.length) {
+    return true;
+  }
+  for (let i = 0; i < a.length; i += 1) {
+    if (a[i] !== b[i]) {
+      return true;
+    }
+  }
+  return false;
+}
+
+export type MemoCompare<R> = (a: R, b: R) => boolean;
+
+export default function useFreshLazyRef<T, R>(
+  supplier: () => T,
+  dependency: R,
+  shouldUpdate: MemoCompare<R> = defaultCompare,
+): MutableRefObject<T> {
+  const value = useLazyRef(supplier);
+  const prevDeps = useRef(dependency);
+
+  if (shouldUpdate(prevDeps.current, dependency)) {
+    value.current = supplier();
+    prevDeps.current = dependency;
+  }
+
+  return value;
 }

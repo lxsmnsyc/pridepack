@@ -25,11 +25,16 @@
  * @author Alexis Munsayac <alexis.munsayac@gmail.com>
  * @copyright Alexis Munsayac 2020
  */
-import { useReducer } from 'react';
+import useFreshLazyRef, { defaultCompare, MemoCompare } from './useFreshLazyRef';
 
-/**
- * Force render a component manually
- */
-export default function useForceUpdate(): () => void {
-  return useReducer(() => ({}), () => ({}))[1];
+export default function useMemoCondition<T, R>(
+  supplier: () => T,
+  dependency: R,
+  shouldUpdate: MemoCompare<R> = defaultCompare,
+): T {
+  return useFreshLazyRef(
+    supplier,
+    dependency,
+    shouldUpdate,
+  ).current;
 }

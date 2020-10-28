@@ -1,7 +1,10 @@
-import { DependencyList, useCallback, useEffect, useMemo } from 'react';
+import { DependencyList, useEffect } from 'react';
 
 import { AsyncMemo } from './useAsyncMemo';
+import useCallbackCondition from './useCallbackCondition';
+import { defaultCompareList } from './useFreshLazyRef';
 import useFreshState from './useFreshState';
+import useMemoCondition from './useMemoCondition';
 
 export interface LoadableEvent<T, E> {
   onPending?: () => void;
@@ -63,32 +66,35 @@ export function useLoadableRace(
   const [success, setSuccess] = useFreshState(
     () => 0,
     dependency,
+    defaultCompareList,
   );
   const [hasError, setHasError] = useFreshState(
     () => false,
     dependency,
+    defaultCompareList,
   );
 
-  const onSuccess = useCallback(() => {
+  const onSuccess = useCallbackCondition(() => {
     setSuccess((current) => {
       if (current < maxSuccess) {
         return current + 1;
       }
       return current;
     });
-  }, [maxSuccess, setSuccess]);
+  }, [maxSuccess, setSuccess], defaultCompareList);
 
-  const onFailure = useCallback(() => {
+  const onFailure = useCallbackCondition(() => {
     setHasError(true);
-  }, [setHasError]);
+  }, setHasError);
 
-  const loadable = useMemo(
+  const loadable = useMemoCondition(
     () => convertToLoadable(
       success,
       hasError,
       maxSuccess,
     ),
     [success, hasError, maxSuccess],
+    defaultCompareList,
   );
 
   useLoadableEvent(props, loadable);

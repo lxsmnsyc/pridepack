@@ -1,4 +1,6 @@
-import { DependencyList, useCallback, useEffect, useState } from 'react';
+import { DependencyList, useEffect, useState } from 'react';
+import useCallbackCondition from './useCallbackCondition';
+import { defaultCompareList } from './useFreshLazyRef';
 import useMountedState from './useMountedState';
 
 export interface AsyncSuccess<T> {
@@ -30,7 +32,7 @@ export default function useAsyncMemo<T, E>(
  
   const isMounted = useMountedState();
 
-  const memoizedEffect = useCallback(effect, dependencies);
+  const memoizedEffect = useCallbackCondition(effect, dependencies, defaultCompareList);
 
   useEffect(() => {
     setState({

@@ -25,20 +25,8 @@
  * @author Alexis Munsayac <alexis.munsayac@gmail.com>
  * @copyright Alexis Munsayac 2020
  */
-import { useRef } from 'react';
-
-interface Value<T> {
-  value: T;
-}
+import useLazyRef from './useLazyRef';
 
 export default function useConstant<T>(supplier: () => T): T {
-  const ref = useRef<Value<T> | null>();
-
-  if (!ref.current) {
-    ref.current = {
-      value: supplier(),
-    };
-  }
-
-  return ref.current.value;
+  return useLazyRef(supplier).current;
 }

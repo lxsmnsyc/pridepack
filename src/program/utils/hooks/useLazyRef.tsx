@@ -25,11 +25,16 @@
  * @author Alexis Munsayac <alexis.munsayac@gmail.com>
  * @copyright Alexis Munsayac 2020
  */
-import { useReducer } from 'react';
+import { MutableRefObject, useRef } from 'react';
 
-/**
- * Force render a component manually
- */
-export default function useForceUpdate(): () => void {
-  return useReducer(() => ({}), () => ({}))[1];
+export default function useLazyRef<T>(supplier: () => T): MutableRefObject<T> {
+  const ref = useRef<MutableRefObject<T> | null>();
+
+  if (!ref.current) {
+    ref.current = {
+      current: supplier(),
+    };
+  }
+
+  return ref.current;
 }
