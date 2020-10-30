@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 import path from 'path';
-import esbuild, { BuildResult } from 'esbuild';
+import { build, BuildResult } from 'esbuild';
 import { PRODUCTION_ENV } from './read-env-defs';
 import readConfigWithCWD from './read-config-with-cwd';
 import getPackageName from './get-package-name';
@@ -42,7 +42,7 @@ export default async function buildProduction(): Promise<BuildResult> {
     `${packageName}.${OUTPUT_SUFFIX}.js`,
   ));
   // run esbuild
-  return esbuild.build({
+  return build({
     entryPoints: [
       configCWD.srcFile,
     ],

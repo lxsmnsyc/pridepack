@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 import path from 'path';
-import esbuild, { BuildResult } from 'esbuild';
+import { build, BuildResult } from 'esbuild';
 import { DEVELOPMENT_ENV } from './read-env-defs';
 import getPackageName from './get-package-name';
 import readConfig from './read-config';
@@ -42,13 +42,14 @@ export default async function buildESM(): Promise<BuildResult> {
     `${packageName}.${OUTPUT_SUFFIX}.js`,
   ));
   // run esbuild
-  return esbuild.build({
+  return build({
     entryPoints: [
       configCWD.srcFile,
     ],
     outfile,
     bundle: true,
     minify: false,
+    platform: 'node',
     format: 'esm',
     sourcemap: true,
     define: {
