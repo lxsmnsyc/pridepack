@@ -1,6 +1,6 @@
 {
   "name": "pridepack",
-  "version": "0.3.6",
+  "version": "0.3.7",
   "description": "CLI for building TypeScript packages",
   "main": "index.js",
   "author": "Alexis Munsayac <alexis.munsayac@gmail.com>",
@@ -44,7 +44,7 @@
     "@types/node": "^14.14.8",
     "@types/react": "^16.9.56",
     "@types/yargs": "^15.0.10",
-    "eslint": "^7.12.1",
+    "eslint": "^7.13.0",
     "eslint-config-lxsmnsyc": "^0.1.19"
   },
   "publishConfig": {
