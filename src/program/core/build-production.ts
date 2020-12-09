@@ -61,5 +61,7 @@ export default async function buildProduction(): Promise<BuildResult> {
     jsxFactory: config.jsxFactory,
     jsxFragment: config.jsxFragment,
     logLevel: 'silent',
+    banner: "'use strict';",
+    charset: 'utf8',
   });
 }

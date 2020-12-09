@@ -61,5 +61,6 @@ export default async function buildESM(): Promise<BuildResult> {
     jsxFactory: config.jsxFactory,
     jsxFragment: config.jsxFragment,
     logLevel: 'silent',
+    charset: 'utf8',
   });
 }
