@@ -21,10 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
+export type PeerDependency = string | [string, string];
+
 export interface Template {
   name: string;
   dependencies: string[];
-  peerDependencies: string[];
+  peerDependencies: PeerDependency[];
   devDependencies: string[];
 }
 
@@ -57,8 +60,8 @@ const TEMPLATES: Templates = {
     dependencies: [
     ],
     peerDependencies: [
-      'react',
-      'react-dom',
+      ['react', '^16.8.0 || ^17.0.0'],
+      ['react-dom', '^16.8.0 || ^17.0.0'],
     ],
     devDependencies: [
       ...baseDevDependencies,
@@ -74,7 +77,7 @@ const TEMPLATES: Templates = {
     dependencies: [
     ],
     peerDependencies: [
-      'preact',
+      ['preact', '^10.0.0'],
     ],
     devDependencies: [
       ...baseDevDependencies,
