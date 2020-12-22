@@ -64,7 +64,7 @@ export default function GenerateTemplate(
         <GenerateFileFromTemplate
           template={template}
           directory={directory}
-          sourceFile=".pridepackrc"
+          sourceFile="pridepack.json"
           onSuccess={onSuccess}
           onFailure={onFailure}
         />
