@@ -1,15 +1,14 @@
-import supertest from 'supertest';
-import SERVER from '../src/server;
+import SERVER from '../src/server';
 import '../src/routes';
 
-
-
 describe('Example', () => {
-  it('should have the expected content', (done) => {
-    supertest(SERVER)
-      .get('/user')
-      .set('Accept', 'application/json')
-      .expect('Content-Type', /json/)
-      .expect(200, done);
+  it('should have the expected content', async () => {
+    const response = await SERVER
+      .inject()
+      .get('/')
+      .headers({
+        'Accept': 'application/json',
+      });
+    expect(response.statusCode).toBe(200);
   });
 });
