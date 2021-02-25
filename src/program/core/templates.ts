@@ -86,6 +86,18 @@ const TEMPLATES: Templates = {
       '@testing-library/preact-hooks',
     ],
   },
+  fastify: {
+    name: 'fastify',
+    dependencies: [
+      'fastify',
+    ],
+    peerDependencies: [],
+    devDependencies: [
+      ...baseDevDependencies,
+      'supertest',
+      '@types/supertest',
+    ],
+  },
 };
 
 export default TEMPLATES;
