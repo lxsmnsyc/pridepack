@@ -64,7 +64,7 @@ export async function installDevDeps(template: string, cwd = '.'): Promise<void>
     ...devDependencies,
   ];
 
-  if (allDeps.length > 1) {
+  if (allDeps.length > 0) {
     await execa(cmd, getDevDepsArgs(cmd, allDeps), {
       cwd: path.resolve(path.join(process.cwd(), cwd)),
     });
@@ -78,7 +78,8 @@ export async function installDeps(template: string, cwd = '.'): Promise<void> {
   const { dependencies } = TEMPLATES[template];
 
   // Run
-  if (dependencies.length > 1) {
+  console.log(dependencies);
+  if (dependencies.length > 0) {
     await execa(cmd, getDepsArgs(cmd, dependencies), {
       cwd: path.resolve(path.join(process.cwd(), cwd)),
     });
