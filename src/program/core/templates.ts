@@ -94,8 +94,6 @@ const TEMPLATES: Templates = {
     peerDependencies: [],
     devDependencies: [
       ...baseDevDependencies,
-      'supertest',
-      '@types/supertest',
     ],
   },
 };
