@@ -11,14 +11,13 @@ import { pendingMessage, successMessage } from '../core/styled-messages';
 // Components
 import SuperDiagnosticMessage from '../utils/SuperDiagnosticMessage';
 import InstallDependencies from './InstallDependencies';
-import InstallDevDependencies from './InstallDevDependencies';
 
 export interface ManageDependenciesProps extends LoadableEvent<void, undefined> {
   template: string;
   packageName?: string;
 }
 
-const MAX_SUCCESS = 2;
+const MAX_SUCCESS = 1;
 
 export default function ManageDependencies(
   { template, packageName, ...props }: ManageDependenciesProps,
@@ -43,13 +42,6 @@ export default function ManageDependencies(
       <Spacer />
       <Box flexDirection="column" marginLeft={2}>
         <InstallDependencies
-          template={template}
-          directory={directory}
-          onSuccess={onSuccess}
-          onFailure={onFailure}
-        />
-        <Spacer />
-        <InstallDevDependencies
           template={template}
           directory={directory}
           onSuccess={onSuccess}

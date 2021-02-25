@@ -50,9 +50,21 @@ function getDevDepsArgs(cmd: CMD, packages: string[]): string[] {
   }
 }
 
-export async function installDevDeps(template: string, cwd = '.'): Promise<void> {
-  await sleep(250);
+export async function installDeps(template: string, cwd = '.'): Promise<void> {
+  await sleep(100);
   const cmd = await getCMD();
+
+  const { dependencies } = TEMPLATES[template];
+
+  // Run
+  if (dependencies.length > 0) {
+    console.log('Installing dependencies');
+    await execa(cmd, getDepsArgs(cmd, dependencies), {
+      cwd: path.resolve(path.join(process.cwd(), cwd)),
+    });
+  }
+
+  await sleep(100);
   const { devDependencies, peerDependencies } = TEMPLATES[template];
   // Merge dev and peer
   const allDeps = [
@@ -64,23 +76,8 @@ export async function installDevDeps(template: string, cwd = '.'): Promise<void>
     ...devDependencies,
   ];
 
-  if (allDeps.length > 0) {
-    await execa(cmd, getDevDepsArgs(cmd, allDeps), {
-      cwd: path.resolve(path.join(process.cwd(), cwd)),
-    });
-    await addPeers(template, cwd);
-  }
-}
-
-export async function installDeps(template: string, cwd = '.'): Promise<void> {
-  await sleep(250);
-  const cmd = await getCMD();
-  const { dependencies } = TEMPLATES[template];
-
-  // Run
-  if (dependencies.length > 0) {
-    await execa(cmd, getDepsArgs(cmd, dependencies), {
-      cwd: path.resolve(path.join(process.cwd(), cwd)),
-    });
-  }
+  await execa(cmd, getDevDepsArgs(cmd, allDeps), {
+    cwd: path.resolve(path.join(process.cwd(), cwd)),
+  });
+  await addPeers(template, cwd);
 }
