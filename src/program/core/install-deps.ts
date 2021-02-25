@@ -78,7 +78,6 @@ export async function installDeps(template: string, cwd = '.'): Promise<void> {
   const { dependencies } = TEMPLATES[template];
 
   // Run
-  console.log(dependencies);
   if (dependencies.length > 0) {
     await execa(cmd, getDepsArgs(cmd, dependencies), {
       cwd: path.resolve(path.join(process.cwd(), cwd)),
