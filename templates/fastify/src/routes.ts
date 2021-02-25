@@ -1,5 +1,5 @@
 import SERVER from './server';
 
-SERVER.get('/', () => ({
-  message: 'Hello World',
-}));
+SERVER.get('/', async (_, reply) => {
+  reply.send({ hello: 'world' })
+});
