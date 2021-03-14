@@ -55,10 +55,7 @@ export default function readConfig(): PridepackConfig {
   
       CONFIG = {
         ...customConfig,
-        srcDir: customConfig.srcDir || DEFAULT_CONFIG.srcDir,
         srcFile: customConfig.srcFile || DEFAULT_CONFIG.srcFile,
-        outDir: customConfig.outDir || DEFAULT_CONFIG.outDir,
-        outFile: customConfig.outFile || DEFAULT_CONFIG.outFile,
         tsconfig: customConfig.tsconfig || DEFAULT_CONFIG.tsconfig,
         target: customConfig.target || DEFAULT_CONFIG.target,
       };
