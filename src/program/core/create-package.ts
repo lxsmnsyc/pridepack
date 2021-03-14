@@ -24,7 +24,8 @@
 import path from 'path';
 import fs from 'fs-extra';
 import { IPackageJson } from 'package-json-type';
-import getSafePackageName from './get-safe-package-name';
+import { DEFAULT_ESM_ENTRY } from './build-esm';
+import { DEFAULT_CJS_ENTRY } from './build-cjs';
 
 export const SCRIPTS = {
   prepublish: 'pridepack clean && pridepack build',
@@ -36,10 +37,15 @@ export const SCRIPTS = {
   watch: 'pridepack watch',
 };
 
-const BASE_PACKAGE: IPackageJson = {
+export const BASE_PACKAGE: IPackageJson = {
   version: '0.0.0',
-  main: 'dist/index.js',
-  types: 'dist/index.d.ts',
+  types: 'dist/types/index.d.ts',
+  main: DEFAULT_CJS_ENTRY,
+  module: DEFAULT_ESM_ENTRY,
+  exports: {
+    require: `./${DEFAULT_CJS_ENTRY}`,
+    import: `./${DEFAULT_ESM_ENTRY}`,
+  },
   files: [
     'dist',
     'src',
@@ -54,15 +60,9 @@ const BASE_PACKAGE: IPackageJson = {
 };
 
 export default async function createPackage(name: string, target: string): Promise<void> {
-  const esmPath = `dist/${getSafePackageName(name)}.esm.js`;
   const packageInfo: IPackageJson = {
     ...BASE_PACKAGE,
     name,
-    module: esmPath,
-    exports: {
-      require: `./${BASE_PACKAGE.main}`,
-      import: `./${esmPath}`,
-    },
   };
   const packagePath = path.resolve(path.join(process.cwd(), target, 'package.json'));
   await fs.outputJSON(packagePath, packageInfo, {
