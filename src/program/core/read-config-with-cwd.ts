@@ -36,10 +36,7 @@ export default function readConfigWithCWD(): PridepackBaseConfig {
   const config = readConfig();
 
   CONFIG_WITH_CWD = {
-    srcDir: path.resolve(path.join(cwd, config.srcDir)),
-    srcFile: path.resolve(path.join(cwd, config.srcDir, config.srcFile)),
-    outDir: path.resolve(path.join(cwd, config.outDir)),
-    outFile: path.resolve(path.join(cwd, config.outDir, config.outFile)),
+    srcFile: path.resolve(path.join(cwd, config.srcFile)),
     tsconfig: path.resolve(path.join(cwd, config.tsconfig)),
   };
 
