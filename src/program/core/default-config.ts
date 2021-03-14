@@ -24,10 +24,7 @@
 import { InitialOptions } from '@jest/types/build/Config';
 
 export interface PridepackBaseConfig {
-  srcDir: string;
   srcFile: string;
-  outDir: string;
-  outFile: string;
   tsconfig: string;
 }
 
@@ -39,10 +36,7 @@ export interface PridepackConfig extends PridepackBaseConfig {
 }
 
 const DEFAULT_CONFIG: PridepackConfig = {
-  srcDir: 'src',
-  srcFile: 'index.ts',
-  outDir: 'dist',
-  outFile: 'index.js',
+  srcFile: 'src/index.ts',
   target: 'esnext',
   tsconfig: 'tsconfig.json',
 };
