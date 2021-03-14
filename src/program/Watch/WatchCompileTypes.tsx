@@ -45,22 +45,39 @@ export default function WatchCompileTypes(
   useEffect(() => {
     let collectDiagnostics = false;
 
-    return watchCompileTypes(
+    let mounted = true;
+
+    let unregister: () => void;
+
+    watchCompileTypes(
       (diagnostic) => {
-        setDiagnostics((current) => [...current, diagnostic]);
+        if (mounted) {
+          setDiagnostics((current) => [...current, diagnostic]);
+        }
       },
       (diagnostic) => {
-        collectDiagnostics = !collectDiagnostics;
-
-        if (collectDiagnostics) {
-          setDiagnostics([]);
+        if (mounted) {
+          collectDiagnostics = !collectDiagnostics;
+  
+          if (collectDiagnostics) {
+            setDiagnostics([]);
+          }
+  
+          setWatchStatus(diagnostic);
+          remount();
         }
-
-        setWatchStatus(diagnostic);
-        remount();
       },
       noEmit,
-    );
+    ).then((cleanup) => {
+      if (mounted) {
+        unregister = cleanup;
+      }
+    });
+
+    return () => {
+      mounted = false;
+      unregister?.();
+    };
   }, [remount, noEmit]);
 
   return (
