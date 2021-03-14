@@ -27,7 +27,7 @@ import { IPackageJson } from 'package-json-type';
 import getSafePackageName from './get-safe-package-name';
 
 export const SCRIPTS = {
-  prepublish: 'pridepack build',
+  prepublish: 'pridepack clean && pridepack build',
   build: 'pridepack build',
   'type-check': 'pridepack check',
   lint: 'pridepack lint',
