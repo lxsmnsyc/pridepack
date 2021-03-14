@@ -25,21 +25,21 @@ import path from 'path';
 import { build, BuildResult } from 'esbuild';
 import { PRODUCTION_ENV } from './read-env-defs';
 import readConfigWithCWD from './read-config-with-cwd';
-import getPackageName from './get-package-name';
 import readExternals from './read-externals';
 import readConfig from './read-config';
+import { getCJSTargetDirectory, DEFAULT_CJS_PRODUCTION_ENTRY } from './build-cjs';
 
 export const OUTPUT_SUFFIX = 'production.min';
 
 export default async function buildProduction(): Promise<BuildResult> {
-  const packageName = await getPackageName();
   const config = readConfig();
   const configCWD = readConfigWithCWD();
   const externals = await readExternals();
   // get outfile
   const outfile = path.resolve(path.join(
-    configCWD.outDir,
-    `${packageName}.${OUTPUT_SUFFIX}.js`,
+    process.cwd(),
+    getCJSTargetDirectory(),
+    DEFAULT_CJS_PRODUCTION_ENTRY,
   ));
   // run esbuild
   return build({
@@ -61,7 +61,9 @@ export default async function buildProduction(): Promise<BuildResult> {
     jsxFactory: config.jsxFactory,
     jsxFragment: config.jsxFragment,
     logLevel: 'silent',
-    banner: '"use strict";',
+    banner: {
+      js: '"use strict";'
+    },
     charset: 'utf8',
   });
 }
