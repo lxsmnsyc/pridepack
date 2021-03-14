@@ -22,25 +22,52 @@
  * SOFTWARE.
  */
 import path from 'path';
+import { legacy, resolve } from 'resolve.exports';
 import { build, BuildResult } from 'esbuild';
 import { DEVELOPMENT_ENV } from './read-env-defs';
-import getPackageName from './get-package-name';
 import readConfig from './read-config';
 import readConfigWithCWD from './read-config-with-cwd';
 import readExternals from './read-externals';
+import readPackage from './read-package';
 
-export const OUTPUT_SUFFIX = 'esm';
+export const DEFAULT_ESM_ENTRY = 'dist/esm/index.js';
+
+function resolveESM() {
+  const pkg = readPackage();
+
+  // Resolve through Export map
+  let result: string | void;
+  try {
+    result = resolve(pkg, '.') ?? undefined;
+  } catch (err) {
+    result = undefined;
+  }
+
+  // If there is a definition, return it.
+  if (result) {
+    return result;
+  }
+
+  // Otherwise, fallback to legacy.
+  const legacyResult = legacy(pkg, {
+    browser: false,
+    fields: ['module'],
+  });
+
+  if (legacyResult) {
+    return legacyResult;
+  }
+
+  return DEFAULT_ESM_ENTRY;
+}
 
 export default async function buildESM(): Promise<BuildResult> {
-  const packageName = await getPackageName();
   const config = readConfig();
   const configCWD = readConfigWithCWD();
   const externals = await readExternals();
   // get outfile
-  const outfile = path.resolve(path.join(
-    configCWD.outDir,
-    `${packageName}.${OUTPUT_SUFFIX}.js`,
-  ));
+  const esmFile = resolveESM();
+  const outfile = path.resolve(esmFile);
   // run esbuild
   return build({
     entryPoints: [
