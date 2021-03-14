@@ -21,47 +21,40 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-import React from 'react';
+import path from 'path';
+import fs from 'fs-extra';
+import { getCJSTargetDirectory } from './build-cjs';
+import { getESMTargetDirectory } from './build-esm';
+import readPackage from './read-package';
+import { BASE_PACKAGE } from './create-package';
 
-// Hooks
-import useAsyncMemo from '../utils/hooks/useAsyncMemo';
-
-// Core
-import { commandTitle, pendingMessage, successMessage } from '../core/styled-messages';
-
-// Components
-import SuperDiagnosticMessage from '../utils/SuperDiagnosticMessage';
-import { Box, Spacer } from 'ink';
-import Timer from '../utils/Timer';
-import clean from '../core/clean';
-
-
-export default function Clean(): JSX.Element {
-  const data = useAsyncMemo<void, Error>(
-    clean,
-    [],
+export default async function clean() {
+  // Remove CJS directory
+  await fs.remove(
+    path.resolve(
+      path.join(
+        process.cwd(),
+        getCJSTargetDirectory(),
+      ),
+    ),
   );
-
-  const title = commandTitle('clean');
-
-  return (
-    <Box flexDirection="column" marginLeft={2}>
-      <SuperDiagnosticMessage
-        status={data.status}
-        pending={title}
-        success={title}
-        failure={title}
-      />
-      <Spacer />
-      <Box flexDirection="column" marginLeft={2}>
-        <SuperDiagnosticMessage
-          status={data.status}
-          pending={pendingMessage('Cleaning', 'output directory')}
-          success={successMessage('Cleaned', 'output directory')}
-          failure={data.result ? data.result.message : undefined}
-        />
-      </Box>
-      <Timer status={data.status} />
-    </Box>
+  // Remove ESM directory
+  await fs.remove(
+    path.resolve(
+      path.join(
+        process.cwd(),
+        getESMTargetDirectory(),
+      ),
+    ),
+  );
+  const pkg = await readPackage();
+  // Remove Types directory
+  await fs.remove(
+    path.resolve(
+      path.join(
+        process.cwd(),
+        path.dirname(pkg.types ?? BASE_PACKAGE.types ?? '')
+      ),
+    ),
   );
 }
