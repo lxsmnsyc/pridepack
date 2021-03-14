@@ -21,6 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+import path from 'path';
 import fs from 'fs-extra';
 import {
   CompilerOptions,
@@ -30,7 +31,9 @@ import {
   getPreEmitDiagnostics,
 } from 'typescript';
 import readConfigWithCWD from './read-config-with-cwd';
+import readPackage from './read-package';
 import readValidCompilerOptions from './read-valid-compiler-options';
+import { BASE_PACKAGE } from './create-package';
 
 interface OutputFile {
   name: string;
@@ -38,11 +41,16 @@ interface OutputFile {
 }
 
 export default async function compileTypes(noEmit = true): Promise<Diagnostic[]> {
-  const config = readConfigWithCWD();
+  const pkg = await readPackage();
 
   const baseConfig: CompilerOptions = {
     ...readValidCompilerOptions(),
-    outDir: config.outDir,
+    outDir: path.resolve(
+      path.join(
+        process.cwd(),
+        path.dirname(pkg.types ?? BASE_PACKAGE.types ?? ''),
+      ),
+    ),
     emitDeclarationOnly: !noEmit,
     moduleResolution: 2,
     noEmit,
