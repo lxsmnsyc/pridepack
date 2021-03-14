@@ -41,7 +41,7 @@ interface OutputFile {
 }
 
 export default async function compileTypes(noEmit = true): Promise<Diagnostic[]> {
-  const pkg = await readPackage();
+  const pkg = readPackage();
 
   const baseConfig: CompilerOptions = {
     ...readValidCompilerOptions(),

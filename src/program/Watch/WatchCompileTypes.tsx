@@ -44,12 +44,9 @@ export default function WatchCompileTypes(
 
   useEffect(() => {
     let collectDiagnostics = false;
-
     let mounted = true;
 
-    let unregister: () => void;
-
-    watchCompileTypes(
+    const unregister = watchCompileTypes(
       (diagnostic) => {
         if (mounted) {
           setDiagnostics((current) => [...current, diagnostic]);
@@ -68,15 +65,11 @@ export default function WatchCompileTypes(
         }
       },
       noEmit,
-    ).then((cleanup) => {
-      if (mounted) {
-        unregister = cleanup;
-      }
-    });
+    );
 
     return () => {
       mounted = false;
-      unregister?.();
+      unregister();
     };
   }, [remount, noEmit]);
 

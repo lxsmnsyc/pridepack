@@ -39,12 +39,12 @@ import readValidCompilerOptions from './read-valid-compiler-options';
 export type EndCompile = () => void;
 export type ReadDiagnostic = (diagnostic: Diagnostic) => void;
 
-export default async function watchCompileTypes(
+export default function watchCompileTypes(
   reportDiagnostic: ReadDiagnostic,
   reportWatchStatus: ReadDiagnostic,
   noEmit?: boolean,
 ) {
-  const pkg = await readPackage();
+  const pkg = readPackage();
 
   const baseConfig: CompilerOptions = {
     ...readValidCompilerOptions(),

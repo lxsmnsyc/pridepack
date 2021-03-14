@@ -47,7 +47,7 @@ export default async function clean() {
       ),
     ),
   );
-  const pkg = await readPackage();
+  const pkg = readPackage();
   // Remove Types directory
   await fs.remove(
     path.resolve(

@@ -32,7 +32,7 @@ import { DEFAULT_CJS_DEVELOPMENT_ENTRY, getCJSTargetDirectory } from './build-cj
 export default async function buildDevelopment(): Promise<BuildResult> {
   const config = readConfig();
   const configCWD = readConfigWithCWD();
-  const externals = await readExternals();
+  const externals = readExternals();
   // get outfile
   const outfile = path.resolve(path.join(
     process.cwd(),

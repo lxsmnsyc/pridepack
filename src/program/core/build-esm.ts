@@ -70,7 +70,7 @@ export function getESMTargetDirectory() {
 export default async function buildESM(): Promise<BuildResult> {
   const config = readConfig();
   const configCWD = readConfigWithCWD();
-  const externals = await readExternals();
+  const externals = readExternals();
   // get outfile
   const esmFile = resolveESM();
   const outfile = path.resolve(esmFile);

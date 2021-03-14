@@ -34,7 +34,7 @@ export const OUTPUT_SUFFIX = 'production.min';
 export default async function buildProduction(): Promise<BuildResult> {
   const config = readConfig();
   const configCWD = readConfigWithCWD();
-  const externals = await readExternals();
+  const externals = readExternals();
   // get outfile
   const outfile = path.resolve(path.join(
     process.cwd(),
