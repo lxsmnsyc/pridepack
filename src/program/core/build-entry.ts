@@ -21,23 +21,33 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+import path from 'path';
 import fs from 'fs-extra';
-import { OUTPUT_SUFFIX as DEV_SUFFIX } from './build-development';
-import { OUTPUT_SUFFIX as PROD_SUFFIX } from './build-production';
-import getPackageName from './get-package-name';
-import readConfigWithCWD from './read-config-with-cwd';
+import {
+  DEFAULT_CJS_DEVELOPMENT_ENTRY,
+  DEFAULT_CJS_PRODUCTION_ENTRY,
+  resolveEntry,
+} from './build-cjs';
+
 
 export default async function buildEntry(): Promise<void> {
-  const packageName = await getPackageName();
-  const baseLine = `module.exports = require('./${packageName}`;
   const contents = `
 'use strict';
 if (process.env.NODE_ENV === 'production') {
-  ${baseLine}.${PROD_SUFFIX}.js')
+  module.exports = require('./${DEFAULT_CJS_PRODUCTION_ENTRY}');
 } else {
-  ${baseLine}.${DEV_SUFFIX}.js')
+  module.exports = require('./${DEFAULT_CJS_DEVELOPMENT_ENTRY}');
 }
   `;
 
-  await fs.outputFile(readConfigWithCWD().outFile, contents);
+  const entryPath = resolveEntry();
+
+  const resolvedEntry = path.resolve(
+    path.join(
+      process.cwd(),
+      entryPath,
+    ),
+  );
+
+  await fs.outputFile(resolvedEntry, contents);
 }
