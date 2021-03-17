@@ -22,9 +22,11 @@
  * SOFTWARE.
  */
 import { DependencyList, useEffect, useState } from 'react';
-import useCallbackCondition from './useCallbackCondition';
-import { defaultCompareList } from './useFreshLazyRef';
-import useMountedState from './useMountedState';
+import {
+  useCallbackCondition,
+  useMountedState,
+} from '@lyonph/react-hooks';
+import defaultCompareList from '../default-compare-list';
 
 export interface AsyncSuccess<T> {
   status: 'success';

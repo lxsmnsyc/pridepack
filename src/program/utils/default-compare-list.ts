@@ -21,11 +21,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-import { useReducer } from 'react';
+import { DependencyList } from 'react';
 
-/**
- * Force render a component manually
- */
-export default function useForceUpdate(): () => void {
-  return useReducer(() => ({}), () => ({}))[1];
+export default function defaultCompareList(a: DependencyList, b: DependencyList): boolean {
+  if (a.length !== b.length) {
+    return true;
+  }
+  for (let i = 0; i < a.length; i += 1) {
+    if (a[i] !== b[i]) {
+      return true;
+    }
+  }
+  return false;
 }

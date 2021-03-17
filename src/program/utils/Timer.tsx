@@ -23,9 +23,11 @@
  */
 import chalk from 'chalk';
 import React, { useEffect } from 'react';
+import {
+  useConstant,
+  useForceUpdate,
+} from '@lyonph/react-hooks';
 import { AsyncStatus } from './hooks/useAsyncMemo';
-import useConstant from './hooks/useConstant';
-import useForceUpdate from './hooks/useForceUpdate';
 import SuperDiagnosticMessage from './SuperDiagnosticMessage';
 
 interface TimerProps {

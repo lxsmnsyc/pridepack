@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 import { useState } from 'react';
-import useConstantCallback from './useConstantCallback';
+import { useConstantCallback } from '@lyonph/react-hooks';
 
 export type RemountKey = 'versionA' | 'versionB';
 export type Remount = () => void;

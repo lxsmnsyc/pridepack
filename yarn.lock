@@ -512,6 +512,11 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
+"@lyonph/react-hooks@^0.2.3":
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/@lyonph/react-hooks/-/react-hooks-0.2.3.tgz#f8ca46f170e0b65d3b15169c177e19bb68af56c6"
+  integrity sha512-RnmYuHeNjGaGBafzxcw0htD8VrzbZh5z/xzQEVicQHE7o1E2bg4h7UbdVNQG0PL/HnMcVxpc1vmtQXnajPmkbA==
+
 "@mdn/browser-compat-data@^2.0.7":
   version "2.0.7"
   resolved "https://registry.yarnpkg.com/@mdn/browser-compat-data/-/browser-compat-data-2.0.7.tgz#72ec37b9c1e00ce0b4e0309d753be18e2da12ee3"
