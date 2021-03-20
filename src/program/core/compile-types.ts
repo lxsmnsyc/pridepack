@@ -2,7 +2,7 @@
  * @license
  * MIT License
  *
- * Copyright (c) 2020 Lyon Software Technologies, Inc.
+ * Copyright (c) 2021 Lyon Software Technologies, Inc.
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
@@ -21,6 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+import path from 'path';
 import fs from 'fs-extra';
 import {
   CompilerOptions,
@@ -30,7 +31,9 @@ import {
   getPreEmitDiagnostics,
 } from 'typescript';
 import readConfigWithCWD from './read-config-with-cwd';
+import readPackage from './read-package';
 import readValidCompilerOptions from './read-valid-compiler-options';
+import { BASE_PACKAGE } from './create-package';
 
 interface OutputFile {
   name: string;
@@ -38,11 +41,16 @@ interface OutputFile {
 }
 
 export default async function compileTypes(noEmit = true): Promise<Diagnostic[]> {
-  const config = readConfigWithCWD();
+  const pkg = readPackage();
 
   const baseConfig: CompilerOptions = {
     ...readValidCompilerOptions(),
-    outDir: config.outDir,
+    outDir: path.resolve(
+      path.join(
+        process.cwd(),
+        path.dirname(pkg.types ?? BASE_PACKAGE.types ?? ''),
+      ),
+    ),
     emitDeclarationOnly: !noEmit,
     moduleResolution: 2,
     noEmit,

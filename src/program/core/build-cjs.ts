@@ -2,7 +2,7 @@
  * @license
  * MIT License
  *
- * Copyright (c) 2020 Alexis Munsayac
+ * Copyright (c) 2021 Lyon Software Technologies, Inc.
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
@@ -20,44 +20,50 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- *
- *
- * @author Alexis Munsayac <alexis.munsayac@gmail.com>
- * @copyright Alexis Munsayac 2020
  */
-import { DependencyList, MutableRefObject, useRef } from 'react';
-import useLazyRef from './useLazyRef';
+import path from 'path';
+import { legacy, resolve } from 'resolve.exports';
+import readPackage from './read-package';
 
-export function defaultCompare<R>(a: R, b: R): boolean {
-  return !Object.is(a, b);
+export const DEFAULT_OUTPUT = 'dist/cjs';
+export const DEFAULT_CJS_ENTRY_FILE = 'index.js';
+export const DEFAULT_CJS_ENTRY = `${DEFAULT_OUTPUT}/${DEFAULT_CJS_ENTRY_FILE}`;
+export const DEFAULT_CJS_PRODUCTION_ENTRY = 'production/index.js';
+export const DEFAULT_CJS_DEVELOPMENT_ENTRY = 'development/index.js';
+
+export function resolveEntry() {
+  const pkg = readPackage();
+
+  // Resolve through Export map
+  let result: string | void;
+  try {
+    result = resolve(pkg, '.', {
+      require: true,
+    }) ?? undefined;
+  } catch (err) {
+    result = undefined;
+  }
+
+  // If there is a definition, return it.
+  if (result) {
+    return result;
+  }
+
+  // Otherwise, fallback to legacy.
+  const legacyResult = legacy(pkg, {
+    browser: false,
+    fields: ['main'],
+  });
+
+  if (legacyResult) {
+    return legacyResult;
+  }
+
+  return DEFAULT_CJS_ENTRY;
 }
 
-export function defaultCompareList(a: DependencyList, b: DependencyList): boolean {
-  if (a.length !== b.length) {
-    return true;
-  }
-  for (let i = 0; i < a.length; i += 1) {
-    if (a[i] !== b[i]) {
-      return true;
-    }
-  }
-  return false;
-}
+export function getCJSTargetDirectory() {
+  const targetPath = resolveEntry();
 
-export type MemoCompare<R> = (a: R, b: R) => boolean;
-
-export default function useFreshLazyRef<T, R>(
-  supplier: () => T,
-  dependency: R,
-  shouldUpdate: MemoCompare<R> = defaultCompare,
-): MutableRefObject<T> {
-  const value = useLazyRef(supplier);
-  const prevDeps = useRef(dependency);
-
-  if (shouldUpdate(prevDeps.current, dependency)) {
-    value.current = supplier();
-    prevDeps.current = dependency;
-  }
-
-  return value;
+  return path.dirname(targetPath);
 }

@@ -2,7 +2,7 @@
  * @license
  * MIT License
  *
- * Copyright (c) 2020 Lyon Software Technologies, Inc.
+ * Copyright (c) 2021 Lyon Software Technologies, Inc.
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
@@ -29,7 +29,7 @@ import TEMPLATES from './templates';
 import { SCRIPTS } from './create-package';
 
 export default async function addPeers(template: string, cwd = '.'): Promise<void> {
-  const packageInfo = await readPackage(cwd);
+  const packageInfo = readPackage(cwd);
   const peerDependencies: IDependencyMap = {};
 
   if (packageInfo.devDependencies) {

@@ -24,6 +24,7 @@ Pridepack currently ships with the following templates:
 - `basic`: Basic Typescript package setup.
 - `react`: React + Typescript package setup, includes `@testing-library/react` and `@testing-library/react-hooks`.
 - `preact`: Preact + Typescript package setup, includes `@testing-library/preact` and `@testing-library/preact-hooks`
+- `fastify`: Fastify package setup
 
 ## Usage
 
@@ -33,7 +34,7 @@ Initializes current working directory with the selected template. Package name i
 
 ### `pridepack create <name> [template]`
 
-Creates a new project directory from the given template. `<name>` is any valid NPM package name. Project directory's name is derived from the supplied package name. 
+Creates a new project directory from the given template. `<name>` is any valid NPM package name. Project directory's name is derived from the supplied package name.
 
 ### `pridepack clean`
 
@@ -72,19 +73,23 @@ Currently, JS config files are not yet supported.
 
 ### Fields
 
-- `srcDir`: path of the source directory. Defaults to `src`.
 - `srcFile`: path of the entry source file. Defaults to `index.ts` (relative to `srcDir).
-- `outDir`: path of the output directory. Defaults to `dist`.
-- `outFile`: path of the entry output file (used for `package.json`'s `main` field). Defaults to `index.js`.
 - `target`: ECMAScript version target. Defaults to `esnext`.
 - `tsconfig`: path of Typescript config file. Defaults to `tsconfig.json`.
 - `jsxFactory`: JSX pragma.
 - `jsxFragment`: JSX Fragment expression pragma.
 - `jest`: Jest config.
 
+### Exports Map
+
+Build files are automatically inferred from exports map. `pridepack` prioritizes the `"exports"` field for resolving target CJS and ESM builds. If the `"exports"` field isn't defined, it will use the `"module"` and `"main"` field, respectively.
+
+For types, the output file is inferred from the `"types"` field.
+
 ## Soon
 
 - Code-splitting (requires ESBuild)
+- Conditional exports for user-defined paths.
 
 ## License
 

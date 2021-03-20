@@ -2,7 +2,7 @@
  * @license
  * MIT License
  *
- * Copyright (c) 2020 Lyon Software Technologies, Inc.
+ * Copyright (c) 2021 Lyon Software Technologies, Inc.
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
@@ -36,10 +36,7 @@ export default function readConfigWithCWD(): PridepackBaseConfig {
   const config = readConfig();
 
   CONFIG_WITH_CWD = {
-    srcDir: path.resolve(path.join(cwd, config.srcDir)),
-    srcFile: path.resolve(path.join(cwd, config.srcDir, config.srcFile)),
-    outDir: path.resolve(path.join(cwd, config.outDir)),
-    outFile: path.resolve(path.join(cwd, config.outDir, config.outFile)),
+    srcFile: path.resolve(path.join(cwd, config.srcFile)),
     tsconfig: path.resolve(path.join(cwd, config.tsconfig)),
   };
 

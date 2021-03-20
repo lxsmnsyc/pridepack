@@ -2,7 +2,7 @@
  * @license
  * MIT License
  *
- * Copyright (c) 2020 Lyon Software Technologies, Inc.
+ * Copyright (c) 2021 Lyon Software Technologies, Inc.
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
@@ -25,6 +25,6 @@ import fs from 'fs-extra';
 import { IPackageJson } from 'package-json-type';
 import getPackagePath from './get-package-path';
 
-export default async function readPackage(cwd = '.'): Promise<IPackageJson> {
-  return (await fs.readJson(getPackagePath(cwd))) as IPackageJson;
+export default function readPackage(cwd = '.'): IPackageJson {
+  return fs.readJsonSync(getPackagePath(cwd));
 }
