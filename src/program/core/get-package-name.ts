@@ -2,7 +2,7 @@
  * @license
  * MIT License
  *
- * Copyright (c) 2020 Lyon Software Technologies, Inc.
+ * Copyright (c) 2021 Lyon Software Technologies, Inc.
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
@@ -24,8 +24,8 @@
 import readPackage from './read-package';
 import getSafePackageName from './get-safe-package-name';
 
-export default async function getPackageName(): Promise<string> {
-  const { name } = await readPackage();
+export default function getPackageName(): string {
+  const { name } = readPackage();
   if (!name) {
     throw new Error('Missing package name in package.json.');
   }

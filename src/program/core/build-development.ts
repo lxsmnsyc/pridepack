@@ -2,7 +2,7 @@
  * @license
  * MIT License
  *
- * Copyright (c) 2020 Lyon Software Technologies, Inc.
+ * Copyright (c) 2021 Lyon Software Technologies, Inc.
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
@@ -24,22 +24,20 @@
 import path from 'path';
 import { build, BuildResult } from 'esbuild';
 import { DEVELOPMENT_ENV } from './read-env-defs';
-import getPackageName from './get-package-name';
 import readConfig from './read-config';
 import readConfigWithCWD from './read-config-with-cwd';
 import readExternals from './read-externals';
-
-export const OUTPUT_SUFFIX = 'development';
+import { DEFAULT_CJS_DEVELOPMENT_ENTRY, getCJSTargetDirectory } from './build-cjs';
 
 export default async function buildDevelopment(): Promise<BuildResult> {
-  const packageName = await getPackageName();
   const config = readConfig();
   const configCWD = readConfigWithCWD();
-  const externals = await readExternals();
+  const externals = readExternals();
   // get outfile
   const outfile = path.resolve(path.join(
-    configCWD.outDir,
-    `${packageName}.${OUTPUT_SUFFIX}.js`,
+    process.cwd(),
+    getCJSTargetDirectory(),
+    DEFAULT_CJS_DEVELOPMENT_ENTRY,
   ));
   // run esbuild
   return build({
@@ -61,7 +59,9 @@ export default async function buildDevelopment(): Promise<BuildResult> {
     jsxFactory: config.jsxFactory,
     jsxFragment: config.jsxFragment,
     logLevel: 'silent',
-    banner: '"use strict";',
+    banner: {
+      js: '"use strict";'
+    },
     charset: 'utf8',
   });
 }

@@ -2,7 +2,7 @@
  * @license
  * MIT License
  *
- * Copyright (c) 2020 Lyon Software Technologies, Inc.
+ * Copyright (c) 2021 Lyon Software Technologies, Inc.
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
@@ -22,25 +22,58 @@
  * SOFTWARE.
  */
 import path from 'path';
+import { legacy, resolve } from 'resolve.exports';
 import { build, BuildResult } from 'esbuild';
 import { DEVELOPMENT_ENV } from './read-env-defs';
-import getPackageName from './get-package-name';
 import readConfig from './read-config';
 import readConfigWithCWD from './read-config-with-cwd';
 import readExternals from './read-externals';
+import readPackage from './read-package';
 
-export const OUTPUT_SUFFIX = 'esm';
+export const DEFAULT_ESM_ENTRY = 'dist/esm/index.js';
+
+export function resolveESM() {
+  const pkg = readPackage();
+
+  // Resolve through Export map
+  let result: string | void;
+  try {
+    result = resolve(pkg, '.') ?? undefined;
+  } catch (err) {
+    result = undefined;
+  }
+
+  // If there is a definition, return it.
+  if (result) {
+    return result;
+  }
+
+  // Otherwise, fallback to legacy.
+  const legacyResult = legacy(pkg, {
+    browser: false,
+    fields: ['module'],
+  });
+
+  if (legacyResult) {
+    return legacyResult;
+  }
+
+  return DEFAULT_ESM_ENTRY;
+}
+
+export function getESMTargetDirectory() {
+  const targetPath = resolveESM();
+
+  return path.dirname(targetPath);
+}
 
 export default async function buildESM(): Promise<BuildResult> {
-  const packageName = await getPackageName();
   const config = readConfig();
   const configCWD = readConfigWithCWD();
-  const externals = await readExternals();
+  const externals = readExternals();
   // get outfile
-  const outfile = path.resolve(path.join(
-    configCWD.outDir,
-    `${packageName}.${OUTPUT_SUFFIX}.js`,
-  ));
+  const esmFile = resolveESM();
+  const outfile = path.resolve(esmFile);
   // run esbuild
   return build({
     entryPoints: [
