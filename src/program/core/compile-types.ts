@@ -41,10 +41,12 @@ interface OutputFile {
 }
 
 export default async function compileTypes(noEmit = true): Promise<Diagnostic[]> {
-  const pkg = readPackage();
+  const pkg = await readPackage();
+
+  const options = await readValidCompilerOptions();
 
   const baseConfig: CompilerOptions = {
-    ...readValidCompilerOptions(),
+    ...options,
     outDir: path.resolve(
       path.join(
         process.cwd(),
@@ -69,8 +71,9 @@ export default async function compileTypes(noEmit = true): Promise<Diagnostic[]>
   };
 
   // Prepare and emit the d.ts files
+  const configCWD = await readConfigWithCWD();
   const program = createProgram(
-    [readConfigWithCWD().srcFile],
+    [configCWD.srcFile],
     baseConfig,
     host,
   );

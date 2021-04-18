@@ -35,7 +35,7 @@ import { pendingMessage, successMessage } from '../core/styled-messages';
 
 // Components
 import SuperDiagnosticMessage from '../utils/SuperDiagnosticMessage';
-import BuildResultDiagnostics from './BuildResultDiagnostics';
+import BuildDiagnostics from './BuildDiagnostics';
 
 export interface BuildESMProps extends LoadableEvent<BuildResult, BuildFailure> {
 }
@@ -57,26 +57,9 @@ export default function BuildESM(
         pending={pendingMessage('Generating', 'ESM build')}
         success={successMessage('Generated', 'ESM build')}
       />
-      {
-        data.status === 'success' && (
-          <BuildResultDiagnostics
-            messages={data.result.warnings}
-            isWarning
-          />
-        )
-      }
-      {
-        data.status === 'failure' && (
-          <>
-            <BuildResultDiagnostics
-              messages={data.result.errors}
-            />
-            <BuildResultDiagnostics
-              messages={data.result.warnings}
-            />
-          </>
-        )
-      }
+      <BuildDiagnostics 
+        data={data}
+      />
     </Box>
   );
 }

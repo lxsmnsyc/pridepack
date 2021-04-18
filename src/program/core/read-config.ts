@@ -22,9 +22,10 @@
  * SOFTWARE.
  */
 import path from 'path';
-import fs from 'fs';
+import fs from 'fs-extra';
 import DEFAULT_CONFIG, { PridepackConfig } from './default-config';
 import { loadJS } from './load-js';
+import { isFile } from './stat';
 
 export const CONFIG_NAMES = [
   '.pridepackrc',
@@ -43,7 +44,7 @@ export const CONFIG_JS = [
 
 let CONFIG: PridepackConfig;
 
-export default function readConfig(): PridepackConfig {
+export default async function readConfig(): Promise<PridepackConfig> {
   if (CONFIG) {
     return CONFIG;
   }
@@ -54,12 +55,9 @@ export default function readConfig(): PridepackConfig {
     const filepath = path.resolve(path.join(cwd, CONFIG_NAMES[i]));
   
     // Check if config exists
-    if (fs.existsSync(filepath)) {
+    if (await isFile(filepath)) {
       // Read config
-      const result = fs.readFileSync(filepath);
-  
-      // Parse config to object
-      const customConfig = JSON.parse(result.toString()) as Partial<PridepackConfig>;
+      const customConfig = await fs.readJson(filepath) as Partial<PridepackConfig>;
   
       CONFIG = {
         ...customConfig,
@@ -74,8 +72,8 @@ export default function readConfig(): PridepackConfig {
 
   for (let i = 0; i < CONFIG_JS.length; i += 1) {
     const filepath = path.resolve(path.join(cwd, CONFIG_JS[i]));
-
-    if (fs.existsSync(filepath)) {
+  
+    if (await isFile(filepath)) {
       const customConfig: Partial<PridepackConfig> = loadJS(filepath);
 
       CONFIG = {

@@ -25,6 +25,6 @@ import fs from 'fs-extra';
 import { IPackageJson } from 'package-json-type';
 import getPackagePath from './get-package-path';
 
-export default function readPackage(cwd = '.'): IPackageJson {
-  return fs.readJsonSync(getPackagePath(cwd));
+export default function readPackage(cwd = '.'): Promise<IPackageJson> {
+  return fs.readJson(getPackagePath(cwd));
 }

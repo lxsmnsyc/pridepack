@@ -29,7 +29,7 @@ import TEMPLATES from './templates';
 import { SCRIPTS } from './create-package';
 
 export default async function addPeers(template: string, cwd = '.'): Promise<void> {
-  const packageInfo = readPackage(cwd);
+  const packageInfo = await readPackage(cwd);
   const peerDependencies: IDependencyMap = {};
 
   if (packageInfo.devDependencies) {

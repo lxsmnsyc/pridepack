@@ -30,11 +30,11 @@ const DEFAULT_JEST_CONFIG: InitialOptions = {
   testEnvironment: 'node',
 };
 
-export default function runJest(args: string[]): Promise<void> {
+export default async function runJest(args: string[]): Promise<void> {
   // Swap environments
   process.env.NODE_ENV = 'test';
   // Read config
-  const config = readConfig();
+  const config = await readConfig();
   // Merge config
   const currentConfig = {
     ...DEFAULT_JEST_CONFIG,

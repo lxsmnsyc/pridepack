@@ -30,13 +30,13 @@ import readExternals from './read-externals';
 import { DEFAULT_CJS_DEVELOPMENT_ENTRY, getCJSTargetDirectory } from './build-cjs';
 
 export default async function buildDevelopment(): Promise<BuildResult> {
-  const config = readConfig();
-  const configCWD = readConfigWithCWD();
-  const externals = readExternals();
+  const config = await readConfig();
+  const configCWD = await readConfigWithCWD();
+  const externals = await readExternals();
   // get outfile
   const outfile = path.resolve(path.join(
     process.cwd(),
-    getCJSTargetDirectory(),
+    await getCJSTargetDirectory(),
     DEFAULT_CJS_DEVELOPMENT_ENTRY,
   ));
   // run esbuild

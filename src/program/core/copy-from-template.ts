@@ -23,6 +23,7 @@
  */
 import path from 'path';
 import fs from 'fs-extra';
+import { isDirectory, isFile } from './stat';
 
 const TRANSFORMS = [
   {
@@ -42,8 +43,7 @@ export default async function copyFromTemplate(
     template,
   );
 
-  const stat = await fs.stat(source);
-  if (stat.isDirectory()) {
+  if (await isDirectory(source)) {
     const target = path.resolve(
       process.cwd(),
       directory,
@@ -57,9 +57,7 @@ export default async function copyFromTemplate(
         TRANSFORMS[i].from,
       );
 
-      const fileStat = await fs.stat(file);
-
-      if (fileStat.isFile()) {
+      if (await isFile(file)) {
         const newName = path.resolve(
           process.cwd(),
           directory,

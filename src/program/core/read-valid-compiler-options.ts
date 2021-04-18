@@ -24,9 +24,10 @@
 import { CompilerOptions, convertCompilerOptionsFromJson } from 'typescript';
 import readTSConfig from './read-tsconfig';
 
-export default function readValidCompilerOptions(): CompilerOptions {
+export default async function readValidCompilerOptions(): Promise<CompilerOptions> {
+  const config = await readTSConfig();
   return convertCompilerOptionsFromJson(
-    readTSConfig().compilerOptions,
+    config.compilerOptions,
     process.cwd(),
   ).options;
 }

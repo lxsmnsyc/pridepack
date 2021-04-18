@@ -32,13 +32,13 @@ import { getCJSTargetDirectory, DEFAULT_CJS_PRODUCTION_ENTRY } from './build-cjs
 export const OUTPUT_SUFFIX = 'production.min';
 
 export default async function buildProduction(): Promise<BuildResult> {
-  const config = readConfig();
-  const configCWD = readConfigWithCWD();
-  const externals = readExternals();
+  const config = await readConfig();
+  const configCWD = await readConfigWithCWD();
+  const externals = await readExternals();
   // get outfile
   const outfile = path.resolve(path.join(
     process.cwd(),
-    getCJSTargetDirectory(),
+    await getCJSTargetDirectory(),
     DEFAULT_CJS_PRODUCTION_ENTRY,
   ));
   // run esbuild

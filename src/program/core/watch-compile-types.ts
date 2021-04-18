@@ -29,6 +29,7 @@ import {
   createWatchProgram,
   Diagnostic,
   sys,
+  WatchOfConfigFile,
 } from 'typescript';
 
 import { BASE_PACKAGE } from './create-package';
@@ -44,37 +45,60 @@ export default function watchCompileTypes(
   reportWatchStatus: ReadDiagnostic,
   noEmit?: boolean,
 ) {
-  const pkg = readPackage();
+  let ready = true;
 
-  const baseConfig: CompilerOptions = {
-    ...readValidCompilerOptions(),
-    outDir: path.resolve(
-      path.join(
-        process.cwd(),
-        path.dirname(pkg.types ?? BASE_PACKAGE.types ?? ''),
+  let program: WatchOfConfigFile<any>;
+
+  async function setup() {
+    const pkg = await readPackage();
+
+    if (!ready) {
+      return;
+    }
+
+    const options = await readValidCompilerOptions();
+
+    const baseConfig: CompilerOptions = {
+      ...options,
+      outDir: path.resolve(
+        path.join(
+          process.cwd(),
+          path.dirname(pkg.types ?? BASE_PACKAGE.types ?? ''),
+        ),
       ),
-    ),
-    emitDeclarationOnly: !noEmit,
-    moduleResolution: 2,
-    noEmit,
-  };
+      emitDeclarationOnly: !noEmit,
+      moduleResolution: 2,
+      noEmit,
+    };
 
-  // Create a Program with an in-memory emit
-  const host = createWatchCompilerHost(
-    readConfigWithCWD().tsconfig,
-    baseConfig,
-    sys,
-    createSemanticDiagnosticsBuilderProgram,
-    reportDiagnostic,
-    reportWatchStatus,
-  );
+    // Create a Program with an in-memory emit
+    const cwdConfig = await readConfigWithCWD();
 
-  // Prepare and emit the d.ts files
-  const program = createWatchProgram(
-    host,
-  );
+    if (!ready) {
+      return;
+    }
+
+    const host = createWatchCompilerHost(
+      cwdConfig.tsconfig,
+      baseConfig,
+      sys,
+      createSemanticDiagnosticsBuilderProgram,
+      reportDiagnostic,
+      reportWatchStatus,
+    );
+
+    // Prepare and emit the d.ts files
+    program = createWatchProgram(
+      host,
+    );
+  }
+
+  setup();
 
   return () => {
-    program.close();
+    ready = false;
+    if (program) {
+      program.close();
+    }
   };
 }

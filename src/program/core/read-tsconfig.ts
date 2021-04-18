@@ -39,17 +39,19 @@ export interface TsConfig {
 
 let TSCONFIG: Partial<TsConfig>;
 
-export function getTSConfigPath(): string {
-  return path.resolve(path.join(process.cwd(), readConfig().tsconfig));
+export async function getTSConfigPath(): Promise<string> {
+  const config = await readConfig();
+  return path.resolve(path.join(process.cwd(), config.tsconfig));
 }
 
-export default function readTSConfig(): Partial<TsConfig> {
+export default async function readTSConfig(): Promise<Partial<TsConfig>> {
   if (TSCONFIG) {
     return TSCONFIG;
   }
   
   // Read config
-  TSCONFIG = fs.readJsonSync(getTSConfigPath()) as Partial<TsConfig>;
+  const tsconfig = await getTSConfigPath();
+  TSCONFIG = await fs.readJson(tsconfig) as Partial<TsConfig>;
 
   return TSCONFIG;
 }

@@ -87,6 +87,20 @@ const TEMPLATES: Templates = {
       '@testing-library/preact-hooks',
     ],
   },
+  vue: {
+    name: 'vue',
+    dependencies: [
+    ],
+    peerDependencies: [
+      ['vue', '^2.6.0'],
+    ],
+    devDependencies: [
+      ...baseDevDependencies,
+      '@testing-library/vue',
+      '@testing-library/jest-dom',
+      'esbuild-vue',
+    ],
+  },
   fastify: {
     name: 'fastify',
     dependencies: [

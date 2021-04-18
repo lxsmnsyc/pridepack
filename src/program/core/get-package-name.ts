@@ -24,8 +24,8 @@
 import readPackage from './read-package';
 import getSafePackageName from './get-safe-package-name';
 
-export default function getPackageName(): string {
-  const { name } = readPackage();
+export default async function getPackageName(): Promise<string> {
+  const { name } = await readPackage();
   if (!name) {
     throw new Error('Missing package name in package.json.');
   }

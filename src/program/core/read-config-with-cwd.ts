@@ -27,13 +27,13 @@ import readConfig from './read-config';
 
 let CONFIG_WITH_CWD: PridepackBaseConfig;
 
-export default function readConfigWithCWD(): PridepackBaseConfig {
+export default async function readConfigWithCWD(): Promise<PridepackBaseConfig> {
   if (CONFIG_WITH_CWD) {
     return CONFIG_WITH_CWD;
   }
 
   const cwd = process.cwd();
-  const config = readConfig();
+  const config = await readConfig();
 
   CONFIG_WITH_CWD = {
     srcFile: path.resolve(path.join(cwd, config.srcFile)),

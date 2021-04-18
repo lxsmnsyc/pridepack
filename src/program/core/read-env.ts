@@ -24,6 +24,7 @@
 import path from 'path';
 import fs from 'fs-extra';
 import dotenv from 'dotenv';
+import { isFile } from './stat';
 
 const ENV = '.env';
 const ENV_PRODUCTION = '.env.production';
@@ -36,12 +37,12 @@ export default async function readEnv(
 
   if (isProduction) {
     const productionPath = path.resolve(path.join(cwd, ENV_PRODUCTION));
-    if (await fs.pathExists(productionPath)) {
+    if (await isFile(productionPath)) {
       return dotenv.parse(await fs.readFile(productionPath));
     }
   } else {
     const developmentPath = path.resolve(path.join(cwd, ENV_DEVELOPMENT));
-    if (await fs.pathExists(developmentPath)) {
+    if (await isFile(developmentPath)) {
       return dotenv.parse(await fs.readFile(developmentPath));
     }
   }

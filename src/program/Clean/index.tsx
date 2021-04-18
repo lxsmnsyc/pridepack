@@ -37,10 +37,7 @@ import clean from '../core/clean';
 
 
 export default function Clean(): JSX.Element {
-  const data = useAsyncMemo<void, Error>(
-    clean,
-    [],
-  );
+  const data = useAsyncMemo<void, Error>(clean, []);
 
   const title = commandTitle('clean');
 

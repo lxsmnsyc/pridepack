@@ -34,7 +34,7 @@ export default async function clean() {
     path.resolve(
       path.join(
         process.cwd(),
-        getCJSTargetDirectory(),
+        await getCJSTargetDirectory(),
       ),
     ),
   );
@@ -43,11 +43,11 @@ export default async function clean() {
     path.resolve(
       path.join(
         process.cwd(),
-        getESMTargetDirectory(),
+        await getESMTargetDirectory(),
       ),
     ),
   );
-  const pkg = readPackage();
+  const pkg = await readPackage();
   // Remove Types directory
   await fs.remove(
     path.resolve(

@@ -26,7 +26,7 @@ import readPackage from './read-package';
 
 let EXTERNALS: string[];
 
-export default function readExternals(): string[] {
+export default async function readExternals(): Promise<string[]> {
   if (EXTERNALS) {
     return EXTERNALS;
   }
@@ -36,7 +36,7 @@ export default function readExternals(): string[] {
     devDependencies,
     peerDependencies,
     optionalDependencies,
-  } = readPackage();
+  } = await readPackage();
 
   const external = new Set<string>();
 

@@ -32,8 +32,8 @@ import readPackage from './read-package';
 
 export const DEFAULT_ESM_ENTRY = 'dist/esm/index.js';
 
-export function resolveESM() {
-  const pkg = readPackage();
+export async function resolveESM() {
+  const pkg = await readPackage();
 
   // Resolve through Export map
   let result: string | void;
@@ -61,18 +61,18 @@ export function resolveESM() {
   return DEFAULT_ESM_ENTRY;
 }
 
-export function getESMTargetDirectory() {
-  const targetPath = resolveESM();
+export async function getESMTargetDirectory() {
+  const targetPath = await resolveESM();
 
   return path.dirname(targetPath);
 }
 
 export default async function buildESM(): Promise<BuildResult> {
-  const config = readConfig();
-  const configCWD = readConfigWithCWD();
-  const externals = readExternals();
+  const config = await readConfig();
+  const configCWD = await readConfigWithCWD();
+  const externals = await readExternals();
   // get outfile
-  const esmFile = resolveESM();
+  const esmFile = await resolveESM();
   const outfile = path.resolve(esmFile);
   // run esbuild
   return build({

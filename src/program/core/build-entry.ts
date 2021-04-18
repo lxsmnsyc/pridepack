@@ -40,7 +40,7 @@ if (process.env.NODE_ENV === 'production') {
 }
   `;
 
-  const entryPath = resolveEntry();
+  const entryPath = await resolveEntry();
 
   const resolvedEntry = path.resolve(
     path.join(

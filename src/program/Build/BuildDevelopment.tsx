@@ -35,7 +35,7 @@ import { pendingMessage, successMessage } from '../core/styled-messages';
 
 // Components
 import SuperDiagnosticMessage from '../utils/SuperDiagnosticMessage';
-import BuildResultDiagnostics from './BuildResultDiagnostics';
+import BuildDiagnostics from './BuildDiagnostics';
 
 export interface BuildDevelopmentProps extends LoadableEvent<BuildResult, BuildFailure> {
 }
@@ -57,26 +57,9 @@ export default function BuildDevelopment(
         pending={pendingMessage('Generating', 'CommonJS development build')}
         success={successMessage('Generated', 'CommonJS development build')}
       />
-      {
-        data.status === 'success' && (
-          <BuildResultDiagnostics
-            messages={data.result.warnings}
-            isWarning
-          />
-        )
-      }
-      {
-        data.status === 'failure' && (
-          <>
-            <BuildResultDiagnostics
-              messages={data.result.errors}
-            />
-            <BuildResultDiagnostics
-              messages={data.result.warnings}
-            />
-          </>
-        )
-      }
+      <BuildDiagnostics 
+        data={data}
+      />
     </Box>
   );
 }

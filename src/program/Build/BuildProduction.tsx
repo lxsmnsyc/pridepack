@@ -34,8 +34,8 @@ import buildProduction from '../core/build-production';
 
 // Components
 import SuperDiagnosticMessage from '../utils/SuperDiagnosticMessage';
-import BuildResultDiagnostics from './BuildResultDiagnostics';
 import { pendingMessage } from '../core/styled-messages';
+import BuildDiagnostics from './BuildDiagnostics';
 
 export interface BuildProductionProps extends LoadableEvent<BuildResult, BuildFailure> {
 }
@@ -57,26 +57,9 @@ export default function BuildProduction(
         pending={pendingMessage('Generating', 'CommonJS production build')}
         success={pendingMessage('Generated', 'CommonJS production build')}
       />
-      {
-        data.status === 'success' && (
-          <BuildResultDiagnostics
-            messages={data.result.warnings}
-            isWarning
-          />
-        )
-      }
-      {
-        data.status === 'failure' && (
-          <>
-            <BuildResultDiagnostics
-              messages={data.result.errors}
-            />
-            <BuildResultDiagnostics
-              messages={data.result.warnings}
-            />
-          </>
-        )
-      }
+      <BuildDiagnostics 
+        data={data}
+      />
     </Box>
   );
 }
