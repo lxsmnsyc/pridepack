@@ -73,10 +73,12 @@ export default function readConfig(): PridepackConfig {
   }
 
   for (let i = 0; i < CONFIG_JS.length; i += 1) {
-    const filepath = path.resolve(path.join(cwd, CONFIG_NAMES[i]));
+    const filepath = path.resolve(path.join(cwd, CONFIG_JS[i]));
 
     if (fs.existsSync(filepath)) {
       const customConfig: Partial<PridepackConfig> = loadJS(filepath);
+
+      console.log(customConfig);
 
       CONFIG = {
         ...customConfig,

@@ -95,5 +95,6 @@ export default async function buildESM(): Promise<BuildResult> {
     jsxFragment: config.jsxFragment,
     logLevel: 'silent',
     charset: 'utf8',
+    plugins: config.plugins,
   });
 }

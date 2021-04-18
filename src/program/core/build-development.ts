@@ -63,5 +63,6 @@ export default async function buildDevelopment(): Promise<BuildResult> {
       js: '"use strict";'
     },
     charset: 'utf8',
+    plugins: config.plugins,
   });
 }
