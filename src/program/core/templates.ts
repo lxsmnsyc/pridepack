@@ -43,6 +43,7 @@ const baseDevDependencies = [
   'tslib',
   'typescript',
   'pridepack',
+  'jest',
   'ts-jest',
 ];
 

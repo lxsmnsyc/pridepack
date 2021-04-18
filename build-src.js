@@ -11,6 +11,9 @@ esbuild.buildSync({
   sourcemap: false,
   platform: 'node',
   tsconfig: './tsconfig.json',
-  external: Object.keys(packageJSON.dependencies),
+  external: [
+    ...Object.keys(packageJSON.dependencies),
+    ...Object.keys(packageJSON.devDependencies),
+  ],
   target: "es2017",
 });
