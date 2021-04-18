@@ -21,58 +21,44 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-import { Box, Spacer } from 'ink';
 import React from 'react';
-import { pendingMessage, successMessage } from '../core/styled-messages';
 
 // Hooks
-import { LoadableEvent, useLoadableRace } from '../utils/hooks/useLoadableEvent';
+import useAsyncMemo from '../utils/hooks/useAsyncMemo';
+import useLoadableEvent, { LoadableEvent } from '../utils/hooks/useLoadableEvent';
+
+// Core
+import copyFromTemplate from '../core/copy-from-template';
+import { pendingMessage, successMessage } from '../core/styled-messages';
 
 // Components
-import GenerateFileFromTemplate from './GenerateFileFromTemplate';
 import SuperDiagnosticMessage from '../utils/SuperDiagnosticMessage';
 
-export interface GenerateBaseTemplateProps extends LoadableEvent<void, undefined> {
+export interface GenerateFileProps extends LoadableEvent<void, Error> {
   template: string;
   directory: string;
 }
 
-const MAX_SUCCESS = 2;
-
-export default function GenerateBaseTemplate(
-  { template, directory, ...props }: GenerateBaseTemplateProps,
+export default function GenerateFileFromTemplate(
+  {
+    template,
+    directory,
+    ...props
+  }: GenerateFileProps,
 ): JSX.Element {
-  const {
-    status,
-    onSuccess,
-    onFailure,
-  } = useLoadableRace(props, MAX_SUCCESS, [template, directory]);
+  const data = useAsyncMemo<void, Error>(
+    () => copyFromTemplate(template, directory),
+    [template, directory],
+  );
+
+  useLoadableEvent(props, data);
 
   return (
-    <Box flexDirection="column">
-      <SuperDiagnosticMessage
-        status={status}
-        pending={pendingMessage('Generating', 'base template')}
-        success={successMessage('Generated', 'base template')}
-      />
-      <Spacer />
-      <Box flexDirection="column" marginLeft={2}>
-        <GenerateFileFromTemplate
-          template={template}
-          directory={directory}
-          sourceFile="src"
-          onSuccess={onSuccess}
-          onFailure={onFailure}
-        />
-        <Spacer />
-        <GenerateFileFromTemplate
-          template={template}
-          directory={directory}
-          sourceFile="test"
-          onSuccess={onSuccess}
-          onFailure={onFailure}
-        />
-      </Box>
-    </Box>
+    <SuperDiagnosticMessage
+      status={data.status}
+      pending={pendingMessage('Generating', `files from '${template}'`)}
+      success={successMessage('Generated', `files from '${template}'`)}
+      failure={data.result ? data.result.message : undefined}
+    />
   );
 }

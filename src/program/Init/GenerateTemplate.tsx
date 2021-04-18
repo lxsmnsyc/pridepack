@@ -35,16 +35,14 @@ import { LoadableEvent, useLoadableRace } from '../utils/hooks/useLoadableEvent'
 // Components
 import SuperDiagnosticMessage from '../utils/SuperDiagnosticMessage';
 import CreatePackageJSON from './CreatePackageJSON';
-import GenerateBaseTemplate from './GenerateBaseTemplate';
-import GenerateFileFromTemplate from './GenerateFileFromTemplate';
-import GenerateTSConfig from './GenerateTSConfig';
+import GenerateFilesFromTemplate from './GenerateFilesFromTemplate';
 
 export interface GenerateTemplateProps extends LoadableEvent<void, undefined> {
   template: string;
   packageName?: string;
 }
 
-const MAX_SUCCESS = 6;
+const MAX_SUCCESS = 2;
 
 export default function GenerateTemplate(
   { template, packageName, ...props }: GenerateTemplateProps,
@@ -75,39 +73,7 @@ export default function GenerateTemplate(
           onFailure={onFailure}
         />
         <Spacer />
-        <GenerateFileFromTemplate
-          template={template}
-          directory={directory}
-          sourceFile="_gitignore"
-          targetFile=".gitignore"
-          onSuccess={onSuccess}
-          onFailure={onFailure}
-        />
-        <Spacer />
-        <GenerateFileFromTemplate
-          template={template}
-          directory={directory}
-          sourceFile="pridepack.json"
-          onSuccess={onSuccess}
-          onFailure={onFailure}
-        />
-        <Spacer />
-        <GenerateFileFromTemplate
-          template={template}
-          directory={directory}
-          sourceFile=".eslintrc"
-          onSuccess={onSuccess}
-          onFailure={onFailure}
-        />
-        <Spacer />
-        <GenerateTSConfig
-          template={template}
-          directory={directory}
-          onSuccess={onSuccess}
-          onFailure={onFailure}
-        />
-        <Spacer />
-        <GenerateBaseTemplate
+        <GenerateFilesFromTemplate
           template={template}
           directory={directory}
           onSuccess={onSuccess}

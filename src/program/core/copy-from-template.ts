@@ -24,25 +24,49 @@
 import path from 'path';
 import fs from 'fs-extra';
 
+const TRANSFORMS = [
+  {
+    from: '_gitignore',
+    to: '.gitignore',
+  },
+];
+
 export default async function copyFromTemplate(
   template: string,
-  name: string,
-  target: string,
-  newName = target,
+  directory: string,
 ): Promise<void> {
-  const sourceFile = path.resolve(
+  const source = path.resolve(
     __dirname,
     '..',
     'templates',
     template,
-    target,
   );
-  if (fs.existsSync(sourceFile)) {
-    const targetFile = path.resolve(
+
+  const stat = await fs.stat(source);
+  if (stat.isDirectory()) {
+    const target = path.resolve(
       process.cwd(),
-      name,
-      newName,
+      directory,
     );
-    await fs.copy(sourceFile, targetFile);
+    await fs.copy(source, target);
+
+    for (let i = 0; i < TRANSFORMS.length; i += 1) {
+      const file = path.resolve(
+        process.cwd(),
+        directory,
+        TRANSFORMS[i].from,
+      );
+
+      const fileStat = await fs.stat(file);
+
+      if (fileStat.isFile()) {
+        const newName = path.resolve(
+          process.cwd(),
+          directory,
+          TRANSFORMS[i].to,
+        );
+        await fs.rename(file, newName);
+      }
+    }
   }
 }

@@ -78,8 +78,6 @@ export default function readConfig(): PridepackConfig {
     if (fs.existsSync(filepath)) {
       const customConfig: Partial<PridepackConfig> = loadJS(filepath);
 
-      console.log(customConfig);
-
       CONFIG = {
         ...customConfig,
         srcFile: customConfig.srcFile || DEFAULT_CONFIG.srcFile,
