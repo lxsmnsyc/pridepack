@@ -1,5 +1,5 @@
 /** @jsx h */
-import { defineComponent } from 'vue';
+import { h, defineComponent } from 'vue';
 import { render, screen } from '@testing-library/vue';
 import '@testing-library/jest-dom';
 import Hello from '../src';
@@ -9,10 +9,9 @@ describe('Example', () => {
     const greeting = 'World';
 
     const Component = defineComponent({
-      components: {
-        Hello,
-      },
-      template: `<hello greeting="${greeting}"></hello>`,
+      setup() {
+        return () => <Hello greeting={greeting} />;
+      }
     });
   
     render(Component);
