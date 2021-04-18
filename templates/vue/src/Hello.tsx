@@ -1,10 +1,6 @@
 /** @jsx h */
 import { h, defineComponent, toRefs } from 'vue';
 
-export interface HelloProps {
-  greeting: string;
-}
-
 export default defineComponent({
   name: 'Hello',
   props: {
