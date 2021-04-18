@@ -21,10 +21,12 @@ yarn global add pridepack
 ### Templates
 
 Pridepack currently ships with the following templates:
+
 - `basic`: Basic Typescript package setup.
 - `react`: React + Typescript package setup, includes `@testing-library/react` and `@testing-library/react-hooks`.
 - `preact`: Preact + Typescript package setup, includes `@testing-library/preact` and `@testing-library/preact-hooks`
 - `fastify`: Fastify package setup
+- `vue`: Vue 3 + Typescript package setup, includes `@testing-library/vue@next`. SFCs are not supported yet, although achievable using the Plugins feature.
 
 ## Usage
 
@@ -63,22 +65,29 @@ Runs test suites using Jest. You can also add valid command-line Jest arguments,
 ## Config
 
 Even though Pridepack encourages zero-config setup, Pridepack also includes config files. Pridepack config files can be either of the following:
+
 - `.pridepackrc`
 - `.pridepack.json`
 - `.pridepack.config.json`
 - `pridepack.json`
 - `pridepack.config.json`
 
-Currently, JS config files are not yet supported.
+JS Config files are also supported, useful for loading environment variables and more.
+
+- `.pridepack.js`
+- `.pridepack.config.js`
+- `pridepack.js`
+- `pridepack.config.js`
 
 ### Fields
 
-- `srcFile`: path of the entry source file. Defaults to `index.ts` (relative to `srcDir).
+- `srcFile`: path of the entry source file. Defaults to `src/index.ts`.
 - `target`: ECMAScript version target. Defaults to `esnext`.
 - `tsconfig`: path of Typescript config file. Defaults to `tsconfig.json`.
 - `jsxFactory`: JSX pragma.
 - `jsxFragment`: JSX Fragment expression pragma.
 - `jest`: Jest config.
+- `plugins`: ESBuild plugins to be used for bundling. You can check the official [ESBuild Community Plugins](https://github.com/esbuild/community-plugins)
 
 ### Exports Map
 
