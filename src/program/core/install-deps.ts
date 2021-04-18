@@ -69,8 +69,8 @@ export async function installDeps(template: string, cwd = '.'): Promise<void> {
   // Merge dev and peer
   const allDeps = [
     ...peerDependencies.map((peer) => (
-      peer instanceof Array
-        ? peer[0]
+      typeof peer === 'object'
+        ? `${peer.name}@${peer.dev}`
         : peer
     )),
     ...devDependencies,

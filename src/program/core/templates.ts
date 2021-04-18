@@ -22,7 +22,13 @@
  * SOFTWARE.
  */
 
-export type PeerDependency = string | [string, string];
+export interface PeerDependencyPattern {
+  name: string;
+  dev: string;
+  peer: string;
+}
+
+export type PeerDependency = string | PeerDependencyPattern;
 
 export interface Template {
   name: string;
@@ -61,8 +67,16 @@ const TEMPLATES: Templates = {
     dependencies: [
     ],
     peerDependencies: [
-      ['react', '^16.8.0 || ^17.0.0'],
-      ['react-dom', '^16.8.0 || ^17.0.0'],
+      {
+        name: 'react',
+        dev: 'latest',
+        peer: '^16.8.0 || ^17.0.0',
+      },
+      {
+        name: 'react-dom',
+        dev: 'latest',
+        peer: '^16.8.0 || ^17.0.0',
+      },
     ],
     devDependencies: [
       ...baseDevDependencies,
@@ -78,7 +92,11 @@ const TEMPLATES: Templates = {
     dependencies: [
     ],
     peerDependencies: [
-      ['preact', '^10.0.0'],
+      {
+        name: 'preact',
+        dev: 'latest',
+        peer: '^10.0.0',
+      },
     ],
     devDependencies: [
       ...baseDevDependencies,
@@ -92,13 +110,16 @@ const TEMPLATES: Templates = {
     dependencies: [
     ],
     peerDependencies: [
-      ['vue', '^2.6.0'],
+      {
+        name: 'vue',
+        dev: 'next',
+        peer: '^3.0.0',
+      },
     ],
     devDependencies: [
       ...baseDevDependencies,
-      '@testing-library/vue',
+      '@testing-library/vue@next',
       '@testing-library/jest-dom',
-      'esbuild-vue',
     ],
   },
   fastify: {

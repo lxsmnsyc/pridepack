@@ -36,9 +36,9 @@ export default async function addPeers(template: string, cwd = '.'): Promise<voi
     const peers = TEMPLATES[template].peerDependencies;
     Object.entries(packageInfo.devDependencies).forEach(([key, value]) => {
       peers.forEach((peer) => {
-        if (peer instanceof Array) {
-          if (peer[0] === key) {
-            peerDependencies[key] = peer[1];
+        if (typeof peer === 'object') {
+          if (peer.name === key) {
+            peerDependencies[key] = peer.peer;
           }
         } else if (peer === key) {
           peerDependencies[key] = value;

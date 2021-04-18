@@ -1,13 +1,13 @@
 {
   "exclude": ["node_modules"],
-  "include": ["src", "types", "test"],
+  "include": ["src", "types"],
   "compilerOptions": {
     "module": "ESNext",
     "lib": ["DOM", "ESNext"],
     "importHelpers": true,
     "declaration": true,
     "sourceMap": true,
-    "rootDir": "./",
+    "rootDir": "./src",
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
@@ -17,7 +17,6 @@
     "jsx": "react",
     "esModuleInterop": true,
     "target": "ES2017",
-    "jsxFactory": "h",
-    "jsxFragmentFactory": "Fragment"
+    "jsxFactory": "h"
   }
 }
