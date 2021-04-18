@@ -24,6 +24,7 @@
 import path from 'path';
 import fs from 'fs';
 import DEFAULT_CONFIG, { PridepackConfig } from './default-config';
+import { loadJS } from './load-js';
 
 export const CONFIG_NAMES = [
   '.pridepackrc',
@@ -31,6 +32,13 @@ export const CONFIG_NAMES = [
   'pridepack.json',
   'pridepack.config.json',
   '.pridepack.config.json',
+];
+
+export const CONFIG_JS = [
+  'pridepack.config.js',
+  'pridepack.js',
+  '.pridepack.config.js',
+  '.pridepack.js',
 ];
 
 let CONFIG: PridepackConfig;
@@ -53,6 +61,23 @@ export default function readConfig(): PridepackConfig {
       // Parse config to object
       const customConfig = JSON.parse(result.toString()) as Partial<PridepackConfig>;
   
+      CONFIG = {
+        ...customConfig,
+        srcFile: customConfig.srcFile || DEFAULT_CONFIG.srcFile,
+        tsconfig: customConfig.tsconfig || DEFAULT_CONFIG.tsconfig,
+        target: customConfig.target || DEFAULT_CONFIG.target,
+      };
+
+      return CONFIG;
+    }
+  }
+
+  for (let i = 0; i < CONFIG_JS.length; i += 1) {
+    const filepath = path.resolve(path.join(cwd, CONFIG_NAMES[i]));
+
+    if (fs.existsSync(filepath)) {
+      const customConfig: Partial<PridepackConfig> = loadJS(filepath);
+
       CONFIG = {
         ...customConfig,
         srcFile: customConfig.srcFile || DEFAULT_CONFIG.srcFile,

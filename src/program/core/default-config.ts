@@ -22,6 +22,7 @@
  * SOFTWARE.
  */
 import { InitialOptions } from '@jest/types/build/Config';
+import { Plugin } from 'esbuild';
 
 export interface PridepackBaseConfig {
   srcFile: string;
@@ -33,6 +34,7 @@ export interface PridepackConfig extends PridepackBaseConfig {
   jsxFactory?: string;
   jsxFragment?: string;
   jest?: InitialOptions;
+  plugins?: Plugin[];
 }
 
 const DEFAULT_CONFIG: PridepackConfig = {
