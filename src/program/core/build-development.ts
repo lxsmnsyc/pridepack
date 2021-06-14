@@ -64,5 +64,6 @@ export default async function buildDevelopment(): Promise<BuildResult> {
     },
     charset: 'utf8',
     plugins: config.plugins,
+    legalComments: 'eof',
   });
 }

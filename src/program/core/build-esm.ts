@@ -96,5 +96,6 @@ export default async function buildESM(): Promise<BuildResult> {
     logLevel: 'silent',
     charset: 'utf8',
     plugins: config.plugins,
+    legalComments: 'eof',
   });
 }
