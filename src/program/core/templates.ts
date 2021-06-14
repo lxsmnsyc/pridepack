@@ -49,8 +49,6 @@ const baseDevDependencies = [
   'tslib',
   'typescript',
   'pridepack',
-  'jest',
-  'ts-jest',
 ];
 
 const TEMPLATES: Templates = {
