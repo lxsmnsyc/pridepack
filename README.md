@@ -23,6 +23,8 @@ yarn global add pridepack
 Pridepack currently ships with the following templates:
 
 - `basic`: Basic Typescript package setup.
+- `bot-discord`: [Discord](http://discord.com/) bot TypeScript package setup. Basic implementation for `ready` and
+  `messageCreate` events provided as guides for additional handlers.
 - `react`: React + Typescript package setup, includes `@testing-library/react` and `@testing-library/react-hooks`.
 - `preact`: Preact + Typescript package setup, includes `@testing-library/preact` and `@testing-library/preact-hooks`
 - `fastify`: Fastify package setup
