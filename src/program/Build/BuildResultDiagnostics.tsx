@@ -23,7 +23,7 @@
  */
 import { Box } from 'ink';
 import React from 'react';
-import { DiagnosticCategory } from 'typescript';
+import ts from 'typescript';
 import { Message } from 'esbuild';
 import chalk from 'chalk';
 
@@ -61,8 +61,8 @@ export default function BuildResultDiagnostics(
               <DiagnosticMessage
                 category={
                   isWarning
-                    ? DiagnosticCategory.Warning
-                    : DiagnosticCategory.Error
+                    ? ts.DiagnosticCategory.Warning
+                    : ts.DiagnosticCategory.Error
                 }
                 message={parsed}
               />

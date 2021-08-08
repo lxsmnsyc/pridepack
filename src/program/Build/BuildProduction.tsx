@@ -37,8 +37,7 @@ import SuperDiagnosticMessage from '../utils/SuperDiagnosticMessage';
 import { pendingMessage } from '../core/styled-messages';
 import BuildDiagnostics from './BuildDiagnostics';
 
-export interface BuildProductionProps extends LoadableEvent<BuildResult, BuildFailure> {
-}
+export type BuildProductionProps = LoadableEvent<BuildResult, BuildFailure>;
 
 export default function BuildProduction(
   props: BuildProductionProps,
@@ -57,7 +56,7 @@ export default function BuildProduction(
         pending={pendingMessage('Generating', 'CommonJS production build')}
         success={pendingMessage('Generated', 'CommonJS production build')}
       />
-      <BuildDiagnostics 
+      <BuildDiagnostics
         data={data}
       />
     </Box>

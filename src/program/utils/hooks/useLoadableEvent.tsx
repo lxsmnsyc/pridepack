@@ -62,14 +62,13 @@ export function convertToLoadable(
   return {
     status: 'pending',
     result: undefined,
-  }
+  };
 }
-
 
 export default function useLoadableEvent<T, E>(
   { onPending, onSuccess, onFailure }: LoadableEvent<T, E>,
   data: AsyncMemo<T, E>,
-) {
+): void {
   useEffect(() => {
     if (data.status === 'pending' && onPending) {
       onPending();
@@ -80,6 +79,7 @@ export default function useLoadableEvent<T, E>(
     if (data.status === 'success' && onSuccess) {
       onSuccess(data.result);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 }
 
@@ -130,4 +130,3 @@ export function useLoadableRace(
     onFailure,
   };
 }
-

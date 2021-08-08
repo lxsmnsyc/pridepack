@@ -54,7 +54,7 @@ export default function useAsyncMemo<T, E>(
     status: 'pending',
     result: undefined,
   });
- 
+
   const isMounted = useMountedState();
 
   const memoizedEffect = useCallbackCondition(effect, dependencies, defaultCompareList);
@@ -74,7 +74,7 @@ export default function useAsyncMemo<T, E>(
           });
         }
       },
-      (result) => {
+      (result: E) => {
         if (isMounted()) {
           setState({
             status: 'failure',

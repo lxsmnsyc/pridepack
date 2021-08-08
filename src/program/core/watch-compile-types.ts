@@ -22,15 +22,7 @@
  * SOFTWARE.
  */
 import path from 'path';
-import {
-  CompilerOptions,
-  createSemanticDiagnosticsBuilderProgram,
-  createWatchCompilerHost,
-  createWatchProgram,
-  Diagnostic,
-  sys,
-  WatchOfConfigFile,
-} from 'typescript';
+import ts from 'typescript';
 
 import { BASE_PACKAGE } from './create-package';
 import readConfigWithCWD from './read-config-with-cwd';
@@ -38,7 +30,7 @@ import readPackage from './read-package';
 import readValidCompilerOptions from './read-valid-compiler-options';
 
 export type EndCompile = () => void;
-export type ReadDiagnostic = (diagnostic: Diagnostic) => void;
+export type ReadDiagnostic = (diagnostic: ts.Diagnostic) => void;
 
 export default function watchCompileTypes(
   reportDiagnostic: ReadDiagnostic,
@@ -47,7 +39,7 @@ export default function watchCompileTypes(
 ): EndCompile {
   let ready = true;
 
-  let program: WatchOfConfigFile<any>;
+  let program: ts.WatchOfConfigFile<any>;
 
   async function setup() {
     const pkg = await readPackage();
@@ -58,7 +50,7 @@ export default function watchCompileTypes(
 
     const options = await readValidCompilerOptions();
 
-    const baseConfig: CompilerOptions = {
+    const baseConfig: ts.CompilerOptions = {
       ...options,
       outDir: path.resolve(
         path.join(
@@ -78,17 +70,17 @@ export default function watchCompileTypes(
       return;
     }
 
-    const host = createWatchCompilerHost(
+    const host = ts.createWatchCompilerHost(
       cwdConfig.tsconfig,
       baseConfig,
-      sys,
-      createSemanticDiagnosticsBuilderProgram,
+      ts.sys,
+      ts.createSemanticDiagnosticsBuilderProgram,
       reportDiagnostic,
       reportWatchStatus,
     );
 
     // Prepare and emit the d.ts files
-    program = createWatchProgram(
+    program = ts.createWatchProgram(
       host,
     );
   }

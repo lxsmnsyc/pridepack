@@ -37,13 +37,18 @@ import runLinter, { LintOptions } from '../core/run-linter';
 import SuperDiagnosticMessage from '../utils/SuperDiagnosticMessage';
 import LinterResult from './LinterResult';
 
-
 interface RunLinterProps extends LintOptions, LoadableEvent<ESLint.LintResult[], Error> {
   pattern: string;
 }
 
 export default function RunLinter(
-  { files, fix, cache, pattern, ...props }: RunLinterProps,
+  {
+    files,
+    fix,
+    cache,
+    pattern,
+    ...props
+  }: RunLinterProps,
 ): JSX.Element {
   const data = useAsyncMemo<ESLint.LintResult[], Error>(
     () => runLinter({ files, fix, cache }, pattern),

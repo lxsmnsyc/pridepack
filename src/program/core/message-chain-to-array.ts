@@ -21,16 +21,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-import { DiagnosticCategory, DiagnosticMessageChain } from 'typescript';
+import ts from 'typescript';
 
 interface DiagnosticMessageSimple {
   messageText: string;
   code: number;
-  category: DiagnosticCategory;
+  category: ts.DiagnosticCategory;
 }
 
 export default function messageChainToArray(
-  messageChain?: DiagnosticMessageChain[],
+  messageChain?: ts.DiagnosticMessageChain[],
 ): DiagnosticMessageSimple[] {
   const result: DiagnosticMessageSimple[] = [];
 

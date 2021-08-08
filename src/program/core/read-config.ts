@@ -24,7 +24,7 @@
 import path from 'path';
 import fs from 'fs-extra';
 import DEFAULT_CONFIG, { PridepackConfig } from './default-config';
-import { loadJS } from './load-js';
+import loadJS from './load-js';
 import { isFile } from './stat';
 
 export const CONFIG_NAMES = [
@@ -51,14 +51,15 @@ export default async function readConfig(): Promise<PridepackConfig> {
   // Get working directory
   const cwd = process.cwd();
 
-  for (let i = 0; i < CONFIG_NAMES.length; i += 1) {// Get config file path
+  for (let i = 0; i < CONFIG_NAMES.length; i += 1) {
+    // Get config file path
     const filepath = path.resolve(path.join(cwd, CONFIG_NAMES[i]));
-  
+
     // Check if config exists
     if (await isFile(filepath)) {
       // Read config
       const customConfig = await fs.readJson(filepath) as Partial<PridepackConfig>;
-  
+
       CONFIG = {
         ...customConfig,
         srcFile: customConfig.srcFile || DEFAULT_CONFIG.srcFile,
@@ -72,7 +73,7 @@ export default async function readConfig(): Promise<PridepackConfig> {
 
   for (let i = 0; i < CONFIG_JS.length; i += 1) {
     const filepath = path.resolve(path.join(cwd, CONFIG_JS[i]));
-  
+
     if (await isFile(filepath)) {
       const customConfig: Partial<PridepackConfig> = loadJS(filepath);
 
@@ -86,7 +87,7 @@ export default async function readConfig(): Promise<PridepackConfig> {
       return CONFIG;
     }
   }
-  
+
   CONFIG = DEFAULT_CONFIG;
 
   // Return default config

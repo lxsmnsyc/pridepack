@@ -25,17 +25,17 @@ import chalk from 'chalk';
 import { Box } from 'ink';
 import path from 'path';
 import React from 'react';
-import { Diagnostic, flattenDiagnosticMessageText } from 'typescript';
+import ts from 'typescript';
 
 // Components
 import DiagnosticMessage from '../utils/DiagnosticMessage';
 
 export interface CompileTypesDiagnosticsProps {
-  diagnostics: Diagnostic[];
+  diagnostics: ts.Diagnostic[];
 }
 
-export function diagnosticToMessage(diagnostic: Diagnostic): string {
-  const baseMessage = flattenDiagnosticMessageText(diagnostic.messageText, '\n');
+export function diagnosticToMessage(diagnostic: ts.Diagnostic): string {
+  const baseMessage = ts.flattenDiagnosticMessageText(diagnostic.messageText, '\n');
   if (diagnostic.file && diagnostic.start) {
     const { line, character } = diagnostic.file.getLineAndCharacterOfPosition(diagnostic.start);
     const fileName = path.relative(process.cwd(), diagnostic.file.fileName);

@@ -30,7 +30,7 @@ import useRemount from '../utils/hooks/useRemount';
 import IndefiniteMessage from '../utils/IndefiniteMessage';
 import WatchCompileTypes from './WatchCompileTypes';
 
-export default function Watch() {
+export default function Watch(): JSX.Element {
   const [key, remount] = useRemount();
 
   const title = commandTitle('watch');
