@@ -4,5 +4,10 @@
   ],
   "parserOptions": {
     "project": "./tsconfig.eslint.json"
+  },
+  "rules": {
+    "react/require-default-props": "off",
+    "no-await-in-loop": "off",
+    "react-hooks/exhaustive-deps": "off"
   }
 }

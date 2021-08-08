@@ -28,7 +28,7 @@ import useAsyncMemo from '../utils/hooks/useAsyncMemo';
 import useLoadableEvent, { LoadableEvent } from '../utils/hooks/useLoadableEvent';
 
 // Core
-import { installDeps } from '../core/install-deps';
+import installDeps from '../core/install-deps';
 import { pendingMessage, successMessage } from '../core/styled-messages';
 
 // Components

@@ -23,15 +23,13 @@
  */
 import path from 'path';
 import { build, BuildResult } from 'esbuild';
-import { PRODUCTION_ENV } from './read-env-defs';
+import { DEVELOPMENT_ENV } from './read-env-defs';
+import readConfig from './read-config';
 import readConfigWithCWD from './read-config-with-cwd';
 import readExternals from './read-externals';
-import readConfig from './read-config';
-import { getCJSTargetDirectory, DEFAULT_CJS_PRODUCTION_ENTRY } from './build-cjs';
+import { DEFAULT_CJS_DEVELOPMENT_ENTRY, getCJSTargetDirectory } from './build-cjs';
 
-export const OUTPUT_SUFFIX = 'production.min';
-
-export default async function buildProduction(): Promise<BuildResult> {
+export default async function buildCJSDevelopment(): Promise<BuildResult> {
   const config = await readConfig();
   const configCWD = await readConfigWithCWD();
   const externals = await readExternals();
@@ -39,7 +37,7 @@ export default async function buildProduction(): Promise<BuildResult> {
   const outfile = path.resolve(path.join(
     process.cwd(),
     await getCJSTargetDirectory(),
-    DEFAULT_CJS_PRODUCTION_ENTRY,
+    DEFAULT_CJS_DEVELOPMENT_ENTRY,
   ));
   // run esbuild
   return build({
@@ -48,12 +46,12 @@ export default async function buildProduction(): Promise<BuildResult> {
     ],
     outfile,
     bundle: true,
-    minify: true,
+    minify: false,
     platform: 'node',
     sourcemap: true,
     define: {
-      ...await PRODUCTION_ENV,
-      'process.env.NODE_ENV': '"production"',
+      ...await DEVELOPMENT_ENV,
+      'process.env.NODE_ENV': '"development"',
     },
     external: externals,
     target: config.target,
@@ -62,7 +60,7 @@ export default async function buildProduction(): Promise<BuildResult> {
     jsxFragment: config.jsxFragment,
     logLevel: 'silent',
     banner: {
-      js: '"use strict";'
+      js: '"use strict";',
     },
     charset: 'utf8',
     plugins: config.plugins,

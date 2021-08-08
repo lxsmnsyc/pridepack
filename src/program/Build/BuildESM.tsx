@@ -37,8 +37,7 @@ import { pendingMessage, successMessage } from '../core/styled-messages';
 import SuperDiagnosticMessage from '../utils/SuperDiagnosticMessage';
 import BuildDiagnostics from './BuildDiagnostics';
 
-export interface BuildESMProps extends LoadableEvent<BuildResult, BuildFailure> {
-}
+export type BuildESMProps = LoadableEvent<BuildResult, BuildFailure>;
 
 export default function BuildESM(
   props: BuildESMProps,
@@ -57,7 +56,7 @@ export default function BuildESM(
         pending={pendingMessage('Generating', 'ESM build')}
         success={successMessage('Generated', 'ESM build')}
       />
-      <BuildDiagnostics 
+      <BuildDiagnostics
         data={data}
       />
     </Box>

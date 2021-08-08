@@ -48,7 +48,7 @@ export function successMessage(
 }
 
 export function commandTitle(
-  command: string
+  command: string,
 ): string {
   const base = `${chalk.magenta('pridepack')} ${chalk.magentaBright(command)}`;
 

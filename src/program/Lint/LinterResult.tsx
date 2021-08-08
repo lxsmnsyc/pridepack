@@ -26,24 +26,24 @@ import { ESLint, Linter } from 'eslint';
 import { Box, Spacer, Text } from 'ink';
 import path from 'path';
 import React from 'react';
-import { DiagnosticCategory } from 'typescript';
+import ts from 'typescript';
 import DiagnosticMessage from '../utils/DiagnosticMessage';
 
 interface LinterResultProps {
   result: ESLint.LintResult;
 }
 
-type SeverityMap = Record<Linter.Severity, DiagnosticCategory>;
+type SeverityMap = Record<Linter.Severity, ts.DiagnosticCategory>;
 
 const diagnostics: SeverityMap = {
-  0: DiagnosticCategory.Message,
-  1: DiagnosticCategory.Warning,
-  2: DiagnosticCategory.Error,
+  0: ts.DiagnosticCategory.Message,
+  1: ts.DiagnosticCategory.Warning,
+  2: ts.DiagnosticCategory.Error,
 };
 
 function linterMessageToString(message: Linter.LintMessage): string {
   const baseMessage = message.message;
-  const rule = chalk.blue(message.ruleId ? ` [${message.ruleId}]`: '');
+  const rule = chalk.blue(message.ruleId ? ` [${message.ruleId}]` : '');
   const line = chalk.yellow(message.line);
   const column = chalk.yellow(message.column);
   return `(${line}, ${column}): ${baseMessage}${rule}`;
@@ -59,8 +59,8 @@ export default function LinterResult({ result }: LinterResultProps): JSX.Element
         <Spacer />
         <Box flexDirection="column" marginLeft={2}>
           {
-            result.messages.map((message, index) => (
-              <Box key={`message-${index}`}>
+            result.messages.map((message) => (
+              <Box>
                 <DiagnosticMessage
                   category={diagnostics[message.severity]}
                   message={linterMessageToString(message)}

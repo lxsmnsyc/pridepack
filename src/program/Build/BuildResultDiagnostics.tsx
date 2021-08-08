@@ -23,12 +23,12 @@
  */
 import { Box } from 'ink';
 import React from 'react';
-import { DiagnosticCategory } from 'typescript';
+import ts from 'typescript';
 import { Message } from 'esbuild';
+import chalk from 'chalk';
 
 // Components
 import DiagnosticMessage from '../utils/DiagnosticMessage';
-import chalk from 'chalk';
 
 export interface BuildResultDiagnosticsProps {
   messages: Message[];
@@ -54,18 +54,21 @@ export default function BuildResultDiagnostics(
   return (
     <Box flexDirection="column" marginLeft={2}>
       {
-        messages.map((message, index) => (
-          <Box key={`diagnostic-${index}`}>
-            <DiagnosticMessage
-              category={
-                isWarning
-                  ? DiagnosticCategory.Warning
-                  : DiagnosticCategory.Error
-              }
-              message={messageToString(message)}
-            />
-          </Box>
-        ))
+        messages.map((message) => {
+          const parsed = messageToString(message);
+          return (
+            <Box key={parsed}>
+              <DiagnosticMessage
+                category={
+                  isWarning
+                    ? ts.DiagnosticCategory.Warning
+                    : ts.DiagnosticCategory.Error
+                }
+                message={parsed}
+              />
+            </Box>
+          );
+        })
       }
     </Box>
   );

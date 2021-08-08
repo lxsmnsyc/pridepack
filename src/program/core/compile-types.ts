@@ -23,13 +23,7 @@
  */
 import path from 'path';
 import fs from 'fs-extra';
-import {
-  CompilerOptions,
-  createCompilerHost,
-  createProgram,
-  Diagnostic,
-  getPreEmitDiagnostics,
-} from 'typescript';
+import ts from 'typescript';
 import readConfigWithCWD from './read-config-with-cwd';
 import readPackage from './read-package';
 import readValidCompilerOptions from './read-valid-compiler-options';
@@ -40,12 +34,12 @@ interface OutputFile {
   data: string;
 }
 
-export default async function compileTypes(noEmit = true): Promise<Diagnostic[]> {
+export default async function compileTypes(noEmit = true): Promise<ts.Diagnostic[]> {
   const pkg = await readPackage();
 
   const options = await readValidCompilerOptions();
 
-  const baseConfig: CompilerOptions = {
+  const baseConfig: ts.CompilerOptions = {
     ...options,
     outDir: path.resolve(
       path.join(
@@ -59,7 +53,7 @@ export default async function compileTypes(noEmit = true): Promise<Diagnostic[]>
   };
 
   // Create a Program with an in-memory emit
-  const host = createCompilerHost(baseConfig);
+  const host = ts.createCompilerHost(baseConfig);
 
   const files: OutputFile[] = [];
 
@@ -72,18 +66,18 @@ export default async function compileTypes(noEmit = true): Promise<Diagnostic[]>
 
   // Prepare and emit the d.ts files
   const configCWD = await readConfigWithCWD();
-  const program = createProgram(
+  const program = ts.createProgram(
     [configCWD.srcFile],
     baseConfig,
     host,
   );
-  
+
   const result = program.emit();
 
   await Promise.all(
-    files.map((file) => fs.outputFile(file.name, file.data))
+    files.map((file) => fs.outputFile(file.name, file.data)),
   );
 
-  return getPreEmitDiagnostics(program)
+  return ts.getPreEmitDiagnostics(program)
     .concat(result.diagnostics);
 }

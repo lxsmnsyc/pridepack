@@ -35,8 +35,7 @@ import BuildEntry from './BuildEntry';
 import BuildOutput from './BuildOutput';
 import CompileTypes from './CompileTypes';
 
-export interface BuildProps extends LoadableEvent<void, undefined> {
-}
+export type BuildProps = LoadableEvent<void, undefined>;
 
 const MAX_SUCCESS = 3;
 

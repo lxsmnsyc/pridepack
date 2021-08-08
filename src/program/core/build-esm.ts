@@ -32,7 +32,7 @@ import readPackage from './read-package';
 
 export const DEFAULT_ESM_ENTRY = 'dist/esm/index.js';
 
-export async function resolveESM() {
+export async function resolveESM(): Promise<string> {
   const pkg = await readPackage();
 
   // Resolve through Export map
@@ -61,7 +61,7 @@ export async function resolveESM() {
   return DEFAULT_ESM_ENTRY;
 }
 
-export async function getESMTargetDirectory() {
+export async function getESMTargetDirectory(): Promise<string> {
   const targetPath = await resolveESM();
 
   return path.dirname(targetPath);

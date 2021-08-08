@@ -35,8 +35,7 @@ import SuperDiagnosticMessage from '../utils/SuperDiagnosticMessage';
 import Timer from '../utils/Timer';
 import CompileTypes from '../Build/CompileTypes';
 
-export interface CheckProps extends LoadableEvent<void, undefined> {
-}
+export type CheckProps = LoadableEvent<void, undefined>;
 
 const MAX_SUCCESS = 1;
 
@@ -60,7 +59,7 @@ export default function Check(props: CheckProps): JSX.Element {
       <Spacer />
       <Box flexDirection="column" marginLeft={2}>
         <CompileTypes
-          noEmit={true}
+          noEmit
           onSuccess={onSuccess}
           onFailure={onFailure}
         />

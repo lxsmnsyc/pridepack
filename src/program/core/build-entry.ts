@@ -29,7 +29,6 @@ import {
   resolveEntry,
 } from './build-cjs';
 
-
 export default async function buildEntry(): Promise<void> {
   const contents = `
 'use strict';

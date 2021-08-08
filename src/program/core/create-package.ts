@@ -55,7 +55,7 @@ export const BASE_PACKAGE: IPackageJson = {
   },
   license: 'MIT',
   keywords: [
-    "pridepack"
+    'pridepack',
   ],
 };
 

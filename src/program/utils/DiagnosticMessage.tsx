@@ -23,7 +23,7 @@
  */
 import { Box, Text, TextProps } from 'ink';
 import React from 'react';
-import { DiagnosticCategory } from 'typescript';
+import ts from 'typescript';
 
 interface DiagnosticDisplay {
   symbol: string;
@@ -35,26 +35,26 @@ interface DiagnosticDisplayOptions {
 }
 
 export const DIAGNOSTIC_DISPLAYS: DiagnosticDisplayOptions = {
-  [DiagnosticCategory.Error]: {
+  [ts.DiagnosticCategory.Error]: {
     symbol: '✖',
     color: 'red',
   },
-  [DiagnosticCategory.Message]: {
+  [ts.DiagnosticCategory.Message]: {
     symbol: '✔',
     color: 'green',
   },
-  [DiagnosticCategory.Suggestion]: {
+  [ts.DiagnosticCategory.Suggestion]: {
     symbol: 'ℹ',
     color: 'cyan',
   },
-  [DiagnosticCategory.Warning]: {
+  [ts.DiagnosticCategory.Warning]: {
     symbol: '⚠',
     color: 'yellow',
   },
 };
 
 export interface DiagnosticMessageProps {
-  category: DiagnosticCategory;
+  category: ts.DiagnosticCategory;
   message: string;
 }
 

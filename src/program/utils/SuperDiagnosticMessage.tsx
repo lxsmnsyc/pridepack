@@ -22,7 +22,8 @@
  * SOFTWARE.
  */
 import React from 'react';
-import { DiagnosticCategory } from 'typescript';
+import ts from 'typescript';
+import chalk from 'chalk';
 
 // Hooks
 import { AsyncStatus } from './hooks/useAsyncMemo';
@@ -30,7 +31,6 @@ import { AsyncStatus } from './hooks/useAsyncMemo';
 // Components
 import DiagnosticMessage from './DiagnosticMessage';
 import IndefiniteMessage from './IndefiniteMessage';
-import chalk from 'chalk';
 
 interface SuperDiagnosticMessageProps {
   status: AsyncStatus;
@@ -40,12 +40,17 @@ interface SuperDiagnosticMessageProps {
 }
 
 export default function SuperDiagnosticMessage(
-  { status, success, pending, failure }: SuperDiagnosticMessageProps,
+  {
+    status,
+    success,
+    pending,
+    failure,
+  }: SuperDiagnosticMessageProps,
 ): JSX.Element {
   if (status === 'success') {
     return (
       <DiagnosticMessage
-        category={DiagnosticCategory.Message}
+        category={ts.DiagnosticCategory.Message}
         message={chalk.green(success)}
       />
     );
@@ -53,10 +58,10 @@ export default function SuperDiagnosticMessage(
   if (status === 'failure') {
     return (
       <DiagnosticMessage
-        category={DiagnosticCategory.Error}
+        category={ts.DiagnosticCategory.Error}
         message={chalk.red(failure ?? pending)}
       />
-    )
+    );
   }
   return (
     <IndefiniteMessage

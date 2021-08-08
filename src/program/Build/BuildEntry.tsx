@@ -34,8 +34,7 @@ import { pendingMessage, successMessage } from '../core/styled-messages';
 // Components
 import SuperDiagnosticMessage from '../utils/SuperDiagnosticMessage';
 
-export interface BuildEntryProps extends LoadableEvent<void, Error> {
-}
+export type BuildEntryProps = LoadableEvent<void, Error>;
 
 export default function BuildEntry(
   props: BuildEntryProps,

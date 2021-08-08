@@ -21,12 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-import { CompilerOptions, convertCompilerOptionsFromJson } from 'typescript';
+import ts from 'typescript';
 import readTSConfig from './read-tsconfig';
 
-export default async function readValidCompilerOptions(): Promise<CompilerOptions> {
+export default async function readValidCompilerOptions(): Promise<ts.CompilerOptions> {
   const config = await readTSConfig();
-  return convertCompilerOptionsFromJson(
+  return ts.convertCompilerOptionsFromJson(
     config.compilerOptions,
     process.cwd(),
   ).options;

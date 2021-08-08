@@ -39,7 +39,14 @@ import RunLinter from './RunLinter';
 export interface LintProps extends LintOptions, LoadableEvent<void, undefined> {
 }
 
-export default function Lint({ files, fix, cache, ...props }: LintProps): JSX.Element {
+export default function Lint(
+  {
+    files,
+    fix,
+    cache,
+    ...props
+  }: LintProps,
+): JSX.Element {
   const {
     status,
     onSuccess,
@@ -61,7 +68,7 @@ export default function Lint({ files, fix, cache, ...props }: LintProps): JSX.El
         {
           files
             ? (
-              <RunLinter 
+              <RunLinter
                 files={files}
                 fix={fix}
                 cache={cache}
@@ -72,7 +79,7 @@ export default function Lint({ files, fix, cache, ...props }: LintProps): JSX.El
             )
             : (
               <>
-                <RunLinter 
+                <RunLinter
                   files={files}
                   fix={fix}
                   cache={cache}
@@ -80,7 +87,7 @@ export default function Lint({ files, fix, cache, ...props }: LintProps): JSX.El
                   onFailure={onFailure}
                   onSuccess={onSuccess}
                 />
-                <RunLinter 
+                <RunLinter
                   files={files}
                   fix={fix}
                   cache={cache}

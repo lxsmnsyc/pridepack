@@ -9,6 +9,7 @@ esbuild.buildSync({
   bundle: true,
   minify: true,
   sourcemap: false,
+  format: 'cjs',
   platform: 'node',
   tsconfig: './tsconfig.json',
   external: [
@@ -16,4 +17,5 @@ esbuild.buildSync({
     ...Object.keys(packageJSON.devDependencies),
   ],
   target: "es2017",
+  legalComments: 'eof',
 });

@@ -22,6 +22,7 @@
  * SOFTWARE.
  */
 import { Box } from 'ink';
+import chalk from 'chalk';
 import React, { useEffect, useState } from 'react';
 import { Diagnostic } from 'typescript';
 import CompileTypesDiagnostics, { diagnosticToMessage } from '../Build/CompileTypesDiagnostics';
@@ -29,7 +30,6 @@ import watchCompileTypes from '../core/watch-compile-types';
 import { Remount } from '../utils/hooks/useRemount';
 import DiagnosticMessage from '../utils/DiagnosticMessage';
 import IndefiniteMessage from '../utils/IndefiniteMessage';
-import chalk from 'chalk';
 
 interface WatchCompileTypesProps {
   remount: Remount;
@@ -55,11 +55,11 @@ export default function WatchCompileTypes(
       (diagnostic) => {
         if (mounted) {
           collectDiagnostics = !collectDiagnostics;
-  
+
           if (collectDiagnostics) {
             setDiagnostics([]);
           }
-  
+
           setWatchStatus(diagnostic);
           remount();
         }

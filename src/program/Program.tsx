@@ -26,7 +26,7 @@ import React from 'react';
 import Build from './Build';
 import Check from './Check';
 import Clean from './Clean';
-import CreatePackage from './Init/CreatePackage'
+import CreatePackage from './Init/CreatePackage';
 import InitPackage from './Init/InitPackage';
 import Lint, { LintProps } from './Lint';
 import Test from './Test';
@@ -92,11 +92,12 @@ function Program(
     return <Lint files={files} fix={fix} cache={cache} />;
   }
 
-  return <></>
+  return <></>;
 }
 
-export default function renderProgram(props: ProgramProps) {
+export default function renderProgram(props: ProgramProps): void {
   render((
+    // eslint-disable-next-line react/jsx-props-no-spreading
     <Program {...props} />
   ), {
     patchConsole: true,
