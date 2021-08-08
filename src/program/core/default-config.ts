@@ -39,7 +39,7 @@ export interface PridepackConfig extends PridepackBaseConfig {
 
 const DEFAULT_CONFIG: PridepackConfig = {
   srcFile: 'src/index.ts',
-  target: 'esnext',
+  target: 'es2017',
   tsconfig: 'tsconfig.json',
 };
 
