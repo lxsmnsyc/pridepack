@@ -34,7 +34,7 @@ import useLoadableEvent, { LoadableEvent } from '../utils/hooks/useLoadableEvent
 // Components
 import SuperDiagnosticMessage from '../utils/SuperDiagnosticMessage';
 
-interface CreatePackageJSONProps extends LoadableEvent<void, Error>  {
+interface CreatePackageJSONProps extends LoadableEvent<void, Error> {
   packageName: string;
   directory: string;
 }

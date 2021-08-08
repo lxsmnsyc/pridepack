@@ -26,5 +26,5 @@ import { IPackageJson } from 'package-json-type';
 import getPackagePath from './get-package-path';
 
 export default function readPackage(cwd = '.'): Promise<IPackageJson> {
-  return fs.readJson(getPackagePath(cwd));
+  return fs.readJson(getPackagePath(cwd)) as Promise<IPackageJson>;
 }

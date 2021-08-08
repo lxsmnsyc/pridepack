@@ -48,7 +48,7 @@ export default async function readTSConfig(): Promise<Partial<TsConfig>> {
   if (TSCONFIG) {
     return TSCONFIG;
   }
-  
+
   // Read config
   const tsconfig = await getTSConfigPath();
   TSCONFIG = await fs.readJson(tsconfig) as Partial<TsConfig>;

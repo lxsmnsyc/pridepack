@@ -22,6 +22,7 @@
  * SOFTWARE.
  */
 import React from 'react';
+import { Box, Spacer } from 'ink';
 
 // Hooks
 import useAsyncMemo from '../utils/hooks/useAsyncMemo';
@@ -31,10 +32,8 @@ import { commandTitle, pendingMessage, successMessage } from '../core/styled-mes
 
 // Components
 import SuperDiagnosticMessage from '../utils/SuperDiagnosticMessage';
-import { Box, Spacer } from 'ink';
 import Timer from '../utils/Timer';
 import clean from '../core/clean';
-
 
 export default function Clean(): JSX.Element {
   const data = useAsyncMemo<void, Error>(clean, []);

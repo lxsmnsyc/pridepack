@@ -42,7 +42,7 @@ export interface CompileTypesProps extends LoadableEvent<Diagnostic[], Error> {
 }
 
 export default function CompileTypes(
-  { noEmit, ...props}: CompileTypesProps,
+  { noEmit, ...props }: CompileTypesProps,
 ): JSX.Element {
   const data = useAsyncMemo<Diagnostic[], Error>(
     () => compileTypes(noEmit),
@@ -57,7 +57,7 @@ export default function CompileTypes(
         status={data.status}
         pending={pendingMessage('Compiling', 'type declarations')}
         success={successMessage('Compiled', 'type declarations')}
-        failure={(data.result && data.result instanceof Error ) ? data.result.message : undefined}
+        failure={(data.result && data.result instanceof Error) ? data.result.message : undefined}
       />
       {
         data.status === 'success' && (

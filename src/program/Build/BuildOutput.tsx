@@ -35,8 +35,7 @@ import SuperDiagnosticMessage from '../utils/SuperDiagnosticMessage';
 import BuildESM from './BuildESM';
 import BuildCJS from './BuildCJS';
 
-export interface BuildOutputProps extends LoadableEvent<void, undefined> {
-}
+export type BuildOutputProps = LoadableEvent<void, undefined>;
 
 const MAX_SUCCESS = 2;
 

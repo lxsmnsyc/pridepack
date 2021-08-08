@@ -59,14 +59,16 @@ export default function LinterResult({ result }: LinterResultProps): JSX.Element
         <Spacer />
         <Box flexDirection="column" marginLeft={2}>
           {
-            result.messages.map((message, index) => (
+            result.messages.map((message, index) => {
+              return (
               <Box key={`message-${index}`}>
                 <DiagnosticMessage
                   category={diagnostics[message.severity]}
                   message={linterMessageToString(message)}
                 />
               </Box>
-            ))
+            )
+          })
           }
         </Box>
       </Box>

@@ -30,15 +30,14 @@ import useAsyncMemo from '../utils/hooks/useAsyncMemo';
 import useLoadableEvent, { LoadableEvent } from '../utils/hooks/useLoadableEvent';
 
 // Core
-import buildDevelopment from '../core/build-development';
+import buildDevelopment from '../core/build-cjs-development';
 import { pendingMessage, successMessage } from '../core/styled-messages';
 
 // Components
 import SuperDiagnosticMessage from '../utils/SuperDiagnosticMessage';
 import BuildDiagnostics from './BuildDiagnostics';
 
-export interface BuildDevelopmentProps extends LoadableEvent<BuildResult, BuildFailure> {
-}
+export type BuildDevelopmentProps = LoadableEvent<BuildResult, BuildFailure>;
 
 export default function BuildDevelopment(
   props: BuildDevelopmentProps,
@@ -57,7 +56,7 @@ export default function BuildDevelopment(
         pending={pendingMessage('Generating', 'CommonJS development build')}
         success={successMessage('Generated', 'CommonJS development build')}
       />
-      <BuildDiagnostics 
+      <BuildDiagnostics
         data={data}
       />
     </Box>

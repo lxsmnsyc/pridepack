@@ -30,7 +30,7 @@ import useAsyncMemo from '../utils/hooks/useAsyncMemo';
 import useLoadableEvent, { LoadableEvent } from '../utils/hooks/useLoadableEvent';
 
 // Core
-import buildProduction from '../core/build-production';
+import buildProduction from '../core/build-cjs-production';
 
 // Components
 import SuperDiagnosticMessage from '../utils/SuperDiagnosticMessage';

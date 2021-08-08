@@ -36,8 +36,8 @@ export interface CompileTypesDiagnosticsProps {
 
 export function diagnosticToMessage(diagnostic: Diagnostic): string {
   const baseMessage = flattenDiagnosticMessageText(diagnostic.messageText, '\n');
-  if (diagnostic.file) {
-    const { line, character } = diagnostic.file.getLineAndCharacterOfPosition(diagnostic.start!);
+  if (diagnostic.file && diagnostic.start) {
+    const { line, character } = diagnostic.file.getLineAndCharacterOfPosition(diagnostic.start);
     const fileName = path.relative(process.cwd(), diagnostic.file.fileName);
     const file = chalk.blue(fileName);
     const styledLine = chalk.yellow(line + 1);
@@ -54,15 +54,18 @@ export default function CompileTypesDiagnostics(
   return (
     <Box flexDirection="column" marginLeft={2}>
       {
-        diagnostics.map((diagnostic, index) => (
-          <Box key={`diagnostic-${index}`}>
-            <DiagnosticMessage
-              category={diagnostic.category}
-              message={diagnosticToMessage(diagnostic)}
-            />
-          </Box>
-        ))
+        diagnostics.map((diagnostic) => {
+          const parsed = diagnosticToMessage(diagnostic);
+          return (
+            <Box key={parsed}>
+              <DiagnosticMessage
+                category={diagnostic.category}
+                message={parsed}
+              />
+            </Box>
+          );
+        })
       }
     </Box>
-  )
+  );
 }

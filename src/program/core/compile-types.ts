@@ -77,11 +77,11 @@ export default async function compileTypes(noEmit = true): Promise<Diagnostic[]>
     baseConfig,
     host,
   );
-  
+
   const result = program.emit();
 
   await Promise.all(
-    files.map((file) => fs.outputFile(file.name, file.data))
+    files.map((file) => fs.outputFile(file.name, file.data)),
   );
 
   return getPreEmitDiagnostics(program)

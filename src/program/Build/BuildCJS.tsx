@@ -34,8 +34,7 @@ import BuildProduction from './BuildProduction';
 
 import { pendingMessage, successMessage } from '../core/styled-messages';
 
-export interface BuildCJSProps extends LoadableEvent<void, undefined> {
-}
+export type BuildCJSProps = LoadableEvent<void, undefined>;
 
 const MAX_SUCCESS = 2;
 

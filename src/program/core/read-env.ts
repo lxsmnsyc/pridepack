@@ -50,7 +50,7 @@ export default async function readEnv(
   const defaultPath = path.resolve(path.join(cwd, ENV));
 
   if (await fs.pathExists(defaultPath)) {
-    return dotenv.parse(await fs.readFile(defaultPath))
+    return dotenv.parse(await fs.readFile(defaultPath));
   }
   return {};
 }

@@ -29,7 +29,7 @@ import readConfigWithCWD from './read-config-with-cwd';
 import readExternals from './read-externals';
 import { DEFAULT_CJS_DEVELOPMENT_ENTRY, getCJSTargetDirectory } from './build-cjs';
 
-export default async function buildDevelopment(): Promise<BuildResult> {
+export default async function buildCJSDevelopment(): Promise<BuildResult> {
   const config = await readConfig();
   const configCWD = await readConfigWithCWD();
   const externals = await readExternals();
@@ -60,7 +60,7 @@ export default async function buildDevelopment(): Promise<BuildResult> {
     jsxFragment: config.jsxFragment,
     logLevel: 'silent',
     banner: {
-      js: '"use strict";'
+      js: '"use strict";',
     },
     charset: 'utf8',
     plugins: config.plugins,

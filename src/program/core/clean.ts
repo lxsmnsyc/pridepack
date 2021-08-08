@@ -28,7 +28,7 @@ import { getESMTargetDirectory } from './build-esm';
 import readPackage from './read-package';
 import { BASE_PACKAGE } from './create-package';
 
-export default async function clean() {
+export default async function clean(): Promise<void> {
   // Remove CJS directory
   await fs.remove(
     path.resolve(
@@ -53,7 +53,7 @@ export default async function clean() {
     path.resolve(
       path.join(
         process.cwd(),
-        path.dirname(pkg.types ?? BASE_PACKAGE.types ?? '')
+        path.dirname(pkg.types ?? BASE_PACKAGE.types ?? ''),
       ),
     ),
   );

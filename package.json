@@ -14,6 +14,7 @@
   "bin": {
     "pridepack": "./bin/index.js"
   },
+  "type": "module",
   "scripts": {
     "prepublish": "yarn build",
     "build": "node build-src",
@@ -67,5 +68,8 @@
     "package",
     "scaffolding",
     "bootstrap"
-  ]
+  ],
+  "engines": {
+    "node": "^14.0.0"
+  }
 }

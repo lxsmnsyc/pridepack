@@ -1,5 +1,5 @@
-const esbuild = require('esbuild');
-const packageJSON = require('./package.json');
+import * as esbuild from 'esbuild';
+import packageJSON from './package.json';
 
 esbuild.buildSync({
   entryPoints: [
@@ -9,6 +9,7 @@ esbuild.buildSync({
   bundle: true,
   minify: true,
   sourcemap: false,
+  format: 'esm',
   platform: 'node',
   tsconfig: './tsconfig.json',
   external: [
@@ -16,4 +17,5 @@ esbuild.buildSync({
     ...Object.keys(packageJSON.devDependencies),
   ],
   target: "es2017",
+  legalComments: 'eof',
 });

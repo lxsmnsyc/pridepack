@@ -22,58 +22,25 @@
  * SOFTWARE.
  */
 import path from 'path';
-import { legacy, resolve } from 'resolve.exports';
 import { build, BuildResult } from 'esbuild';
-import { DEVELOPMENT_ENV } from './read-env-defs';
-import readConfig from './read-config';
+import { PRODUCTION_ENV } from './read-env-defs';
 import readConfigWithCWD from './read-config-with-cwd';
 import readExternals from './read-externals';
-import readPackage from './read-package';
+import readConfig from './read-config';
+import { getCJSTargetDirectory, DEFAULT_CJS_PRODUCTION_ENTRY } from './build-cjs';
 
-export const DEFAULT_ESM_ENTRY = 'dist/esm/index.js';
+export const OUTPUT_SUFFIX = 'production.min';
 
-export async function resolveESM(): Promise<string> {
-  const pkg = await readPackage();
-
-  // Resolve through Export map
-  let result: string | void;
-  try {
-    result = resolve(pkg, '.') ?? undefined;
-  } catch (err) {
-    result = undefined;
-  }
-
-  // If there is a definition, return it.
-  if (result) {
-    return result;
-  }
-
-  // Otherwise, fallback to legacy.
-  const legacyResult = legacy(pkg, {
-    browser: false,
-    fields: ['module'],
-  });
-
-  if (legacyResult) {
-    return legacyResult;
-  }
-
-  return DEFAULT_ESM_ENTRY;
-}
-
-export async function getESMTargetDirectory(): Promise<string> {
-  const targetPath = await resolveESM();
-
-  return path.dirname(targetPath);
-}
-
-export default async function buildESM(): Promise<BuildResult> {
+export default async function buildCJSProduction(): Promise<BuildResult> {
   const config = await readConfig();
   const configCWD = await readConfigWithCWD();
   const externals = await readExternals();
   // get outfile
-  const esmFile = await resolveESM();
-  const outfile = path.resolve(esmFile);
+  const outfile = path.resolve(path.join(
+    process.cwd(),
+    await getCJSTargetDirectory(),
+    DEFAULT_CJS_PRODUCTION_ENTRY,
+  ));
   // run esbuild
   return build({
     entryPoints: [
@@ -81,12 +48,12 @@ export default async function buildESM(): Promise<BuildResult> {
     ],
     outfile,
     bundle: true,
-    minify: false,
+    minify: true,
     platform: 'node',
-    format: 'esm',
     sourcemap: true,
     define: {
-      ...await DEVELOPMENT_ENV,
+      ...await PRODUCTION_ENV,
+      'process.env.NODE_ENV': '"production"',
     },
     external: externals,
     target: config.target,
@@ -94,6 +61,9 @@ export default async function buildESM(): Promise<BuildResult> {
     jsxFactory: config.jsxFactory,
     jsxFragment: config.jsxFragment,
     logLevel: 'silent',
+    banner: {
+      js: '"use strict";',
+    },
     charset: 'utf8',
     plugins: config.plugins,
     legalComments: 'eof',

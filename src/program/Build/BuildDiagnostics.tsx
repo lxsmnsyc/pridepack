@@ -1,12 +1,11 @@
-
 import React from 'react';
 import { BuildResult, BuildFailure } from 'esbuild';
 import { Box } from 'ink';
+import { DiagnosticCategory } from 'typescript';
 
 import { AsyncMemo } from '../utils/hooks/useAsyncMemo';
 import DiagnosticMessage from '../utils/DiagnosticMessage';
 import BuildResultDiagnostics from './BuildResultDiagnostics';
-import { DiagnosticCategory } from 'typescript';
 
 interface BuildSuccessProps {
   value: BuildResult;
@@ -46,10 +45,12 @@ function BuildFailure({ value }: BuildFailureProps): JSX.Element {
         message={value.message}
       />
       {
-        value.stack && <DiagnosticMessage
-          category={DiagnosticCategory.Error}
-          message={value.stack}
-        />
+        value.stack && (
+          <DiagnosticMessage
+            category={DiagnosticCategory.Error}
+            message={value.stack}
+          />
+        )
       }
     </Box>
   );

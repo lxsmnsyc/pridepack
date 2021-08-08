@@ -44,7 +44,7 @@ export default function watchCompileTypes(
   reportDiagnostic: ReadDiagnostic,
   reportWatchStatus: ReadDiagnostic,
   noEmit?: boolean,
-) {
+): EndCompile {
   let ready = true;
 
   let program: WatchOfConfigFile<any>;
