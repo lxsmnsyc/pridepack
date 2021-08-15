@@ -60,10 +60,20 @@ const TEMPLATES: Templates = {
       ...baseDevDependencies,
     ],
   },
+  'bot-discord': {
+    name: 'bot-discord',
+    dependencies: [
+      'discord.js',
+      'dotenv',
+    ],
+    peerDependencies: [],
+    devDependencies: [
+      ...baseDevDependencies,
+    ],
+  },
   react: {
     name: 'react',
-    dependencies: [
-    ],
+    dependencies: [],
     peerDependencies: [
       {
         name: 'react',
@@ -87,8 +97,7 @@ const TEMPLATES: Templates = {
   },
   preact: {
     name: 'preact',
-    dependencies: [
-    ],
+    dependencies: [],
     peerDependencies: [
       {
         name: 'preact',
@@ -105,8 +114,7 @@ const TEMPLATES: Templates = {
   },
   vue: {
     name: 'vue',
-    dependencies: [
-    ],
+    dependencies: [],
     peerDependencies: [
       {
         name: 'vue',

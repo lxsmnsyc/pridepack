@@ -14,6 +14,9 @@
   "bin": {
     "pridepack": "./bin/index.js"
   },
+  "contributors": [
+    "TheoryOfNekomata <allan.crisostomo@outlook.com> (https://modal.sh)"
+  ],
   "scripts": {
     "prepublish": "yarn build",
     "build": "node build-src",
@@ -67,8 +70,5 @@
     "package",
     "scaffolding",
     "bootstrap"
-  ],
-  "engines": {
-    "node": ">14.0.0"
-  }
+  ]
 }
