@@ -28,14 +28,17 @@ import {
   DEFAULT_CJS_PRODUCTION_ENTRY,
   resolveEntry,
 } from './build-cjs';
+import readConfig from './read-config';
 
 export default async function buildEntry(): Promise<void> {
+  const config = await readConfig();
+  const hasJSX = config.jsx === 'preserve';
   const contents = `
 'use strict';
 if (process.env.NODE_ENV === 'production') {
-  module.exports = require('./${DEFAULT_CJS_PRODUCTION_ENTRY}');
+  module.exports = require('./${DEFAULT_CJS_PRODUCTION_ENTRY}${hasJSX ? 'x' : ''}');
 } else {
-  module.exports = require('./${DEFAULT_CJS_DEVELOPMENT_ENTRY}');
+  module.exports = require('./${DEFAULT_CJS_DEVELOPMENT_ENTRY}${hasJSX ? 'x' : ''}');
 }
   `;
 

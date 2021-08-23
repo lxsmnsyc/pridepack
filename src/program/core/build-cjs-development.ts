@@ -44,7 +44,7 @@ export default async function buildCJSDevelopment(): Promise<BuildResult> {
     entryPoints: [
       configCWD.srcFile,
     ],
-    outfile,
+    outfile: `${outfile}${config.jsx === 'preserve' ? 'x' : ''}`,
     bundle: true,
     minify: false,
     platform: 'node',

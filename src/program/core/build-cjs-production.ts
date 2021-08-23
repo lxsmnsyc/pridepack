@@ -29,8 +29,6 @@ import readExternals from './read-externals';
 import readConfig from './read-config';
 import { getCJSTargetDirectory, DEFAULT_CJS_PRODUCTION_ENTRY } from './build-cjs';
 
-export const OUTPUT_SUFFIX = 'production.min';
-
 export default async function buildCJSProduction(): Promise<BuildResult> {
   const config = await readConfig();
   const configCWD = await readConfigWithCWD();
@@ -46,7 +44,7 @@ export default async function buildCJSProduction(): Promise<BuildResult> {
     entryPoints: [
       configCWD.srcFile,
     ],
-    outfile,
+    outfile: `${outfile}${config.jsx === 'preserve' ? 'x' : ''}`,
     bundle: true,
     minify: true,
     platform: 'node',

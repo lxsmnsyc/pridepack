@@ -74,12 +74,15 @@ export default async function buildESM(): Promise<BuildResult> {
   // get outfile
   const esmFile = await resolveESM();
   const outfile = path.resolve(esmFile);
+  const withJSX = config.jsx === 'preserve' && outfile.endsWith('.js')
+    ? `${outfile}x`
+    : outfile;
   // run esbuild
   return build({
     entryPoints: [
       configCWD.srcFile,
     ],
-    outfile,
+    outfile: withJSX,
     bundle: true,
     minify: false,
     platform: 'node',
