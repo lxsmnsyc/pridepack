@@ -46,7 +46,7 @@ export default async function buildCJSProduction(): Promise<BuildResult> {
     entryPoints: [
       configCWD.srcFile,
     ],
-    outfile,
+    outfile: `${outfile}${config.jsx === 'preserve' ? 'x' : ''}`,
     bundle: true,
     minify: true,
     platform: 'node',
@@ -58,6 +58,7 @@ export default async function buildCJSProduction(): Promise<BuildResult> {
     external: externals,
     target: config.target,
     tsconfig: configCWD.tsconfig,
+    jsx: config.jsx,
     jsxFactory: config.jsxFactory,
     jsxFragment: config.jsxFragment,
     logLevel: 'silent',

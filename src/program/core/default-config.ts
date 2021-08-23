@@ -30,7 +30,8 @@ export interface PridepackBaseConfig {
 }
 
 export interface PridepackConfig extends PridepackBaseConfig {
-  target: string;
+  target: string | string[];
+  jsx?: 'transform' | 'preserve';
   jsxFactory?: string;
   jsxFragment?: string;
   jest?: InitialOptions;
