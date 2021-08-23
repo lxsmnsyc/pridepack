@@ -79,7 +79,7 @@ export default async function buildESM(): Promise<BuildResult> {
     entryPoints: [
       configCWD.srcFile,
     ],
-    outfile: `${outfile}${config.jsx === 'preserve' ? 'x' : ''}`,
+    outfile,
     bundle: true,
     minify: false,
     platform: 'node',
