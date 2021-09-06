@@ -1,0 +1,70 @@
+name: Docker Build Image Production
+
+on: 
+  push:
+    branches:
+      - main
+
+jobs:
+  build_pipeline:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+
+      - name: Use cached node_modules
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: nodeModules-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            nodeModules-
+
+      - name: Write Env File
+        shell: bash
+        run: |
+          cat << EOF > .env
+          NODE_ENV=production
+        # Add your env variables inside the `run` key above
+        # Example: `ENV_VARIABLE=${{ secrets.ENV_VARIABLE }}`
+
+      - name: Install
+        run: yarn install --frozen-lockfile
+        env:
+          CI: true
+
+      - name: Clean
+        run: yarn clean
+        env:
+          CI: true
+
+      - name: Type-check
+        run: yarn type-check
+        env:
+          CI: true
+
+      - name: Lint
+        run: yarn lint
+        env:
+          CI: true
+
+      - name: Build
+        run: yarn build
+        env:
+          CI: true
+
+      - name: Push Docker images
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          dockerfile: ./Dockerfile
+          repository: lyonph/repository-name # Change to correct repository name
+          tag_with_sha: true
+          labels: environment=production

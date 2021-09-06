@@ -35,6 +35,7 @@ export interface Template {
   dependencies: string[];
   peerDependencies: PeerDependency[];
   devDependencies: string[];
+  scripts?: Record<string, string>;
 }
 
 export interface Templates {
@@ -46,9 +47,9 @@ const baseDevDependencies = [
   '@types/node',
   'eslint',
   'eslint-config-lxsmnsyc',
+  'pridepack',
   'tslib',
   'typescript',
-  'pridepack',
 ];
 
 const TEMPLATES: Templates = {
@@ -137,6 +138,41 @@ const TEMPLATES: Templates = {
     devDependencies: [
       ...baseDevDependencies,
     ],
+  },
+  'fastify-lyon': {
+    name: 'fastify-lyon',
+    dependencies: [
+      '@sentry/integrations',
+      '@sentry/node',
+      'dd-trace',
+      'dotenv',
+      'fastify',
+      'fastify-cors',
+      'fastify-formbody',
+      'fastify-healthcheck',
+      'fastify-helmet',
+      'graphql',
+      'graphql-request',
+      'graphql-tag',
+      'pino-pretty',
+    ],
+    peerDependencies: [],
+    devDependencies: [
+      ...baseDevDependencies,
+      '@graphql-codegen/cli',
+      '@graphql-codegen/typed-document-node',
+      '@graphql-codegen/typescript',
+      '@graphql-codegen/typescript-graphql-files-modules',
+      '@graphql-codegen/typescript-graphql-request',
+      '@graphql-codegen/typescript-operations',
+      'nodemon',
+    ],
+    scripts: {
+      'dev': 'nodemon',
+      'start': 'node ./dist/cjs/index.js',
+      'build': 'yarn graphql:generate && pridepack build',
+      'graphql:generate': 'graphql-codegen',
+    }
   },
 };
 
