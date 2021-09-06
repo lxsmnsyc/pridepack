@@ -31,9 +31,10 @@ import { SCRIPTS } from './create-package';
 export default async function addPeers(template: string, cwd = '.'): Promise<void> {
   const packageInfo = await readPackage(cwd);
   const peerDependencies: IDependencyMap = {};
+  const chosenTemplate = TEMPLATES[template];
 
   if (packageInfo.devDependencies) {
-    const peers = TEMPLATES[template].peerDependencies;
+    const peers = chosenTemplate.peerDependencies;
     Object.entries(packageInfo.devDependencies).forEach(([key, value]) => {
       peers.forEach((peer) => {
         if (typeof peer === 'object') {
@@ -50,7 +51,10 @@ export default async function addPeers(template: string, cwd = '.'): Promise<voi
   const newInfo = {
     ...packageInfo,
     peerDependencies,
-    scripts: SCRIPTS,
+    scripts: {
+      ...SCRIPTS,
+      ...chosenTemplate.scripts,
+    },
   };
 
   await fs.outputJson(getPackagePath(cwd), newInfo, {
