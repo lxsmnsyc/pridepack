@@ -30,7 +30,7 @@ import useAsyncMemo from '../utils/hooks/useAsyncMemo';
 import useLoadableEvent, { LoadableEvent } from '../utils/hooks/useLoadableEvent';
 
 // Core
-import buildESM from '../core/build-esm';
+import buildESM from '../core/build-esm.old';
 import { pendingMessage, successMessage } from '../core/styled-messages';
 
 // Components

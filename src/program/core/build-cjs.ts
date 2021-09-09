@@ -26,10 +26,10 @@ import { legacy, resolve } from 'resolve.exports';
 import readPackage from './read-package';
 
 export const DEFAULT_OUTPUT = 'dist/cjs';
-export const DEFAULT_CJS_ENTRY_FILE = 'index.js';
-export const DEFAULT_CJS_ENTRY = `${DEFAULT_OUTPUT}/${DEFAULT_CJS_ENTRY_FILE}`;
 export const DEFAULT_CJS_PRODUCTION_ENTRY = 'production/index.js';
 export const DEFAULT_CJS_DEVELOPMENT_ENTRY = 'development/index.js';
+export const DEFAULT_CJS_ENTRY = `${DEFAULT_OUTPUT}/${DEFAULT_CJS_PRODUCTION_ENTRY}`;
+export const DEFAULT_CJS_DEV_ENTRY = `${DEFAULT_OUTPUT}/${DEFAULT_CJS_DEVELOPMENT_ENTRY}`;
 
 export async function resolveEntry(): Promise<string> {
   const pkg = await readPackage();

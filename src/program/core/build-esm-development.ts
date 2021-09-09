@@ -22,34 +22,47 @@
  * SOFTWARE.
  */
 import path from 'path';
-import fs from 'fs-extra';
-import {
-  DEFAULT_CJS_DEVELOPMENT_ENTRY,
-  DEFAULT_CJS_PRODUCTION_ENTRY,
-  resolveEntry,
-} from './build-cjs';
+import { build, BuildResult } from 'esbuild';
+import { DEVELOPMENT_ENV } from './read-env-defs';
 import readConfig from './read-config';
+import readConfigWithCWD from './read-config-with-cwd';
+import readExternals from './read-externals';
+import { DEFAULT_ESM_DEVELOPMENT_ENTRY, getESMTargetDirectory } from './build-esm';
 
-export default async function buildEntry(): Promise<void> {
+export default async function buildESMDevelopment(): Promise<BuildResult> {
   const config = await readConfig();
-  const hasJSX = config.jsx === 'preserve';
-  const contents = `
-'use strict';
-if (process.env.NODE_ENV === 'production') {
-  module.exports = require('./${DEFAULT_CJS_PRODUCTION_ENTRY}${hasJSX ? 'x' : ''}');
-} else {
-  module.exports = require('./${DEFAULT_CJS_DEVELOPMENT_ENTRY}${hasJSX ? 'x' : ''}');
-}
-  `;
-
-  const entryPath = await resolveEntry();
-
-  const resolvedEntry = path.resolve(
-    path.join(
-      process.cwd(),
-      entryPath,
-    ),
-  );
-
-  await fs.outputFile(resolvedEntry, contents);
+  const configCWD = await readConfigWithCWD();
+  const externals = await readExternals();
+  // get outfile
+  const outfile = path.resolve(path.join(
+    process.cwd(),
+    await getESMTargetDirectory(),
+    DEFAULT_ESM_DEVELOPMENT_ENTRY,
+  ));
+  // run esbuild
+  return build({
+    entryPoints: [
+      configCWD.srcFile,
+    ],
+    outfile: `${outfile}${config.jsx === 'preserve' ? 'x' : ''}`,
+    bundle: true,
+    minify: false,
+    platform: 'node',
+    format: 'esm',
+    sourcemap: true,
+    define: {
+      ...await DEVELOPMENT_ENV,
+      'process.env.NODE_ENV': '"development"',
+    },
+    external: externals,
+    target: config.target,
+    tsconfig: configCWD.tsconfig,
+    jsx: config.jsx,
+    jsxFactory: config.jsxFactory,
+    jsxFragment: config.jsxFragment,
+    logLevel: 'silent',
+    charset: 'utf8',
+    plugins: config.plugins,
+    legalComments: 'eof',
+  });
 }

@@ -23,16 +23,15 @@
  */
 import path from 'path';
 import { legacy, resolve } from 'resolve.exports';
-import { build, BuildResult } from 'esbuild';
-import { DEVELOPMENT_ENV } from './read-env-defs';
-import readConfig from './read-config';
-import readConfigWithCWD from './read-config-with-cwd';
-import readExternals from './read-externals';
 import readPackage from './read-package';
 
-export const DEFAULT_ESM_ENTRY = 'dist/esm/index.js';
+export const DEFAULT_OUTPUT = 'dist/esm';
+export const DEFAULT_ESM_PRODUCTION_ENTRY = 'production/index.js';
+export const DEFAULT_ESM_DEVELOPMENT_ENTRY = 'development/index.js';
+export const DEFAULT_ESM_ENTRY = `${DEFAULT_OUTPUT}/${DEFAULT_ESM_PRODUCTION_ENTRY}`;
+export const DEFAULT_ESM_DEV_ENTRY = `${DEFAULT_OUTPUT}/${DEFAULT_ESM_DEVELOPMENT_ENTRY}`;
 
-export async function resolveESM(): Promise<string> {
+export async function resolveEntry(): Promise<string> {
   const pkg = await readPackage();
 
   // Resolve through Export map
@@ -60,46 +59,10 @@ export async function resolveESM(): Promise<string> {
 
   return DEFAULT_ESM_ENTRY;
 }
-
+ 
 export async function getESMTargetDirectory(): Promise<string> {
-  const targetPath = await resolveESM();
+  const targetPath = await resolveEntry();
 
   return path.dirname(targetPath);
 }
-
-export default async function buildESM(): Promise<BuildResult> {
-  const config = await readConfig();
-  const configCWD = await readConfigWithCWD();
-  const externals = await readExternals();
-  // get outfile
-  const esmFile = await resolveESM();
-  const outfile = path.resolve(esmFile);
-  const withJSX = config.jsx === 'preserve' && outfile.endsWith('.js')
-    ? `${outfile}x`
-    : outfile;
-  // run esbuild
-  return build({
-    entryPoints: [
-      configCWD.srcFile,
-    ],
-    outfile: withJSX,
-    bundle: true,
-    minify: false,
-    platform: 'node',
-    format: 'esm',
-    sourcemap: true,
-    define: {
-      ...await DEVELOPMENT_ENV,
-    },
-    external: externals,
-    target: config.target,
-    tsconfig: configCWD.tsconfig,
-    jsx: config.jsx,
-    jsxFactory: config.jsxFactory,
-    jsxFragment: config.jsxFragment,
-    logLevel: 'silent',
-    charset: 'utf8',
-    plugins: config.plugins,
-    legalComments: 'eof',
-  });
-}
+ 
