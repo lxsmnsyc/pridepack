@@ -6,6 +6,7 @@ import prompts from 'prompts';
 import task from 'tasuku';
 import ts from 'typescript';
 import { findLicense } from 'license';
+import licenses from '@ovyerus/licenses';
 import buildCJSDevelopment from './program/core/build-cjs-development';
 import buildCJSProduction from './program/core/build-cjs-production';
 import buildESMDevelopment from './program/core/build-esm-development';
@@ -194,19 +195,10 @@ async function runInitPackage(name: string, directory?: string) {
     type: 'autocomplete',
     name: 'license',
     message: 'License?',
-    choices: [],
-    suggest: (input) => Promise.resolve(findLicense(input).map((item) => ({
-      value: item,
+    choices: Object.keys(licenses).map((item) => ({
       title: item,
-    }))),
-    onState() {
-      this.fallback = { title: this.input, value: this.input };
-
-      // Check to make sure there are no suggestions so we do not override a suggestion
-      if ((this.suggestions as any[]).length === 0) {
-        this.value = this.input;
-      }
-    },
+      value: item,
+    })),
   });
   const { private: isPrivate } = await prompts({
     type: 'confirm',
