@@ -5,6 +5,7 @@ import path from 'path';
 import prompts from 'prompts';
 import task from 'tasuku';
 import ts from 'typescript';
+import { findLicense } from 'license';
 import buildCJSDevelopment from './program/core/build-cjs-development';
 import buildCJSProduction from './program/core/build-cjs-production';
 import buildESMDevelopment from './program/core/build-esm-development';
@@ -12,7 +13,6 @@ import buildESMProduction from './program/core/build-esm-production';
 import clean from './program/core/clean';
 import compileTypes from './program/core/compile-types';
 import copyFromTemplate from './program/core/copy-from-template';
-import createPackage from './program/core/create-package';
 import getCWDName from './program/core/get-cwd-name';
 import getSafePackageName from './program/core/get-safe-package-name';
 import installDeps from './program/core/install-deps';
@@ -20,6 +20,7 @@ import patchPackage from './program/core/patch-package';
 import runLinter from './program/core/run-linter';
 import runJest from './program/core/run-jest';
 import watchCompileTypes from './program/core/watch-compile-types';
+import TEMPLATES from './templates';
 
 interface DiagnosticDisplay {
   symbol: string;
@@ -132,15 +133,6 @@ function generateESLintDiagnostics(results: ESLint.LintResult[]): void {
   }
 }
 
-const TEMPLATES = [
-  'basic',
-  'react',
-  'preact',
-  'vue',
-  'fastify',
-  'bot-discord',
-];
-
 async function chooseTemplate() {
   return prompts({
     type: 'select',
@@ -172,6 +164,59 @@ async function runInstallCommand(directory: string) {
   });
 }
 
+async function runInitPackage(name: string) {
+  const { description } = await prompts({
+    type: 'text',
+    name: 'description',
+    message: 'Your package\'s description?',
+  });
+  const { author } = await prompts({
+    type: 'text',
+    name: 'author',
+    message: 'Author name?',
+  });
+  const { repository } = await prompts({
+    type: 'text',
+    name: 'repository',
+    message: 'Repository URL?',
+  });
+  const { homepage } = await prompts({
+    type: 'text',
+    name: 'homepage',
+    message: 'Home URL?',
+  });
+  const { issues } = await prompts({
+    type: 'text',
+    name: 'issues',
+    message: 'Issues URL?',
+  });
+  const { license } = await prompts({
+    type: 'autocomplete',
+    name: 'license',
+    message: 'License?',
+    choices: [],
+    suggest: (input) => Promise.resolve(findLicense(input).map((item) => ({
+      value: item,
+      title: item,
+    }))),
+  });
+  const { private: isPrivate } = await prompts({
+    type: 'confirm',
+    name: 'private',
+    message: 'Is your package private?',
+  });
+  await patchPackage({
+    name,
+    license,
+    author,
+    description,
+    isPrivate,
+    repository,
+    homepage,
+    issues,
+  });
+}
+
 async function runCreateCommand() {
   const packageName = await prompts({
     type: 'text',
@@ -184,21 +229,17 @@ async function runCreateCommand() {
     await copyFromTemplate(templateName.template, directory);
     ctx.setTitle(`Copied from template '${templateName.template as string}'!`);
   });
-  await patchPackage(directory, packageName.name);
+  await runInitPackage(packageName.name);
   await runInstallCommand(directory);
 }
 
 async function runInitCommand() {
-  await task('Generating package.json...', async (ctx) => {
-    await createPackage(getCWDName(), '.');
-    ctx.setTitle('Generated package.json!');
-  });
   const templateName = await chooseTemplate();
   await task(`Copying from template '${templateName.template as string}'...`, async (ctx) => {
     await copyFromTemplate(templateName.template, '.');
     ctx.setTitle(`Copied from template '${templateName.template as string}'!`);
   });
-  await patchPackage();
+  await runInitPackage(getCWDName());
   await runInstallCommand('.');
 }
 

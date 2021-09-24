@@ -27,7 +27,6 @@ import ts from 'typescript';
 import readConfigWithCWD from './read-config-with-cwd';
 import readPackage from './read-package';
 import readValidCompilerOptions from './read-valid-compiler-options';
-import { BASE_PACKAGE } from './create-package';
 
 interface OutputFile {
   name: string;
@@ -37,6 +36,10 @@ interface OutputFile {
 export default async function compileTypes(noEmit = true): Promise<ts.Diagnostic[]> {
   const pkg = await readPackage();
 
+  if (!pkg.types) {
+    throw new Error('Missing "types" field from package.json');
+  }
+
   const options = await readValidCompilerOptions();
 
   const baseConfig: ts.CompilerOptions = {
@@ -44,7 +47,7 @@ export default async function compileTypes(noEmit = true): Promise<ts.Diagnostic
     outDir: path.resolve(
       path.join(
         process.cwd(),
-        path.dirname(pkg.types ?? BASE_PACKAGE.types ?? ''),
+        path.dirname(pkg.types),
       ),
     ),
     emitDeclarationOnly: !noEmit,

@@ -22,18 +22,66 @@
  * SOFTWARE.
  */
 import fs from 'fs-extra';
+import path from 'path';
+import { getLicense } from 'license';
+import { IPackageJson } from 'package-json-type';
 import readPackage from './read-package';
 import getPackagePath from './get-package-path';
-import { SCRIPTS } from './create-package';
 
-export default async function patchPackage(cwd = '.', name?: string): Promise<void> {
+const SCRIPTS = {
+  prepublish: 'pridepack clean && pridepack build',
+  build: 'pridepack build',
+  'type-check': 'pridepack check',
+  lint: 'pridepack lint',
+  test: 'pridepack test --passWithNoTests',
+  clean: 'pridepack clean',
+  watch: 'pridepack watch',
+};
+
+interface Patch {
+  name: string;
+  license: string;
+  author: string;
+  description: string;
+  repository: string;
+  homepage: string;
+  issues: string;
+  isPrivate: boolean;
+}
+
+export default async function patchPackage(patch: Patch, cwd = '.'): Promise<void> {
   const packageInfo = await readPackage(cwd);
 
-  const newInfo = {
+  await fs.outputFile(
+    path.join(cwd, 'LICENSE'),
+    getLicense(patch.license, {
+      author: patch.author,
+      year: new Date().getFullYear().toString(),
+    }),
+    {
+      encoding: 'utf-8',
+    },
+  );
+
+  const newInfo: IPackageJson = {
     ...packageInfo,
-    name: name ?? packageInfo.name,
+    name: patch.name ?? packageInfo.name,
     version: '0.0.0',
-    private: false,
+    description: patch.description,
+    repository: {
+      url: patch.repository,
+      type: 'git',
+    },
+    homepage: patch.homepage,
+    bugs: {
+      url: patch.issues,
+    },
+    author: patch.author,
+    license: patch.license as any,
+    private: patch.isPrivate,
+    publishConfig: {
+      access: patch.isPrivate ? 'restricted' : 'public',
+    },
     scripts: SCRIPTS,
   };
 

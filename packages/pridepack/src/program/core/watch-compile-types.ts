@@ -24,7 +24,6 @@
 import path from 'path';
 import ts from 'typescript';
 
-import { BASE_PACKAGE } from './create-package';
 import readConfigWithCWD from './read-config-with-cwd';
 import readPackage from './read-package';
 import readValidCompilerOptions from './read-valid-compiler-options';
@@ -44,6 +43,11 @@ export default function watchCompileTypes(
   async function setup() {
     const pkg = await readPackage();
 
+    const typesDir = pkg.types;
+    if (!typesDir) {
+      throw new Error('Missing "types" field from package.json');
+    }
+
     if (!ready) {
       return;
     }
@@ -55,7 +59,7 @@ export default function watchCompileTypes(
       outDir: path.resolve(
         path.join(
           process.cwd(),
-          path.dirname(pkg.types ?? BASE_PACKAGE.types ?? ''),
+          path.dirname(typesDir),
         ),
       ),
       emitDeclarationOnly: !noEmit,
@@ -85,7 +89,7 @@ export default function watchCompileTypes(
     );
   }
 
-  setup();
+  setup().catch(console.error);
 
   return () => {
     ready = false;
