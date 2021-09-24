@@ -41,5 +41,5 @@
   "peerDependencies": {
     "preact": "^10.0.0"
   },
-  "private": false
+  "private": true
 }

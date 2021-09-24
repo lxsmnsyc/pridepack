@@ -40,5 +40,5 @@
   "peerDependencies": {
     "vue": "^3.0.0"
   },
-  "private": false
+  "private": true
 }
