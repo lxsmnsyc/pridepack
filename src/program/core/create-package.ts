@@ -24,8 +24,8 @@
 import path from 'path';
 import fs from 'fs-extra';
 import { IPackageJson } from 'package-json-type';
-import { DEFAULT_ESM_DEV_ENTRY, DEFAULT_ESM_ENTRY } from './build-esm';
-import { DEFAULT_CJS_DEV_ENTRY, DEFAULT_CJS_ENTRY } from './build-cjs';
+import { DEFAULT_ESM_DEV_ENTRY, DEFAULT_ESM_PROD_ENTRY } from './build-esm';
+import { DEFAULT_CJS_DEV_ENTRY, DEFAULT_CJS_PROD_ENTRY } from './build-cjs';
 
 export const SCRIPTS = {
   prepublish: 'pridepack clean && pridepack build',
@@ -40,12 +40,12 @@ export const SCRIPTS = {
 export const BASE_PACKAGE: IPackageJson = {
   version: '0.0.0',
   types: 'dist/types/index.d.ts',
-  main: DEFAULT_CJS_ENTRY,
-  module: DEFAULT_ESM_ENTRY,
+  main: DEFAULT_CJS_PROD_ENTRY,
+  module: DEFAULT_ESM_PROD_ENTRY,
   exports: {
     './': {
-      require: `./${DEFAULT_CJS_ENTRY}`,
-      import: `./${DEFAULT_ESM_ENTRY}`,
+      require: `./${DEFAULT_CJS_PROD_ENTRY}`,
+      import: `./${DEFAULT_ESM_PROD_ENTRY}`,
     },
     './dev': {
       require: `./${DEFAULT_CJS_DEV_ENTRY}`,

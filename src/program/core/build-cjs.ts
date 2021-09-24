@@ -28,16 +28,16 @@ import readPackage from './read-package';
 export const DEFAULT_OUTPUT = 'dist/cjs';
 export const DEFAULT_CJS_PRODUCTION_ENTRY = 'production/index.js';
 export const DEFAULT_CJS_DEVELOPMENT_ENTRY = 'development/index.js';
-export const DEFAULT_CJS_ENTRY = `${DEFAULT_OUTPUT}/${DEFAULT_CJS_PRODUCTION_ENTRY}`;
+export const DEFAULT_CJS_PROD_ENTRY = `${DEFAULT_OUTPUT}/${DEFAULT_CJS_PRODUCTION_ENTRY}`;
 export const DEFAULT_CJS_DEV_ENTRY = `${DEFAULT_OUTPUT}/${DEFAULT_CJS_DEVELOPMENT_ENTRY}`;
 
-export async function resolveEntry(): Promise<string> {
+export async function resolveEntry(dev: boolean): Promise<string> {
   const pkg = await readPackage();
 
   // Resolve through Export map
   let result: string | void;
   try {
-    result = resolve(pkg, '.', {
+    result = resolve(pkg, dev ? './dev' : '.', {
       require: true,
     }) ?? undefined;
   } catch (err) {
@@ -59,11 +59,11 @@ export async function resolveEntry(): Promise<string> {
     return legacyResult;
   }
 
-  return DEFAULT_CJS_ENTRY;
+  return dev ? DEFAULT_CJS_DEV_ENTRY : DEFAULT_CJS_PROD_ENTRY;
 }
 
-export async function getCJSTargetDirectory(): Promise<string> {
-  const targetPath = await resolveEntry();
+export async function getCJSTargetDirectory(dev: boolean): Promise<string> {
+  const targetPath = await resolveEntry(dev);
 
   return path.dirname(targetPath);
 }

@@ -36,7 +36,7 @@ export default async function buildCJSDevelopment(): Promise<BuildResult> {
   // get outfile
   const outfile = path.resolve(path.join(
     process.cwd(),
-    await getCJSTargetDirectory(),
+    await getCJSTargetDirectory(true),
     DEFAULT_CJS_DEVELOPMENT_ENTRY,
   ));
   // run esbuild

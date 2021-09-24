@@ -36,7 +36,7 @@ export default async function buildESMProduction(): Promise<BuildResult> {
   // get outfile
   const outfile = path.resolve(path.join(
     process.cwd(),
-    await getESMTargetDirectory(),
+    await getESMTargetDirectory(false),
     DEFAULT_ESM_PRODUCTION_ENTRY,
   ));
   // run esbuild
