@@ -164,7 +164,7 @@ async function runInstallCommand(directory: string) {
   });
 }
 
-async function runInitPackage(name: string) {
+async function runInitPackage(name: string, directory?: string) {
   const { description } = await prompts({
     type: 'text',
     name: 'description',
@@ -199,6 +199,14 @@ async function runInitPackage(name: string) {
       value: item,
       title: item,
     }))),
+    onState() {
+      this.fallback = { title: this.input, value: this.input };
+
+      // Check to make sure there are no suggestions so we do not override a suggestion
+      if ((this.suggestions as any[]).length === 0) {
+        this.value = this.input;
+      }
+    },
   });
   const { private: isPrivate } = await prompts({
     type: 'confirm',
@@ -214,7 +222,7 @@ async function runInitPackage(name: string) {
     repository,
     homepage,
     issues,
-  });
+  }, directory);
 }
 
 async function runCreateCommand() {
@@ -229,7 +237,7 @@ async function runCreateCommand() {
     await copyFromTemplate(templateName.template, directory);
     ctx.setTitle(`Copied from template '${templateName.template as string}'!`);
   });
-  await runInitPackage(packageName.name);
+  await runInitPackage(packageName.name, directory);
   await runInstallCommand(directory);
 }
 
