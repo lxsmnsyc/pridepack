@@ -24,5 +24,21 @@
   "license": "MIT",
   "keywords": [
     "pridepack"
-  ]
+  ],
+  "devDependencies": {
+    "@types/jest": "^26.0.24",
+    "@types/node": "^16.9.6",
+    "eslint": "^7.32.0",
+    "eslint-config-lxsmnsyc": "^0.2.3",
+    "tslib": "^2.3.1",
+    "typescript": "^4.4.3",
+    "pridepack": "^0.12.2",
+    "preact": "^10.5.14",
+    "@testing-library/preact": "^2.0.1",
+    "@testing-library/preact-hooks": "^1.1.0",
+    "@testing-library/jest-dom": "^5.14.1"
+  },
+  "peerDependencies": {
+    "preact": "^10.0.0"
+  }
 }

@@ -24,5 +24,20 @@
   "license": "MIT",
   "keywords": [
     "pridepack"
-  ]
+  ],
+  "devDependencies": {
+    "@types/jest": "^26.0.24",
+    "@types/node": "^16.9.6",
+    "eslint": "^7.32.0",
+    "eslint-config-lxsmnsyc": "^0.2.3",
+    "tslib": "^2.3.1",
+    "typescript": "^4.4.3",
+    "pridepack": "^0.12.2",
+    "vue": "^3.0.0",
+    "@testing-library/vue": "^6.4.2",
+    "@testing-library/jest-dom": "^5.14.1"
+  },
+  "peerDependencies": {
+    "vue": "^3.0.0"
+  }
 }
