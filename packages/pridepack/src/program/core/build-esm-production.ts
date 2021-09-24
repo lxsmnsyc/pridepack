@@ -27,7 +27,7 @@ import { PRODUCTION_ENV } from './read-env-defs';
 import readConfigWithCWD from './read-config-with-cwd';
 import readExternals from './read-externals';
 import readConfig from './read-config';
-import { getESMTargetDirectory, DEFAULT_ESM_PRODUCTION_ENTRY } from './build-esm';
+import { resolveEntry } from './build-esm';
 
 export default async function buildESMProduction(incremental: boolean): Promise<BuildResult> {
   const config = await readConfig();
@@ -36,8 +36,7 @@ export default async function buildESMProduction(incremental: boolean): Promise<
   // get outfile
   const outfile = path.resolve(path.join(
     process.cwd(),
-    await getESMTargetDirectory(false),
-    DEFAULT_ESM_PRODUCTION_ENTRY,
+    await resolveEntry(false),
   ));
   // run esbuild
   return build({

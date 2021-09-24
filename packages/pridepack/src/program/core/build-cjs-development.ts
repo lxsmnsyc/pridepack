@@ -27,7 +27,7 @@ import { DEVELOPMENT_ENV } from './read-env-defs';
 import readConfig from './read-config';
 import readConfigWithCWD from './read-config-with-cwd';
 import readExternals from './read-externals';
-import { DEFAULT_CJS_DEVELOPMENT_ENTRY, getCJSTargetDirectory } from './build-cjs';
+import { resolveEntry } from './build-cjs';
 
 export default async function buildCJSDevelopment(incremental: boolean): Promise<BuildResult> {
   const config = await readConfig();
@@ -36,8 +36,7 @@ export default async function buildCJSDevelopment(incremental: boolean): Promise
   // get outfile
   const outfile = path.resolve(path.join(
     process.cwd(),
-    await getCJSTargetDirectory(true),
-    DEFAULT_CJS_DEVELOPMENT_ENTRY,
+    await resolveEntry(true),
   ));
   // run esbuild
   return build({
