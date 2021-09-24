@@ -24,7 +24,7 @@
 import path from 'path';
 import fs from 'fs-extra';
 import { getCJSTargetDirectory } from './build-cjs';
-import { getESMTargetDirectory } from './build-esm.old';
+import { getESMTargetDirectory } from './build-esm';
 import readPackage from './read-package';
 import { BASE_PACKAGE } from './create-package';
 

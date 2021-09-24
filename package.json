@@ -34,6 +34,7 @@
     "package-json-type": "^1.0.3",
     "prompts": "^2.4.1",
     "resolve.exports": "^1.0.2",
+    "tasuku": "^1.0.2",
     "ts-jest": "^26.5.6",
     "tslib": "^2.3.0",
     "typescript": "^4.3.5",

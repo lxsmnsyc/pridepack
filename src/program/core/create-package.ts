@@ -51,8 +51,6 @@ export const BASE_PACKAGE: IPackageJson = {
       require: `./${DEFAULT_CJS_DEV_ENTRY}`,
       import: `./${DEFAULT_ESM_DEV_ENTRY}`,
     },
-    require: `./${DEFAULT_CJS_ENTRY}`,
-    import: `./${DEFAULT_ESM_ENTRY}`,
   },
   files: [
     'dist',

@@ -23,8 +23,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+import prompts from 'prompts';
 import yargs from 'yargs';
-import renderProgram from './program/Program';
+import runProgram from './program';
 
 const { argv } = yargs
   .scriptName('pridepack')
@@ -99,24 +100,5 @@ const { argv } = yargs
   .demandCommand(1)
   .help();
 
-switch (argv._[0]) {
-  case 'init':
-  case 'clean':
-  case 'create':
-  case 'build':
-  case 'check':
-  case 'watch':
-  case 'test':
-  case 'lint':
-    renderProgram({
-      command: argv._[0],
-      template: argv.template,
-      packageName: argv.name,
-      fix: argv.fix,
-      cache: argv.cache,
-      files: argv.files as string[],
-    });
-    break;
-  default:
-    break;
-}
+prompts.override(argv);
+runProgram();
