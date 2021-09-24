@@ -13,7 +13,8 @@
     "publish": {
       "npmClient": "yarn",
       "allowBranch": [
-        "main"
+        "main",
+        "rework"
       ],
       "registry": "https://registry.npmjs.org/"
     }

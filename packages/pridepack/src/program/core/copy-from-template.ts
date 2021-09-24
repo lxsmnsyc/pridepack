@@ -24,7 +24,7 @@
 import path from 'path';
 import degit from 'degit';
 
-const SOURCE = 'github:LyonInc/pridepack';
+const SOURCE = 'github:LyonInc/pridepack#rework';
 
 export default async function copyFromTemplate(
   template: string,
