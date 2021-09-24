@@ -5,7 +5,6 @@ import path from 'path';
 import prompts from 'prompts';
 import task from 'tasuku';
 import ts from 'typescript';
-import { findLicense } from 'license';
 import licenses from '@ovyerus/licenses';
 import buildCJSDevelopment from './program/core/build-cjs-development';
 import buildCJSProduction from './program/core/build-cjs-production';
