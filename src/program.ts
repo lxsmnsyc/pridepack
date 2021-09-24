@@ -199,6 +199,14 @@ async function runBuildCommand() {
   });
 }
 
+async function runCheckCommand() {
+  await task('Compiling types...', async (ctx) => {
+    const result = await compileTypes(true);
+    generateTSDiagnostics(result);
+    ctx.setTitle('Compiled types!');
+  });
+}
+
 async function runCommand() {
   const response = await prompts({
     type: 'select',
@@ -228,6 +236,9 @@ async function runCommand() {
       break;
     case 'build':
       await runBuildCommand();
+      break;
+    case 'check':
+      await runCheckCommand();
       break;
   }
 }
