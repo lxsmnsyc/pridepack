@@ -18,6 +18,7 @@ import getSafePackageName from './program/core/get-safe-package-name';
 import installDeps from './program/core/install-deps';
 import patchPackage from './program/core/patch-package';
 import runLinter from './program/core/run-linter';
+import runJest from './program/core/run-jest';
 import watchCompileTypes from './program/core/watch-compile-types';
 
 interface DiagnosticDisplay {
@@ -373,8 +374,15 @@ async function runCommand() {
     case 'lint':
       await runLintCommand();
       break;
-    case 'watch':
-      await runWatchCommand();
+    case 'watch': {
+      const cleanup = await runWatchCommand();
+      process.on('exit', () => {
+        cleanup();
+      });
+    }
+      break;
+    case 'test':
+      await runJest(process.argv.slice(3));
       break;
     default:
       break;
