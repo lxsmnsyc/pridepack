@@ -29,7 +29,7 @@ import readExternals from './read-externals';
 import readConfig from './read-config';
 import { getCJSTargetDirectory, DEFAULT_CJS_PRODUCTION_ENTRY } from './build-cjs';
 
-export default async function buildCJSProduction(): Promise<BuildResult> {
+export default async function buildCJSProduction(incremental: boolean): Promise<BuildResult> {
   const config = await readConfig();
   const configCWD = await readConfigWithCWD();
   const externals = await readExternals();
@@ -53,6 +53,7 @@ export default async function buildCJSProduction(): Promise<BuildResult> {
       ...await PRODUCTION_ENV,
       'process.env.NODE_ENV': '"production"',
     },
+    incremental,
     external: externals,
     target: config.target,
     tsconfig: configCWD.tsconfig,

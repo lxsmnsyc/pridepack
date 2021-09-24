@@ -29,7 +29,7 @@ import readConfigWithCWD from './read-config-with-cwd';
 import readExternals from './read-externals';
 import { DEFAULT_ESM_DEVELOPMENT_ENTRY, getESMTargetDirectory } from './build-esm';
 
-export default async function buildESMDevelopment(): Promise<BuildResult> {
+export default async function buildESMDevelopment(incremental: boolean): Promise<BuildResult> {
   const config = await readConfig();
   const configCWD = await readConfigWithCWD();
   const externals = await readExternals();
@@ -50,6 +50,7 @@ export default async function buildESMDevelopment(): Promise<BuildResult> {
     platform: 'node',
     format: 'esm',
     sourcemap: true,
+    incremental,
     define: {
       ...await DEVELOPMENT_ENV,
       'process.env.NODE_ENV': '"development"',

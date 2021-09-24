@@ -31,14 +31,13 @@ export interface LintOptions {
 
 export default async function runLinter(
   options: LintOptions,
-  defaultPattern: string,
 ): Promise<ESLint.LintResult[]> {
   const linter = new ESLint({
     fix: options.fix,
     cache: options.cache,
   });
 
-  const results = await linter.lintFiles(options.files || defaultPattern);
+  const results = await linter.lintFiles(options.files ?? '');
 
   return results;
 }

@@ -29,7 +29,7 @@ import readConfigWithCWD from './read-config-with-cwd';
 import readExternals from './read-externals';
 import { DEFAULT_CJS_DEVELOPMENT_ENTRY, getCJSTargetDirectory } from './build-cjs';
 
-export default async function buildCJSDevelopment(): Promise<BuildResult> {
+export default async function buildCJSDevelopment(incremental: boolean): Promise<BuildResult> {
   const config = await readConfig();
   const configCWD = await readConfigWithCWD();
   const externals = await readExternals();
@@ -53,6 +53,7 @@ export default async function buildCJSDevelopment(): Promise<BuildResult> {
       ...await DEVELOPMENT_ENV,
       'process.env.NODE_ENV': '"development"',
     },
+    incremental,
     external: externals,
     target: config.target,
     tsconfig: configCWD.tsconfig,
