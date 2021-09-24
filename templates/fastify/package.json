@@ -36,5 +36,6 @@
   },
   "dependencies": {
     "fastify": "^3.21.6"
-  }
+  },
+  "private": false
 }

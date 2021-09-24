@@ -32,6 +32,7 @@ export default async function patchPackage(cwd = '.', name?: string): Promise<vo
   const newInfo = {
     name: name ?? packageInfo.name,
     ...packageInfo,
+    private: false,
     scripts: SCRIPTS,
   };
 
