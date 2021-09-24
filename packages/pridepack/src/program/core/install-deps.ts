@@ -23,60 +23,24 @@
  */
 import path from 'path';
 import execa from 'execa';
-import getCMD, { CMD } from './get-cmd';
-import TEMPLATES from './templates';
-import sleep from './sleep';
-import addPeers from './add-peers';
 
-function getDepsArgs(cmd: CMD, packages: string[]): string[] {
+export type CMD = 'yarn' | 'npm' | 'pnpm';
+
+function getCommand(cmd: CMD): string[] {
   switch (cmd) {
     case 'npm':
-      return ['install', ...packages, '--save'];
+      return ['install'];
     case 'yarn':
-      return ['add', ...packages];
+      return [];
+    case 'pnpm':
+      return ['install'];
     default:
       return [];
   }
 }
 
-function getDevDepsArgs(cmd: CMD, packages: string[]): string[] {
-  switch (cmd) {
-    case 'npm':
-      return ['install', ...packages, '--save-dev'];
-    case 'yarn':
-      return ['add', ...packages, '--dev'];
-    default:
-      return [];
-  }
-}
-
-export default async function installDeps(template: string, cwd = '.'): Promise<void> {
-  await sleep(100);
-  const cmd = await getCMD();
-
-  const { dependencies } = TEMPLATES[template];
-
-  // Run
-  if (dependencies.length > 0) {
-    await execa(cmd, getDepsArgs(cmd, dependencies), {
-      cwd: path.resolve(path.join(process.cwd(), cwd)),
-    });
-  }
-
-  await sleep(100);
-  const { devDependencies, peerDependencies } = TEMPLATES[template];
-  // Merge dev and peer
-  const allDeps = [
-    ...peerDependencies.map((peer) => (
-      typeof peer === 'object'
-        ? `${peer.name}@${peer.dev}`
-        : peer
-    )),
-    ...devDependencies,
-  ];
-
-  await execa(cmd, getDevDepsArgs(cmd, allDeps), {
+export default async function installPackage(command: CMD, cwd = '.'): Promise<void> {
+  await execa(command, getCommand(command), {
     cwd: path.resolve(path.join(process.cwd(), cwd)),
   });
-  await addPeers(template, cwd);
 }

@@ -15,7 +15,7 @@ import createPackage from './program/core/create-package';
 import getCWDName from './program/core/get-cwd-name';
 import getSafePackageName from './program/core/get-safe-package-name';
 import installDeps from './program/core/install-deps';
-import TEMPLATES from './program/core/templates';
+import patchPackage from './program/core/patch-package';
 
 interface DiagnosticDisplay {
   symbol: string;
@@ -102,6 +102,15 @@ function generateTSDiagnostics(messages: ts.Diagnostic[]): void {
   }
 }
 
+const TEMPLATES = [
+  'basic',
+  'react',
+  'preact',
+  'vue',
+  'fastify',
+  'bot-discord',
+];
+
 async function chooseTemplate() {
   return prompts({
     type: 'select',
@@ -115,6 +124,24 @@ async function chooseTemplate() {
   });
 }
 
+async function runInstallCommand(directory: string) {
+  const packageManager = await prompts({
+    type: 'select',
+    name: 'command',
+    message: 'Choose your preferred package manager tool',
+    choices: [
+      { title: 'NPM', value: 'npm' },
+      { title: 'Yarn v1 (Legacy)', value: 'yarn' },
+      { title: 'PNPM', value: 'pnpm' },
+    ],
+    initial: 1
+  });
+  await task(`Installing dependencies...`, async (ctx) => {
+    await installDeps(packageManager.command, directory);
+    ctx.setTitle(`Installed dependencies!`)
+  });
+}
+
 async function runCreateCommand() {
   const packageName = await prompts({
     type: 'text',
@@ -122,19 +149,13 @@ async function runCreateCommand() {
     message: `What's your package name?`
   });
   const directory = getSafePackageName(packageName.name);
-  // await task('Generating package.json...', async (ctx) => {
-  //   await createPackage(packageName.name, directory);
-  //   ctx.setTitle('Generated package.json.');
-  // });
   const templateName = await chooseTemplate();
   await task(`Copying from template '${templateName.template}'...`, async (ctx) => {
     await copyFromTemplate(templateName.template, directory);
     ctx.setTitle(`Copied from template '${templateName.template}'!`)
   });
-  await task(`Installing dependencies from '${templateName.template}'...`, async (ctx) => {
-    await installDeps(templateName.template, directory);
-    ctx.setTitle(`Installed dependencies from '${templateName.template}'!`)
-  });
+  await patchPackage(directory, packageName.name);
+  await runInstallCommand(directory);
 }
 
 async function runInitCommand() {
@@ -147,10 +168,8 @@ async function runInitCommand() {
     await copyFromTemplate(templateName.template, '.');
     ctx.setTitle(`Copied from template '${templateName.template}'!`)
   });
-  await task(`Installing dependencies from '${templateName.template}'...`, async (ctx) => {
-    await installDeps(templateName.template);
-    ctx.setTitle(`Installed dependencies from '${templateName.template}'!`)
-  });
+  await patchPackage();
+  await runInstallCommand('.');
 }
 
 async function runCleanCommand() {

@@ -22,34 +22,16 @@
  * SOFTWARE.
  */
 import fs from 'fs-extra';
-import { IDependencyMap } from 'package-json-type';
 import readPackage from './read-package';
 import getPackagePath from './get-package-path';
-import TEMPLATES from './templates';
 import { SCRIPTS } from './create-package';
 
-export default async function addPeers(template: string, cwd = '.'): Promise<void> {
+export default async function patchPackage(cwd = '.', name?: string): Promise<void> {
   const packageInfo = await readPackage(cwd);
-  const peerDependencies: IDependencyMap = {};
-
-  if (packageInfo.devDependencies) {
-    const peers = TEMPLATES[template].peerDependencies;
-    Object.entries(packageInfo.devDependencies).forEach(([key, value]) => {
-      peers.forEach((peer) => {
-        if (typeof peer === 'object') {
-          if (peer.name === key) {
-            peerDependencies[key] = peer.peer;
-          }
-        } else if (peer === key) {
-          peerDependencies[key] = value;
-        }
-      });
-    });
-  }
 
   const newInfo = {
+    name: name ?? packageInfo.name,
     ...packageInfo,
-    peerDependencies,
     scripts: SCRIPTS,
   };
 
