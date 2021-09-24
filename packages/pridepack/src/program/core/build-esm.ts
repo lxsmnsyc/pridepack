@@ -59,10 +59,9 @@ export async function resolveEntry(dev: boolean): Promise<string> {
 
   return dev ? DEFAULT_ESM_DEV_ENTRY : DEFAULT_ESM_PROD_ENTRY;
 }
- 
+
 export async function getESMTargetDirectory(dev: boolean): Promise<string> {
   const targetPath = await resolveEntry(dev);
 
   return path.dirname(targetPath);
 }
- 

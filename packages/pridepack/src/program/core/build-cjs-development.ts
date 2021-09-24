@@ -34,16 +34,25 @@ export default async function buildCJSDevelopment(incremental: boolean): Promise
   const configCWD = await readConfigWithCWD();
   const externals = await readExternals();
   // get outfile
-  const outfile = path.resolve(path.join(
-    process.cwd(),
-    await resolveEntry(true),
-  ));
+  const parsed = path.parse(
+    path.resolve(
+      path.join(
+        process.cwd(),
+        await resolveEntry(true),
+      ),
+    ),
+  );
+  let extension = parsed.ext;
+  if (config.jsx === 'preserve' && extension !== 'jsx') {
+    extension = 'jsx';
+  }
+  const outfile = path.join(parsed.dir, `${parsed.name}${extension}`);
   // run esbuild
   return build({
     entryPoints: [
       configCWD.srcFile,
     ],
-    outfile: `${outfile}${config.jsx === 'preserve' ? 'x' : ''}`,
+    outfile,
     bundle: true,
     minify: false,
     platform: 'node',
