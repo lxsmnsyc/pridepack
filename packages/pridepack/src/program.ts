@@ -122,10 +122,10 @@ async function runCreateCommand() {
     message: `What's your package name?`
   });
   const directory = getSafePackageName(packageName.name);
-  await task('Generating package.json...', async (ctx) => {
-    await createPackage(packageName.name, directory);
-    ctx.setTitle('Generated package.json.');
-  });
+  // await task('Generating package.json...', async (ctx) => {
+  //   await createPackage(packageName.name, directory);
+  //   ctx.setTitle('Generated package.json.');
+  // });
   const templateName = await chooseTemplate();
   await task(`Copying from template '${templateName.template}'...`, async (ctx) => {
     await copyFromTemplate(templateName.template, directory);

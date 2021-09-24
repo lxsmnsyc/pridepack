@@ -22,49 +22,18 @@
  * SOFTWARE.
  */
 import path from 'path';
-import fs from 'fs-extra';
-import { isDirectory, isFile } from './stat';
+import degit from 'degit';
 
-const TRANSFORMS = [
-  {
-    from: '_gitignore',
-    to: '.gitignore',
-  },
-];
+const SOURCE = 'github:LyonInc/pridepack';
 
 export default async function copyFromTemplate(
   template: string,
   directory: string,
 ): Promise<void> {
-  const source = path.resolve(
-    __dirname,
-    '..',
-    'templates',
-    template,
+  const target = path.resolve(
+    process.cwd(),
+    directory,
   );
-
-  if (await isDirectory(source)) {
-    const target = path.resolve(
-      process.cwd(),
-      directory,
-    );
-    await fs.copy(source, target);
-
-    for (let i = 0; i < TRANSFORMS.length; i += 1) {
-      const file = path.resolve(
-        process.cwd(),
-        directory,
-        TRANSFORMS[i].from,
-      );
-
-      if (await isFile(file)) {
-        const newName = path.resolve(
-          process.cwd(),
-          directory,
-          TRANSFORMS[i].to,
-        );
-        await fs.rename(file, newName);
-      }
-    }
-  }
+  const emitter = degit(`${SOURCE}/templates/${template}`);
+  await emitter.clone(target);
 }

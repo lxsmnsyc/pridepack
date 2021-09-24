@@ -1,0 +1,28 @@
+{
+  "name": "bod-discord-template",
+  "version": "0.0.0",
+  "types": "dist/types/index.d.ts",
+  "main": "dist/cjs/production/index.js",
+  "module": "dist/esm/production/index.js",
+  "exports": {
+    "./": {
+      "require": "./dist/cjs/production/index.js",
+      "import": "./dist/esm/production/index.js"
+    },
+    "./dev": {
+      "require": "./dist/cjs/development/index.js",
+      "import": "./dist/esm/development/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "engines": {
+    "node": ">=10"
+  },
+  "license": "MIT",
+  "keywords": [
+    "pridepack"
+  ]
+}
