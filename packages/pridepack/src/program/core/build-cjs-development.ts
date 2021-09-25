@@ -73,7 +73,11 @@ export default async function buildCJSDevelopment(incremental: boolean): Promise
       js: '"use strict";',
     },
     charset: 'utf8',
-    plugins: config.plugins,
+    plugins: (
+      typeof config.plugins === 'function'
+        ? config.plugins({ isDev: false, isCJS: false, isESM: true })
+        : config.plugins
+    ),
     legalComments: 'eof',
   });
 }

@@ -29,13 +29,21 @@ export interface PridepackBaseConfig {
   tsconfig: string;
 }
 
+interface PridepackPluginEnv {
+  isDev: boolean;
+  isESM: boolean;
+  isCJS: boolean;
+}
+
+type PridepackLazyPlugin = (env: PridepackPluginEnv) => Plugin[];
+
 export interface PridepackConfig extends PridepackBaseConfig {
   target: string | string[];
   jsx?: 'transform' | 'preserve';
   jsxFactory?: string;
   jsxFragment?: string;
   jest?: InitialOptions;
-  plugins?: Plugin[];
+  plugins?: Plugin[] | PridepackLazyPlugin;
 }
 
 const DEFAULT_CONFIG: PridepackConfig = {

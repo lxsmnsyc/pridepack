@@ -71,7 +71,11 @@ export default async function buildESMProduction(incremental: boolean): Promise<
     jsxFragment: config.jsxFragment,
     logLevel: 'silent',
     charset: 'utf8',
-    plugins: config.plugins,
+    plugins: (
+      typeof config.plugins === 'function'
+        ? config.plugins({ isDev: false, isCJS: false, isESM: true })
+        : config.plugins
+    ),
     legalComments: 'eof',
   });
 }
