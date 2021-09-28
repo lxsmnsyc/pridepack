@@ -36,6 +36,8 @@ const SCRIPTS = {
   test: 'pridepack test --passWithNoTests',
   clean: 'pridepack clean',
   watch: 'pridepack watch',
+  start: 'pridepack start',
+  dev: 'pridepack dev',
 };
 
 interface Patch {
