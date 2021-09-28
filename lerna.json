@@ -1,5 +1,4 @@
 {
-  "npmClient": "yarn",
   "useWorkspaces": true,
   "packages": [
     "packages/*",
@@ -11,7 +10,6 @@
       "exact": true
     },
     "publish": {
-      "npmClient": "yarn",
       "allowBranch": [
         "main",
         "rework"
