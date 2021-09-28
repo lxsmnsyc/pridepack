@@ -25,7 +25,6 @@ import path from 'path';
 import degit from 'degit';
 
 const SOURCE = 'github:LyonInc/pridepack';
-const HASH = 'rework'; // main
 
 export default async function copyFromTemplate(
   template: string,
@@ -35,6 +34,6 @@ export default async function copyFromTemplate(
     process.cwd(),
     directory,
   );
-  const emitter = degit(`${SOURCE}/templates/${template}#${HASH}`);
+  const emitter = degit(`${SOURCE}/templates/${template}`);
   await emitter.clone(target);
 }
