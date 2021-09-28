@@ -20,15 +20,7 @@ yarn global add pridepack
 
 ### Templates
 
-Pridepack currently ships with the following templates:
-
-- `basic`: Basic Typescript package setup.
-- `bot-discord`: [Discord](http://discord.com/) bot TypeScript package setup. Basic implementation for `ready` and
-  `messageCreate` events provided as guides for additional handlers.
-- `react`: React + Typescript package setup, includes `@testing-library/react` and `@testing-library/react-hooks`.
-- `preact`: Preact + Typescript package setup, includes `@testing-library/preact` and `@testing-library/preact-hooks`
-- `fastify`: Fastify package setup
-- `vue`: Vue 3 + Typescript package setup, includes `@testing-library/vue@next`. SFCs are not supported yet, although achievable using the Plugins feature.
+See [templates](https://github.com/LyonInc/pridepack/tree/master/templates)
 
 ## Usage
 
@@ -64,6 +56,10 @@ Runs no-emit type-checking.
 
 Runs test suites using Jest. You can also add valid command-line Jest arguments, which will be merged with the `jest` field from the Pridepack config file.
 
+### `pridepack start` / `pridepack dev`
+
+Runs the index file (based on `package.json`'s `type`) in production or development mode, respectively. `dev` does not perform auto-reload.
+
 ## Config
 
 Even though Pridepack encourages zero-config setup, Pridepack also includes config files. Pridepack config files can be either of the following:
@@ -86,10 +82,11 @@ JS Config files are also supported, useful for loading environment variables and
 - `srcFile`: path of the entry source file. Defaults to `src/index.ts`.
 - `target`: ECMAScript version target. Defaults to `esnext`.
 - `tsconfig`: path of Typescript config file. Defaults to `tsconfig.json`.
+- `jsx`: How JSX expressions should be interpreted. Defaults to `react`. Use `preserve` to preserve JSX syntax.
 - `jsxFactory`: JSX pragma.
 - `jsxFragment`: JSX Fragment expression pragma.
 - `jest`: Jest config.
-- `plugins`: ESBuild plugins to be used for bundling. You can check the official [ESBuild Community Plugins](https://github.com/esbuild/community-plugins)
+- `plugins`: ESBuild plugins to be used for bundling. You can check the official [ESBuild Community Plugins](https://github.com/esbuild/community-plugins).
 
 ### Exports Map
 
@@ -100,7 +97,6 @@ For types, the output file is inferred from the `"types"` field.
 ## Soon
 
 - Code-splitting (requires ESBuild)
-- Conditional exports for user-defined paths.
 
 ## License
 
