@@ -22,12 +22,12 @@
       "import": "./dist/esm/development/index.js"
     },
     "./esm": {
-      "development": "./dist/esm/production/index.js",
+      "development": "./dist/esm/development/index.js",
       "production": "./dist/esm/production/index.js",
       "default": "./dist/esm/production/index.js"
     },
     "./cjs": {
-      "development": "./dist/cjs/production/index.js",
+      "development": "./dist/cjs/development/index.js",
       "production": "./dist/cjs/production/index.js",
       "default": "./dist/cjs/production/index.js"
     }
