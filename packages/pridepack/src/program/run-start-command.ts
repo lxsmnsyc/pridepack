@@ -12,7 +12,14 @@ export default async function runStartCommand(isDev: boolean): Promise<void> {
         ? await resolveESMEntry(isDev)
         : await resolveCJSEntry(isDev)
     );
-    await execa('node', [entrypoint, ...process.argv.slice(3)]);
+    await execa(
+      'node',
+      [
+        entrypoint,
+        `NODE_ENV=${isDev ? 'development' : 'production'}`,
+        ...process.argv.slice(3),
+      ],
+    );
     ctx.setTitle('Started!');
   });
 }
