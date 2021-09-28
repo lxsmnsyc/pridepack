@@ -98,6 +98,57 @@ For types, the output file is inferred from the `"types"` field.
 
 - Code-splitting (requires ESBuild)
 
+## Migrating to `0.13.0`
+
+### `package.json`
+
+The following entrypoints must now be provided.  `./esm` and  `./cjs` entrypoints are optional.
+
+```json
+{
+  "types": "dist/types/index.d.ts",
+  "main": "dist/cjs/production/index.js",
+  "module": "dist/esm/production/index.js",
+  "exports": {
+    ".": {
+      "development": {
+        "require": "./dist/cjs/development/index.js",
+        "import": "./dist/esm/development/index.js"
+      },
+      "require": "./dist/cjs/production/index.js",
+      "import": "./dist/esm/production/index.js"
+    },
+    "./dev": {
+      "production": {
+        "require": "./dist/cjs/production/index.js",
+        "import": "./dist/esm/production/index.js"
+      },
+      "require": "./dist/cjs/development/index.js",
+      "import": "./dist/esm/development/index.js"
+    },
+    "./esm": {
+      "development": "./dist/esm/production/index.js",
+      "production": "./dist/esm/production/index.js",
+      "default": "./dist/esm/production/index.js"
+    },
+    "./cjs": {
+      "development": "./dist/cjs/production/index.js",
+      "production": "./dist/cjs/production/index.js",
+      "default": "./dist/cjs/production/index.js"
+    }
+  },
+}
+```
+
+For scripts, if you are using a start command for running the index file (e.g. fastify-based templates), you may add the following to the `scripts` field:
+
+```json
+{
+  "start": "pridepack start",
+  "dev": "pridepack dev",
+}
+```
+
 ## License
 
 MIT © [Lyon Software Technologies, Inc.](https://github.com/LyonInc)
