@@ -31,7 +31,7 @@ export const DEFAULT_ESM_DEVELOPMENT_ENTRY = 'development/index.js';
 export const DEFAULT_ESM_PROD_ENTRY = `${DEFAULT_OUTPUT}/${DEFAULT_ESM_PRODUCTION_ENTRY}`;
 export const DEFAULT_ESM_DEV_ENTRY = `${DEFAULT_OUTPUT}/${DEFAULT_ESM_DEVELOPMENT_ENTRY}`;
 
-export async function resolveEntry(dev: boolean): Promise<string> {
+export async function resolveESMEntry(dev: boolean): Promise<string> {
   const pkg = await readPackage();
 
   // Resolve through Export map
@@ -61,7 +61,7 @@ export async function resolveEntry(dev: boolean): Promise<string> {
 }
 
 export async function getESMTargetDirectory(dev: boolean): Promise<string> {
-  const targetPath = await resolveEntry(dev);
+  const targetPath = await resolveESMEntry(dev);
 
   return path.dirname(targetPath);
 }

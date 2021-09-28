@@ -23,13 +23,13 @@
  */
 import path from 'path';
 import { build, BuildResult } from 'esbuild';
-import { PRODUCTION_ENV } from './read-env-defs';
+import { DEVELOPMENT_ENV } from './read-env-defs';
+import readConfig from './read-config';
 import readConfigWithCWD from './read-config-with-cwd';
 import readExternals from './read-externals';
-import readConfig from './read-config';
-import { resolveEntry } from './build-cjs';
+import { resolveCJSEntry } from './build-cjs';
 
-export default async function buildCJSProduction(incremental: boolean): Promise<BuildResult> {
+export default async function buildCJSDevelopment(incremental: boolean): Promise<BuildResult> {
   const config = await readConfig();
   const configCWD = await readConfigWithCWD();
   const externals = await readExternals();
@@ -38,7 +38,7 @@ export default async function buildCJSProduction(incremental: boolean): Promise<
     path.resolve(
       path.join(
         process.cwd(),
-        await resolveEntry(false),
+        await resolveCJSEntry(true),
       ),
     ),
   );
@@ -54,12 +54,12 @@ export default async function buildCJSProduction(incremental: boolean): Promise<
     ],
     outfile,
     bundle: true,
-    minify: true,
+    minify: false,
     platform: 'node',
     sourcemap: true,
     define: {
-      ...await PRODUCTION_ENV,
-      'process.env.NODE_ENV': '"production"',
+      ...await DEVELOPMENT_ENV,
+      'process.env.NODE_ENV': '"development"',
     },
     incremental,
     external: externals,

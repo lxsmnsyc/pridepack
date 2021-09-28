@@ -45,7 +45,6 @@ const { argv } = yargs
         })
         .positional('template', {
           describe: 'Project template to be used',
-          default: 'basic',
           type: 'string',
         })
     ),
@@ -73,6 +72,14 @@ const { argv } = yargs
   .command(
     'clean',
     'Cleans output directory.',
+  )
+  .command(
+    'start',
+    'Runs the package in production mode.',
+  )
+  .command(
+    'dev',
+    'Runs the package in development mode.',
   )
   .command(
     'test',

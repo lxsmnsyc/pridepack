@@ -27,7 +27,7 @@ import { DEVELOPMENT_ENV } from './read-env-defs';
 import readConfig from './read-config';
 import readConfigWithCWD from './read-config-with-cwd';
 import readExternals from './read-externals';
-import { resolveEntry } from './build-esm';
+import { resolveESMEntry } from './build-esm';
 
 export default async function buildESMDevelopment(incremental: boolean): Promise<BuildResult> {
   const config = await readConfig();
@@ -38,7 +38,7 @@ export default async function buildESMDevelopment(incremental: boolean): Promise
     path.resolve(
       path.join(
         process.cwd(),
-        await resolveEntry(true),
+        await resolveESMEntry(true),
       ),
     ),
   );

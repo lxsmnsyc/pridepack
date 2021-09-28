@@ -31,7 +31,7 @@ export const DEFAULT_CJS_DEVELOPMENT_ENTRY = 'development/index.js';
 export const DEFAULT_CJS_PROD_ENTRY = `${DEFAULT_OUTPUT}/${DEFAULT_CJS_PRODUCTION_ENTRY}`;
 export const DEFAULT_CJS_DEV_ENTRY = `${DEFAULT_OUTPUT}/${DEFAULT_CJS_DEVELOPMENT_ENTRY}`;
 
-export async function resolveEntry(dev: boolean): Promise<string> {
+export async function resolveCJSEntry(dev: boolean): Promise<string> {
   const pkg = await readPackage();
 
   // Resolve through Export map
@@ -63,7 +63,7 @@ export async function resolveEntry(dev: boolean): Promise<string> {
 }
 
 export async function getCJSTargetDirectory(dev: boolean): Promise<string> {
-  const targetPath = await resolveEntry(dev);
+  const targetPath = await resolveCJSEntry(dev);
 
   return path.dirname(targetPath);
 }

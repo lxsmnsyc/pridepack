@@ -23,13 +23,13 @@
  */
 import path from 'path';
 import { build, BuildResult } from 'esbuild';
-import { DEVELOPMENT_ENV } from './read-env-defs';
-import readConfig from './read-config';
+import { PRODUCTION_ENV } from './read-env-defs';
 import readConfigWithCWD from './read-config-with-cwd';
 import readExternals from './read-externals';
-import { resolveEntry } from './build-cjs';
+import readConfig from './read-config';
+import { resolveESMEntry } from './build-esm';
 
-export default async function buildCJSDevelopment(incremental: boolean): Promise<BuildResult> {
+export default async function buildESMProduction(incremental: boolean): Promise<BuildResult> {
   const config = await readConfig();
   const configCWD = await readConfigWithCWD();
   const externals = await readExternals();
@@ -38,7 +38,7 @@ export default async function buildCJSDevelopment(incremental: boolean): Promise
     path.resolve(
       path.join(
         process.cwd(),
-        await resolveEntry(true),
+        await resolveESMEntry(false),
       ),
     ),
   );
@@ -54,12 +54,13 @@ export default async function buildCJSDevelopment(incremental: boolean): Promise
     ],
     outfile,
     bundle: true,
-    minify: false,
+    minify: true,
     platform: 'node',
+    format: 'esm',
     sourcemap: true,
     define: {
-      ...await DEVELOPMENT_ENV,
-      'process.env.NODE_ENV': '"development"',
+      ...await PRODUCTION_ENV,
+      'process.env.NODE_ENV': '"production"',
     },
     incremental,
     external: externals,
@@ -69,9 +70,6 @@ export default async function buildCJSDevelopment(incremental: boolean): Promise
     jsxFactory: config.jsxFactory,
     jsxFragment: config.jsxFragment,
     logLevel: 'silent',
-    banner: {
-      js: '"use strict";',
-    },
     charset: 'utf8',
     plugins: (
       typeof config.plugins === 'function'

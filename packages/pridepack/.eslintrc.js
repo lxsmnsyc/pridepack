@@ -9,6 +9,7 @@ module.exports = {
   },
   "rules": {
     "no-param-reassign": "off",
-    "@typescript-eslint/no-unsafe-assignment": "off"
+    "@typescript-eslint/no-unsafe-assignment": "off",
+    "no-await-in-loop": "off"
   }
 };

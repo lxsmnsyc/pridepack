@@ -27,9 +27,9 @@ import { PRODUCTION_ENV } from './read-env-defs';
 import readConfigWithCWD from './read-config-with-cwd';
 import readExternals from './read-externals';
 import readConfig from './read-config';
-import { resolveEntry } from './build-esm';
+import { resolveCJSEntry } from './build-cjs';
 
-export default async function buildESMProduction(incremental: boolean): Promise<BuildResult> {
+export default async function buildCJSProduction(incremental: boolean): Promise<BuildResult> {
   const config = await readConfig();
   const configCWD = await readConfigWithCWD();
   const externals = await readExternals();
@@ -38,7 +38,7 @@ export default async function buildESMProduction(incremental: boolean): Promise<
     path.resolve(
       path.join(
         process.cwd(),
-        await resolveEntry(false),
+        await resolveCJSEntry(false),
       ),
     ),
   );
@@ -56,7 +56,6 @@ export default async function buildESMProduction(incremental: boolean): Promise<
     bundle: true,
     minify: true,
     platform: 'node',
-    format: 'esm',
     sourcemap: true,
     define: {
       ...await PRODUCTION_ENV,
@@ -70,6 +69,9 @@ export default async function buildESMProduction(incremental: boolean): Promise<
     jsxFactory: config.jsxFactory,
     jsxFragment: config.jsxFragment,
     logLevel: 'silent',
+    banner: {
+      js: '"use strict";',
+    },
     charset: 'utf8',
     plugins: (
       typeof config.plugins === 'function'
