@@ -7,8 +7,9 @@ export default async function runESBuild(
   status: TaskStatus,
 ): Promise<BuildResult> {
   return runTask(
-    async () => {
+    async (runSuccess) => {
       const result = await buildCall();
+      runSuccess();
       generateESBuildDiagnostics(false, result.errors);
       generateESBuildDiagnostics(true, result.warnings);
       return result;

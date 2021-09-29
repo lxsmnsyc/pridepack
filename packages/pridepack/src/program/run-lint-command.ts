@@ -19,8 +19,9 @@ export default async function runLintCommand(): Promise<void> {
     name: 'cache',
     message: 'Do you want to only check the changed files?',
   });
-  await runTask(async () => {
+  await runTask(async (runSuccess) => {
     const result = await runLinter({ files, fix, cache });
+    runSuccess();
     generateESLintDiagnostics(result)
   }, {
     pending: `Linting files...`,

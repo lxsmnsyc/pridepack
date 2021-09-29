@@ -3,8 +3,9 @@ import compileTypes from '../core/compile-types';
 import runTask from './run-task';
 
 export default async function runCompile(noEmit: boolean): Promise<void> {
-  await runTask(async () => {
+  await runTask(async (runSuccess) => {
     const result = await compileTypes(noEmit);
+    runSuccess();
     generateTSDiagnostics(result);
   }, {
     success: 'Compiled types!',

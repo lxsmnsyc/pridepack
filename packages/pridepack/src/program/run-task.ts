@@ -1,5 +1,3 @@
-import ora from 'ora';
-
 export interface TaskStatus {
   failure: string;
   success: string;
@@ -7,13 +5,22 @@ export interface TaskStatus {
 }
 
 export default async function runTask<T>(
-  callback: () => Promise<T>,
+  callback: (prelog: () => void) => Promise<T>,
   status: TaskStatus,
 ): Promise<T> {
+  const ora = (await import('ora')).default;
   const task = ora(status.pending).start();
   try {
-    const result = await callback();
-    task.succeed(status.success);
+    let called = false;
+    const result = await callback(() => {
+      if (!called) {
+        called = true;
+        task.succeed(status.success);
+      }
+    });
+    if (!called) {
+      task.succeed(status.success);
+    }
     return result;
   } catch (error) {
     task.fail(status.failure);
