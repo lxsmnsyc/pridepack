@@ -1,6 +1,6 @@
 import { BuildResult } from 'esbuild';
-import buildESMDevelopment from '../core/build-cjs-development';
-import buildESMProduction from '../core/build-cjs-production';
+import buildESMDevelopment from '../core/build-esm-development';
+import buildESMProduction from '../core/build-esm-production';
 import runESBuild from './run-esbuild';
 
 
