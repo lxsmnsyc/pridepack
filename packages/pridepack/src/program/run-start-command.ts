@@ -21,8 +21,8 @@ export default async function runStartCommand(isDev: boolean): Promise<void> {
       ],
     ).stdout?.pipe(process.stdout);
   }, {
-    pending: `Linting files...`,
-    success: `Linted files!`,
-    failure: `Failed to lint files.`
+    pending: `Starting package in '${isDev ? 'development' : 'production'}' mode...`,
+    success: `Started!`,
+    failure: `Failed to start package in '${isDev ? 'development' : 'production'}' mode.`
   });
 }
