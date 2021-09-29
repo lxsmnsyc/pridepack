@@ -7,6 +7,7 @@ const TEMPLATES = [
   'vue',
   'fastify',
   'bot-discord',
+  'solid-js',
 ];
 
 export default async function chooseTemplate(): Promise<{ template: string }> {
