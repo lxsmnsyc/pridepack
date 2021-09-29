@@ -1,25 +1,28 @@
 import execa from 'execa';
-import task from 'tasuku';
 import { resolveCJSEntry } from '../core/build-cjs';
 import { resolveESMEntry } from '../core/build-esm';
 import readPackage from '../core/read-package';
+import runTask from './run-task';
 
 export default async function runStartCommand(isDev: boolean): Promise<void> {
-  await task('Starting file...', async (ctx) => {
+  await runTask(async () => {
     const pkg = await readPackage();
     const entrypoint = (
       pkg.type === 'module'
         ? await resolveESMEntry(isDev)
         : await resolveCJSEntry(isDev)
     );
-    await execa(
+    execa(
       'node',
       [
         entrypoint,
         `NODE_ENV=${isDev ? 'development' : 'production'}`,
         ...process.argv.slice(3),
       ],
-    );
-    ctx.setTitle('Started!');
+    ).stdout?.pipe(process.stdout);
+  }, {
+    pending: `Linting files...`,
+    success: `Linted files!`,
+    failure: `Failed to lint files.`
   });
 }

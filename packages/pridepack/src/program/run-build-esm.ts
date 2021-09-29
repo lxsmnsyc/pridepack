@@ -1,31 +1,26 @@
 import { BuildResult } from 'esbuild';
-import task from 'tasuku';
-import buildESMDevelopment from '../core/build-esm-development';
-import buildESMProduction from '../core/build-esm-production';
-import generateESBuildDiagnostics from './generate-esbuild-diagnostics';
+import buildESMDevelopment from '../core/build-cjs-development';
+import buildESMProduction from '../core/build-cjs-production';
+import runESBuild from './run-esbuild';
+
 
 export default async function runBuildESM(
   incremental: boolean,
 ): Promise<{ dev: BuildResult, prod: BuildResult }> {
-  const build = await task('Building ESM files...', async (ctx) => {
-    const dev = await ctx.task('Building development...', async ({ setTitle }) => {
-      const result = await buildESMDevelopment(incremental);
-      generateESBuildDiagnostics(false, result.errors);
-      generateESBuildDiagnostics(true, result.warnings);
-      setTitle('Built development!');
-      return result;
-    });
-    const prod = await ctx.task('Building production...', async ({ setTitle }) => {
-      const result = await buildESMProduction(incremental);
-      generateESBuildDiagnostics(false, result.errors);
-      generateESBuildDiagnostics(true, result.warnings);
-      setTitle('Built production!');
-      return result;
-    });
-    ctx.setTitle('Built ESM files!');
-
-    return { dev: dev.result, prod: prod.result };
-  });
-
-  return build.result;
+  const results = await Promise.all([
+    runESBuild(() => buildESMDevelopment(incremental), {
+      pending: 'Building ESM Development output...',
+      success: 'Built ESM Development output!',
+      failure: 'Failed to build ESM Development output.',
+    }),
+    runESBuild(() => buildESMProduction(incremental), {
+      pending: 'Building ESM Production output...',
+      success: 'Built ESM Production output!',
+      failure: 'Failed to build ESM Production output.',
+    }),
+  ]);
+  return {
+    dev: results[0],
+    prod: results[1],
+  };
 }

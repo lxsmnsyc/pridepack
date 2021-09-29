@@ -2,12 +2,12 @@ import prompts from 'prompts';
 import runJest from './core/run-jest';
 import runBuildCommand from './program/run-build-command';
 import runCleanCommand from './program/run-clean-command';
-import runCheckCommand from './program/run-check-command';
 import runCreateCommand from './program/run-create-command';
 import runInitCommand from './program/run-init-command';
 import runLintCommand from './program/run-lint-command';
 import runWatchCommand from './program/run-watch-command';
 import runStartCommand from './program/run-start-command';
+import runCompile from './program/run-compile';
 
 async function runCommand() {
   const response = await prompts({
@@ -43,7 +43,7 @@ async function runCommand() {
       await runBuildCommand();
       break;
     case 'check':
-      await runCheckCommand();
+      await runCompile(true);
       break;
     case 'lint':
       await runLintCommand();

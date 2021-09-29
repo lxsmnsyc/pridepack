@@ -1,9 +1,10 @@
-import task from 'tasuku';
 import clean from '../core/clean';
+import runTask from './run-task';
 
 export default async function runCleanCommand(): Promise<void> {
-  await task('Cleaning build directory...', async (ctx) => {
-    await clean();
-    ctx.setTitle('Cleaned!');
+  await runTask(clean, {
+    pending: 'Cleaning build directory...',
+    success: 'Cleaned build directory!',
+    failure: 'Failed to clean build directory.',
   });
 }
