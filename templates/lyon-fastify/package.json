@@ -1,0 +1,81 @@
+{
+  "name": "lyon-fastify-template",
+  "version": "0.13.0-alpha.17",
+  "types": "dist/types/index.d.ts",
+  "main": "dist/cjs/production/index.js",
+  "module": "dist/esm/production/index.js",
+  "exports": {
+    ".": {
+      "development": {
+        "require": "./dist/cjs/development/index.js",
+        "import": "./dist/esm/development/index.js"
+      },
+      "require": "./dist/cjs/production/index.js",
+      "import": "./dist/esm/production/index.js"
+    },
+    "./dev": {
+      "production": {
+        "require": "./dist/cjs/production/index.js",
+        "import": "./dist/esm/production/index.js"
+      },
+      "require": "./dist/cjs/development/index.js",
+      "import": "./dist/esm/development/index.js"
+    },
+    "./esm": {
+      "development": "./dist/esm/development/index.js",
+      "production": "./dist/esm/production/index.js",
+      "default": "./dist/esm/production/index.js"
+    },
+    "./cjs": {
+      "development": "./dist/cjs/development/index.js",
+      "production": "./dist/cjs/production/index.js",
+      "default": "./dist/cjs/production/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "engines": {
+    "node": ">=10"
+  },
+  "license": "MIT",
+  "keywords": [
+    "pridepack"
+  ],
+  "dependencies": {
+    "@sentry/integrations": "^6.10.0",
+    "@sentry/node": "^6.10.0",
+    "axios": "^0.21.1",
+    "dd-trace": "^1.1.0",
+    "dotenv": "^10.0.0",
+    "fastify": "^3.19.2",
+    "fastify-cors": "^6.0.2",
+    "fastify-formbody": "^5.1.0",
+    "fastify-healthcheck": "^3.1.0",
+    "fastify-helmet": "^5.3.2",
+    "graphql": "^15.4.0",
+    "graphql-request": "^3.3.0",
+    "graphql-tag": "^2.11.0",
+    "pino-pretty": "^5.1.2",
+    "undici": "^4.7.0"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "^1.19.3",
+    "@graphql-codegen/typed-document-node": "^1.18.1",
+    "@graphql-codegen/typescript": "^1.18.1",
+    "@graphql-codegen/typescript-graphql-files-modules": "^1.18.1",
+    "@graphql-codegen/typescript-graphql-request": "^2.0.3",
+    "@graphql-codegen/typescript-operations": "^1.17.12",
+    "@types/jest": "^26.0.24",
+    "@types/node": "^16.4.2",
+    "eslint": "^7.31.0",
+    "eslint-config-lxsmnsyc": "^0.2.3",
+    "nodemon": "^2.0.12",
+    "pridepack": "^0.10.0",
+    "tslib": "^2.3.0",
+    "typescript": "^4.3.5"
+  },
+  "peerDependencies": {},
+  "private": true
+}
