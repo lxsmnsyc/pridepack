@@ -14,11 +14,12 @@ export default async function runCreateCommand(): Promise<void> {
   });
   const directory = getSafePackageName(packageName.name);
   const templateName = await chooseTemplate();
-  await runTask(() => copyFromTemplate(templateName.template, directory), {
+  const task = await runTask(() => copyFromTemplate(templateName.template, directory), {
     pending: `Copying from template '${templateName.template}'...`,
     success: `Copied from template '${templateName.template}'!`,
-    failure: `Failed to copy from template '${templateName.template}'.`
+    failure: `Failed to copy from template '${templateName.template}'.`,
   });
+  await task.start();
   await runInitPackage(packageName.name, directory);
   await runInstall(directory);
 }
