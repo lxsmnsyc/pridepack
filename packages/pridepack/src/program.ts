@@ -48,12 +48,8 @@ async function runCommand() {
     case 'lint':
       await runLintCommand();
       break;
-    case 'watch': {
-      const cleanup = await runWatchCommand();
-      process.on('exit', () => {
-        cleanup();
-      });
-    }
+    case 'watch':
+      await runWatchCommand();
       break;
     case 'test':
       await runJest(process.argv.slice(3));
