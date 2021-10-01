@@ -84,7 +84,10 @@ export default async function patchPackage(patch: Patch, cwd = '.'): Promise<voi
     publishConfig: {
       access: patch.isPrivate ? 'restricted' : 'public',
     },
-    scripts: SCRIPTS,
+    scripts: {
+      ...SCRIPTS,
+      ...packageInfo.scripts,
+    },
   };
 
   await fs.outputJson(getPackagePath(cwd), newInfo, {
