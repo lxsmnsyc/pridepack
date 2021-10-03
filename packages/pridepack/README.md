@@ -56,9 +56,13 @@ Runs no-emit type-checking.
 
 Runs test suites using Jest. You can also add valid command-line Jest arguments, which will be merged with the `jest` field from the Pridepack config file.
 
-### `pridepack start` / `pridepack dev`
+### `pridepack start`
 
-Runs the index file (based on `package.json`'s `type`) in production or development mode, respectively. `dev` does not perform auto-reload.
+Runs the index file (based on `package.json`'s `type`) in production mode, respectively.
+
+### `pridepack dev`
+
+Runs the index file in development mode and runs the build in watch mode. Auto-reloads when detecting changes.
 
 ## Config
 
