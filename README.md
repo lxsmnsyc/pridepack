@@ -148,6 +148,10 @@ For scripts, if you are using a start command for running the index file (e.g. f
 }
 ```
 
+### `ts-jest`
+
+`ts-jest` is still the default preset for `pridepack test`, however, it is no longer a peer dependency. In this case, users needs to install `ts-jest` as `devDependency`. Templates have also been re-adjusted.
+
 ## License
 
 MIT © [Lyon Software Technologies, Inc.](https://github.com/LyonInc)

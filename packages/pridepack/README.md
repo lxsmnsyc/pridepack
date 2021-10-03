@@ -106,37 +106,36 @@ The following entrypoints must now be provided.  `./esm` and  `./cjs` entrypoint
 
 ```json
 {
-  "types": "dist/types/index.d.ts",
-  "main": "dist/cjs/production/index.js",
-  "module": "dist/esm/production/index.js",
-  "exports": {
-    ".": {
-      "development": {
-        "require": "./dist/cjs/development/index.js",
-        "import": "./dist/esm/development/index.js"
-      },
-      "require": "./dist/cjs/production/index.js",
-      "import": "./dist/esm/production/index.js"
-    },
-    "./dev": {
-      "production": {
-        "require": "./dist/cjs/production/index.js",
-        "import": "./dist/esm/production/index.js"
-      },
+  ".": {
+    "development": {
       "require": "./dist/cjs/development/index.js",
       "import": "./dist/esm/development/index.js"
     },
-    "./esm": {
-      "development": "./dist/esm/production/index.js",
-      "production": "./dist/esm/production/index.js",
-      "default": "./dist/esm/production/index.js"
-    },
-    "./cjs": {
-      "development": "./dist/cjs/production/index.js",
-      "production": "./dist/cjs/production/index.js",
-      "default": "./dist/cjs/production/index.js"
-    }
+    "require": "./dist/cjs/production/index.js",
+    "import": "./dist/esm/production/index.js",
+    "types": "./dist/types/index.d.ts"
   },
+  "./dev": {
+    "production": {
+      "require": "./dist/cjs/production/index.js",
+      "import": "./dist/esm/production/index.js"
+    },
+    "require": "./dist/cjs/development/index.js",
+    "import": "./dist/esm/development/index.js",
+    "types": "./dist/types/index.d.ts"
+  },
+  "./esm": {
+    "development": "./dist/esm/development/index.js",
+    "production": "./dist/esm/production/index.js",
+    "default": "./dist/esm/production/index.js",
+    "types": "./dist/types/index.d.ts"
+  },
+  "./cjs": {
+    "development": "./dist/cjs/development/index.js",
+    "production": "./dist/cjs/production/index.js",
+    "default": "./dist/cjs/production/index.js",
+    "types": "./dist/types/index.d.ts"
+  }
 }
 ```
 
@@ -148,6 +147,10 @@ For scripts, if you are using a start command for running the index file (e.g. f
   "dev": "pridepack dev",
 }
 ```
+
+### `ts-jest`
+
+`ts-jest` is still the default preset for `pridepack test`, however, it is no longer a peer dependency. In this case, users needs to install `ts-jest` as `devDependency`. Templates have also been re-adjusted.
 
 ## License
 
