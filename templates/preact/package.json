@@ -11,7 +11,8 @@
         "import": "./dist/esm/development/index.js"
       },
       "require": "./dist/cjs/production/index.js",
-      "import": "./dist/esm/production/index.js"
+      "import": "./dist/esm/production/index.js",
+      "types": "./dist/types/index.d.ts"
     },
     "./dev": {
       "production": {
@@ -19,17 +20,20 @@
         "import": "./dist/esm/production/index.js"
       },
       "require": "./dist/cjs/development/index.js",
-      "import": "./dist/esm/development/index.js"
+      "import": "./dist/esm/development/index.js",
+      "types": "./dist/types/index.d.ts"
     },
     "./esm": {
       "development": "./dist/esm/development/index.js",
       "production": "./dist/esm/production/index.js",
-      "default": "./dist/esm/production/index.js"
+      "default": "./dist/esm/production/index.js",
+      "types": "./dist/types/index.d.ts"
     },
     "./cjs": {
       "development": "./dist/cjs/development/index.js",
       "production": "./dist/cjs/production/index.js",
-      "default": "./dist/cjs/production/index.js"
+      "default": "./dist/cjs/production/index.js",
+      "types": "./dist/types/index.d.ts"
     }
   },
   "files": [
