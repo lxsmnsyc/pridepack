@@ -29,7 +29,7 @@ import readPackage from './read-package';
 import getPackagePath from './get-package-path';
 
 const SCRIPTS = {
-  prepublish: 'pridepack clean && pridepack build',
+  prepublishOnly: 'pridepack clean && pridepack build',
   build: 'pridepack build',
   'type-check': 'pridepack check',
   lint: 'pridepack lint',
