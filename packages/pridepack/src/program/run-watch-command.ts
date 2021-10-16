@@ -24,8 +24,12 @@ export default async function runWatchCommand(
         generateTSDiagnostics([diagnostic]);
       },
       () => {
-        rebuild().catch(console.error);
-        onRebuild?.();
+        rebuild().then(() => {
+          onRebuild?.();
+        }).catch((err) => {
+          console.error(err);
+          process.exit(1);
+        });
       },
       false,
     );

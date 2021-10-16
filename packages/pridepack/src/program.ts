@@ -68,5 +68,6 @@ async function runCommand() {
 export default function runProgram(): void {
   runCommand().catch((err) => {
     console.error(err);
+    process.exit(1);
   });
 }

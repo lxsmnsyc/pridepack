@@ -89,7 +89,11 @@ export default function watchCompileTypes(
     );
   }
 
-  setup().catch(console.error);
+  setup().catch((err) => {
+    program.close();
+    console.error(err);
+    process.exit(1);
+  });
 
   return () => {
     ready = false;

@@ -26,6 +26,7 @@
 import prompts from 'prompts';
 import yargs from 'yargs';
 import runProgram from './program';
+import './program/graceful-crash';
 
 const { argv } = yargs
   .scriptName('pridepack')
