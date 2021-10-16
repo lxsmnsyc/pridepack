@@ -18,7 +18,7 @@
     "TheoryOfNekomata <allan.crisostomo@outlook.com> (https://modal.sh)"
   ],
   "scripts": {
-    "prepublish": "yarn build",
+    "prepublishOnly": "node build-src",
     "build": "node build-src",
     "type-check": "tsc --noEmit"
   },
