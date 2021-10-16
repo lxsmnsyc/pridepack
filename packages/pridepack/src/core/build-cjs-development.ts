@@ -46,7 +46,7 @@ export default async function buildCJSDevelopment(incremental: boolean): Promise
   if (config.jsx === 'preserve' && extension !== '.jsx') {
     extension = 'jsx';
   }
-  const outfile = path.join(parsed.dir, `${parsed.name}.${extension}`);
+  const outfile = path.join(parsed.dir, `${parsed.name}${extension}`);
   // run esbuild
   return build({
     entryPoints: [
