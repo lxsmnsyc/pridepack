@@ -8,6 +8,7 @@ import runLintCommand from './program/run-lint-command';
 import runWatchCommand from './program/run-watch-command';
 import runStartCommand from './program/run-start-command';
 import runCompile from './program/run-compile';
+import crash from './program/graceful-crash';
 
 async function runCommand() {
   const response = await prompts({
@@ -26,6 +27,7 @@ async function runCommand() {
       { title: 'dev', value: 'dev' },
     ],
     initial: 0,
+    onState: crash,
   });
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access

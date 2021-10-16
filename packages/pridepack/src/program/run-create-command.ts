@@ -5,12 +5,14 @@ import chooseTemplate from './choose-template';
 import runInitPackage from './run-init-package';
 import runInstall from './run-install';
 import runTask from './run-task';
+import crash from './graceful-crash';
 
 export default async function runCreateCommand(): Promise<void> {
   const packageName = await prompts({
     type: 'text',
     name: 'name',
     message: 'What\'s your package name?',
+    onState: crash,
   });
   const directory = getSafePackageName(packageName.name);
   const templateName = await chooseTemplate();

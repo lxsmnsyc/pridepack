@@ -1,5 +1,6 @@
 import prompts from 'prompts';
 import installDeps from '../core/install-deps';
+import crash from './graceful-crash';
 import runTask from './run-task';
 
 export default async function runInstall(directory: string): Promise<void> {
@@ -13,6 +14,7 @@ export default async function runInstall(directory: string): Promise<void> {
       { title: 'PNPM', value: 'pnpm' },
     ],
     initial: 0,
+    onState: crash,
   });
   const task = await runTask(() => installDeps(packageManager.command, directory), {
     pending: 'Installing dependencies...',

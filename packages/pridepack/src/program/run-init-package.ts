@@ -1,32 +1,38 @@
 import prompts from 'prompts';
 import licenses from '@ovyerus/licenses';
 import patchPackage from '../core/patch-package';
+import crash from './graceful-crash';
 
 export default async function runInitPackage(name: string, directory?: string): Promise<void> {
   const { description } = await prompts({
     type: 'text',
     name: 'description',
     message: 'Your package\'s description?',
+    onState: crash,
   });
   const { author } = await prompts({
     type: 'text',
     name: 'author',
     message: 'Author name?',
+    onState: crash,
   });
   const { repository } = await prompts({
     type: 'text',
     name: 'repository',
     message: 'Repository URL?',
+    onState: crash,
   });
   const { homepage } = await prompts({
     type: 'text',
     name: 'homepage',
     message: 'Home URL?',
+    onState: crash,
   });
   const { issues } = await prompts({
     type: 'text',
     name: 'issues',
     message: 'Issues URL?',
+    onState: crash,
   });
   const { license } = await prompts({
     type: 'autocomplete',
@@ -36,11 +42,13 @@ export default async function runInitPackage(name: string, directory?: string): 
       title: item,
       value: item,
     })),
+    onState: crash,
   });
   const { private: isPrivate } = await prompts({
     type: 'confirm',
     name: 'private',
     message: 'Is your package private?',
+    onState: crash,
   });
   await patchPackage({
     name,

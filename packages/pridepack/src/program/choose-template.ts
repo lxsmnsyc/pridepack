@@ -1,4 +1,5 @@
 import prompts from 'prompts';
+import crash from './graceful-crash';
 
 const TEMPLATES = [
   'basic',
@@ -20,5 +21,6 @@ export default async function chooseTemplate(): Promise<{ template: string }> {
       value: item,
     })),
     initial: 0,
+    onState: crash,
   });
 }
