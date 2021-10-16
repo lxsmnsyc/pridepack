@@ -43,7 +43,7 @@ export default async function buildESMProduction(incremental: boolean): Promise<
     ),
   );
   let extension = parsed.ext;
-  if (config.jsx === 'preserve' && extension !== 'jsx') {
+  if (config.jsx === 'preserve' && extension !== '.jsx') {
     extension = 'jsx';
   }
   const outfile = path.join(parsed.dir, `${parsed.name}.${extension}`);
