@@ -1,5 +1,6 @@
 {
   "jest": {
+    "preset": "ts-jest",
     "testEnvironment": "jsdom"
   },
   "target": "es2017"
