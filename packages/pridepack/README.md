@@ -102,7 +102,7 @@ For types, the output file is inferred from the `"types"` field.
 
 - Code-splitting (requires ESBuild)
 
-## Migrating to `0.13.0`
+## Migrating to `1.0.0`
 
 ### `package.json`
 
