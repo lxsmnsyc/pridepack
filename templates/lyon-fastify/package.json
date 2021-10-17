@@ -80,8 +80,7 @@
   "private": true,
   "scripts": {
     "dev": "nodemon",
-    "start": "node ./dist/cjs/index.js",
-    "build": "yarn graphql:generate && pridepack build",
+    "build": "npm run graphql:generate && pridepack build",
     "graphql:generate": "graphql-codegen"
   }
 }

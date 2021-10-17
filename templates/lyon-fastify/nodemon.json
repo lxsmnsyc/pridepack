@@ -6,5 +6,5 @@
   "ignore": [
     "src/**/*.spec.ts"
   ],
-  "exec": "pridepack build && node ./dist/cjs"
+  "exec": "pridepack build && pridepack dev"
 }
