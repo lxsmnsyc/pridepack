@@ -1,6 +1,6 @@
 {
   "name": "bod-discord-template",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "types": "dist/types/index.d.ts",
   "main": "dist/cjs/production/index.js",
   "module": "dist/esm/production/index.js",
@@ -52,7 +52,7 @@
     "@types/node": "^16.10.3",
     "eslint": "^7.32.0",
     "eslint-config-lxsmnsyc": "^0.3.0",
-    "pridepack": "1.0.2",
+    "pridepack": "1.0.3",
     "ts-jest": "^27.0.5",
     "tslib": "^2.3.1",
     "typescript": "^4.4.3"
