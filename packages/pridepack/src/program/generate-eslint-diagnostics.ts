@@ -1,7 +1,7 @@
-import chalk from 'chalk';
 import { ESLint, Linter } from 'eslint';
 import path from 'path';
 import ts from 'typescript';
+import { blue, yellow } from '../core/colors';
 import createDiagnosticMessage from './create-diagnostic-message';
 
 type SeverityMap = Record<Linter.Severity, ts.DiagnosticCategory>;
@@ -14,10 +14,10 @@ const diagnostics: SeverityMap = {
 
 function createESLintString(file: string, message: Linter.LintMessage): string {
   const baseMessage = message.message;
-  const rule = chalk.blue(message.ruleId ? ` [${message.ruleId}]` : '');
-  const line = chalk.yellow(message.line);
-  const column = chalk.yellow(message.column);
-  return `${chalk.blue(file)} (${line}, ${column}): ${baseMessage}${rule}`;
+  const rule = blue(message.ruleId ? ` [${message.ruleId}]` : '');
+  const line = yellow(`${message.line}`);
+  const column = yellow(`${message.column}`);
+  return `${blue(file)} (${line}, ${column}): ${baseMessage}${rule}`;
 }
 
 export default function generateESLintDiagnostics(results: ESLint.LintResult[]): void {

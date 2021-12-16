@@ -1,7 +1,7 @@
-import chalk from 'chalk';
 import execa from 'execa';
 import { resolveCJSEntry } from '../core/build-cjs';
 import { resolveESMEntry } from '../core/build-esm';
+import { green, yellow } from '../core/colors';
 import readPackage from '../core/read-package';
 import runTask from './run-task';
 import runWatchCommand from './run-watch-command';
@@ -16,7 +16,7 @@ export default async function runStartCommand(isDev: boolean): Promise<void> {
     );
 
     function startProcess() {
-      console.log(chalk.yellow('Restarting...'));
+      console.log(yellow('Restarting...'));
       const instance = execa(
         'node',
         [
@@ -26,7 +26,7 @@ export default async function runStartCommand(isDev: boolean): Promise<void> {
         ],
       );
       instance.stdout?.pipe(process.stdout);
-      console.log(chalk.green('Restarted!'));
+      console.log(green('Restarted!'));
       return instance;
     }
 

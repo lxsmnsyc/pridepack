@@ -21,14 +21,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-import chalk from 'chalk';
+import { bold, magenta, underline } from './colors';
 
 export function pendingMessage(
   verb: string,
   subject: string,
   suffix?: string,
 ): string {
-  const base = `${verb} ${chalk.underline(subject)}`;
+  const base = `${verb} ${underline(subject)}`;
   if (suffix) {
     return `${base} ${suffix}...`;
   }
@@ -40,7 +40,7 @@ export function successMessage(
   subject: string,
   suffix?: string,
 ): string {
-  const base = `${verb} ${chalk.underline(subject)}`;
+  const base = `${verb} ${underline(subject)}`;
   if (suffix) {
     return `${base} ${suffix}.`;
   }
@@ -50,7 +50,7 @@ export function successMessage(
 export function commandTitle(
   command: string,
 ): string {
-  const base = `${chalk.magenta('pridepack')} ${chalk.magentaBright(command)}`;
+  const base = `${magenta('pridepack')} ${magenta(bold(command))}`;
 
   const args = process.argv.slice(3);
 

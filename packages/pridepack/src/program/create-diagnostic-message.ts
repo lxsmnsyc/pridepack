@@ -1,9 +1,14 @@
-import chalk from 'chalk';
 import ts from 'typescript';
+import {
+  cyan,
+  green,
+  red,
+  yellow,
+} from '../core/colors';
 
 interface DiagnosticDisplay {
   symbol: string;
-  color: typeof chalk.Color;
+  color: (value: string) => string;
 }
 
 interface DiagnosticDisplayOptions {
@@ -13,19 +18,19 @@ interface DiagnosticDisplayOptions {
 const DIAGNOSTIC_DISPLAYS: DiagnosticDisplayOptions = {
   [ts.DiagnosticCategory.Error]: {
     symbol: '✖',
-    color: 'red',
+    color: red,
   },
   [ts.DiagnosticCategory.Message]: {
     symbol: '✔',
-    color: 'green',
+    color: green,
   },
   [ts.DiagnosticCategory.Suggestion]: {
     symbol: 'ℹ',
-    color: 'cyan',
+    color: cyan,
   },
   [ts.DiagnosticCategory.Warning]: {
     symbol: '⚠',
-    color: 'yellow',
+    color: yellow,
   },
 };
 
@@ -34,5 +39,5 @@ export default function createDiagnosticMessage(
   message: string,
 ): void {
   const display = DIAGNOSTIC_DISPLAYS[category];
-  console.log(`${chalk.keyword(display.color)(display.symbol)} ${message}`);
+  console.log(`${display.color(display.symbol)} ${message}`);
 }
