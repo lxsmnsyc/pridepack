@@ -83,10 +83,6 @@ const { argv } = yargs
     'Runs the package in development mode.',
   )
   .command(
-    'test',
-    'Performs testing',
-  )
-  .command(
     'lint',
     'Performs linting',
     (args) => (

@@ -21,7 +21,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-import { InitialOptions } from '@jest/types/build/Config';
 import { Plugin } from 'esbuild';
 
 export interface PridepackBaseConfig {
@@ -42,7 +41,6 @@ export interface PridepackConfig extends PridepackBaseConfig {
   jsx?: 'transform' | 'preserve';
   jsxFactory?: string;
   jsxFragment?: string;
-  jest?: InitialOptions;
   plugins?: Plugin[] | PridepackLazyPlugin;
 }
 

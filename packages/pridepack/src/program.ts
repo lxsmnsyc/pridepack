@@ -1,5 +1,4 @@
 import prompts from 'prompts';
-import runJest from './core/run-jest';
 import runBuildCommand from './program/run-build-command';
 import runCleanCommand from './program/run-clean-command';
 import runCreateCommand from './program/run-create-command';
@@ -52,9 +51,6 @@ async function runCommand() {
       break;
     case 'watch':
       await runWatchCommand();
-      break;
-    case 'test':
-      await runJest(process.argv.slice(3));
       break;
     case 'start':
       await runStartCommand(false);
