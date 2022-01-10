@@ -52,10 +52,6 @@ Lints the project using ESLint and the provided ESLint config.
 
 Runs no-emit type-checking.
 
-### `pridepack test`
-
-Runs test suites using Jest. You can also add valid command-line Jest arguments, which will be merged with the `jest` field from the Pridepack config file.
-
 ### `pridepack start`
 
 Runs the index file (based on `package.json`'s `type`) in production mode, respectively.
@@ -89,7 +85,6 @@ JS Config files are also supported, useful for loading environment variables and
 - `jsx`: How JSX expressions should be interpreted. Defaults to `react`. Use `preserve` to preserve JSX syntax.
 - `jsxFactory`: JSX pragma.
 - `jsxFragment`: JSX Fragment expression pragma.
-- `jest`: Jest config.
 - `plugins`: ESBuild plugins to be used for bundling. You can check the official [ESBuild Community Plugins](https://github.com/esbuild/community-plugins).
 
 ### Exports Map
@@ -156,10 +151,6 @@ For scripts, if you are using a start command for running the index file (e.g. f
   "dev": "pridepack dev",
 }
 ```
-
-### `ts-jest`
-
-`ts-jest` is still the default preset for `pridepack test`, however, it is no longer a peer dependency. In this case, users needs to install `ts-jest` as `devDependency`. Templates have also been re-adjusted.
 
 ## License
 
