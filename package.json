@@ -1,29 +1,14 @@
 {
-  "name": "pridepack-workspace",
+  "name": "root",
   "private": true,
   "workspaces": [
     "packages/*",
-    "templates/*",
-    "examples/*"
+    "templates/*"
   ],
   "devDependencies": {
-    "@typescript-eslint/parser": "^5.9.0",
     "eslint": "^8.6.0",
     "eslint-config-lxsmnsyc": "^0.4.0",
     "lerna": "^4.0.0",
     "typescript": "^4.5.4"
-  },
-  "version": "0.1.0",
-  "description": "Contextual State Management",
-  "main": "index.js",
-  "author": "Alexis Munsayac <alexis.munsayac@gmail.com>",
-  "license": "MIT",
-  "repository": {
-    "url": "https://github.com/lxsmnsyc/pridepack.git",
-    "type": "git"
-  },
-  "homepage": "https://github.com/lxsmnsyc/pridepack",
-  "bugs": {
-    "url": "https://github.com/lxsmnsyc/pridepack/issues"
   }
 }
