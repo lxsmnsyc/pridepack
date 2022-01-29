@@ -1,5 +1,5 @@
 import { BitFieldResolvable, Client, IntentsString } from 'discord.js';
-import dotenv from 'dotenv';
+import * as dotenv from 'dotenv';
 
 dotenv.config();
 

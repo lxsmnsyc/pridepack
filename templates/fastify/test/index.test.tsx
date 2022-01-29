@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import SERVER from '../src/server';
 import '../src/routes';
 

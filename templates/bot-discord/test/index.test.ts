@@ -1,15 +1,23 @@
+import {
+  describe,
+  beforeEach,
+  afterEach,
+  it,
+  expect,
+  vi,
+} from 'vitest';
 import { EventEmitter } from 'events';
 import CLIENT from '../src/client';
 import '../src/handlers';
 
-jest.mock('dotenv', () => ({
+vi.mock('dotenv', () => ({
   config: () => {
     process.env.DISCORD_BOT_TOKEN = 'token';
     process.env.DISCORD_BOT_INTENTS = 'GUILDS,GUILD_MESSAGES';
   },
 }));
 
-jest.mock('discord.js', () => ({
+vi.mock('discord.js', () => ({
   Client: class MockClient extends EventEmitter {
     public user: any = {};
 
@@ -31,7 +39,7 @@ describe('Example', () => {
 
   beforeEach(() => {
     defaultConsoleLog = console.log;
-    console.log = jest.fn();
+    console.log = vi.fn();
   });
 
   afterEach(() => {
@@ -70,7 +78,7 @@ describe('Example', () => {
           }],
         ]),
       },
-      reply: jest.fn(),
+      reply: vi.fn(),
     };
 
     CLIENT.emit('messageCreate', payload as any);
