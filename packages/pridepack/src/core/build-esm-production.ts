@@ -34,7 +34,12 @@ export default async function buildESMProduction(incremental: boolean): Promise<
   const configCWD = await readConfigWithCWD();
   const externals = await readExternals();
   // get output director
-  const outdir = path.resolve(await getESMTargetDirectory(false));
+  const outdir = path.resolve(
+    path.join(
+      process.cwd(),
+      await getESMTargetDirectory(false),
+    ),
+  );
 
   // run esbuild
   return build({

@@ -34,7 +34,12 @@ export default async function buildCJSDevelopment(incremental: boolean): Promise
   const configCWD = await readConfigWithCWD();
   const externals = await readExternals();
   // get output directory
-  const outdir = path.resolve(await getCJSTargetDirectory(true));
+  const outdir = path.resolve(
+    path.join(
+      process.cwd(),
+      await getCJSTargetDirectory(true),
+    ),
+  );
 
   // run esbuild
   return build({
