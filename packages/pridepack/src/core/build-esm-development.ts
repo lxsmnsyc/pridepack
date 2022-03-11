@@ -27,30 +27,19 @@ import { DEVELOPMENT_ENV } from './read-env-defs';
 import readConfig from './read-config';
 import readConfigWithCWD from './read-config-with-cwd';
 import readExternals from './read-externals';
-import { resolveESMEntry } from './build-esm';
+import { getESMTargetDirectory } from './build-esm';
 
 export default async function buildESMDevelopment(incremental: boolean): Promise<BuildResult> {
   const config = await readConfig();
   const configCWD = await readConfigWithCWD();
   const externals = await readExternals();
-  // get outfile
-  const parsed = path.parse(
-    path.resolve(
-      path.join(
-        process.cwd(),
-        await resolveESMEntry(true),
-      ),
-    ),
-  );
-  let extension = parsed.ext;
-  if (config.jsx === 'preserve' && extension !== '.jsx') {
-    extension = 'jsx';
-  }
+  // get output directory
+  const outdir = path.resolve(await getESMTargetDirectory(true));
 
   // run esbuild
   return build({
     entryPoints: configCWD.entryPoints,
-    outdir: parsed.dir,
+    outdir,
     bundle: true,
     minify: false,
     platform: 'node',

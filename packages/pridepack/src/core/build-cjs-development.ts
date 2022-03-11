@@ -20,37 +20,26 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- */
+*/
 import path from 'path';
 import { build, BuildResult } from 'esbuild';
 import { DEVELOPMENT_ENV } from './read-env-defs';
 import readConfig from './read-config';
 import readConfigWithCWD from './read-config-with-cwd';
 import readExternals from './read-externals';
-import { resolveCJSEntry } from './build-cjs';
+import { getCJSTargetDirectory } from './build-cjs';
 
 export default async function buildCJSDevelopment(incremental: boolean): Promise<BuildResult> {
   const config = await readConfig();
   const configCWD = await readConfigWithCWD();
   const externals = await readExternals();
-  // get outfile
-  const parsed = path.parse(
-    path.resolve(
-      path.join(
-        process.cwd(),
-        await resolveCJSEntry(true),
-      ),
-    ),
-  );
-  let extension = parsed.ext;
-  if (config.jsx === 'preserve' && extension !== '.jsx') {
-    extension = 'jsx';
-  }
+  // get output directory
+  const outdir = path.resolve(await getCJSTargetDirectory(true));
 
   // run esbuild
   return build({
     entryPoints: configCWD.entryPoints,
-    outdir: parsed.dir,
+    outdir,
     bundle: true,
     minify: false,
     platform: 'node',
