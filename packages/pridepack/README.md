@@ -79,7 +79,7 @@ JS Config files are also supported, useful for loading environment variables and
 
 ### Fields
 
-- `srcFile`: path of the entry source file. Defaults to `src/index.ts`.
+- `entryPoints`: path of the entry source files. Defaults to `["src/index.ts"]`.
 - `target`: ECMAScript version target. Defaults to `esnext`.
 - `tsconfig`: path of Typescript config file. Defaults to `tsconfig.json`.
 - `jsx`: How JSX expressions should be interpreted. Defaults to `react`. Use `preserve` to preserve JSX syntax.
@@ -101,7 +101,7 @@ For types, the output file is inferred from the `"types"` field.
 
 ### `package.json`
 
-The following entrypoints must now be provided.  `./esm` and  `./cjs` entrypoints are optional.
+The following entrypoints must now be provided.  `./esm` and  `./cjs` entry points are optional.
 
 ```json
 {
