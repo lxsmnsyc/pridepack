@@ -46,13 +46,11 @@ export default async function buildCJSDevelopment(incremental: boolean): Promise
   if (config.jsx === 'preserve' && extension !== '.jsx') {
     extension = 'jsx';
   }
-  const outfile = path.join(parsed.dir, `${parsed.name}${extension}`);
+
   // run esbuild
   return build({
-    entryPoints: [
-      configCWD.srcFile,
-    ],
-    outfile,
+    entryPoints: configCWD.entryPoints,
+    outdir: parsed.dir,
     bundle: true,
     minify: false,
     platform: 'node',

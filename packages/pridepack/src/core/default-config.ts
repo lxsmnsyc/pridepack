@@ -24,7 +24,7 @@
 import { Plugin } from 'esbuild';
 
 export interface PridepackBaseConfig {
-  srcFile: string;
+  entryPoints: string[];
   tsconfig: string;
 }
 
@@ -45,7 +45,7 @@ export interface PridepackConfig extends PridepackBaseConfig {
 }
 
 const DEFAULT_CONFIG: PridepackConfig = {
-  srcFile: 'src/index.ts',
+  entryPoints: ['src/index.ts'],
   target: 'es2017',
   tsconfig: 'tsconfig.json',
 };

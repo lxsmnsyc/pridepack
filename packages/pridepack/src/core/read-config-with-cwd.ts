@@ -36,7 +36,7 @@ export default async function readConfigWithCWD(): Promise<PridepackBaseConfig> 
   const config = await readConfig();
 
   CONFIG_WITH_CWD = {
-    srcFile: path.resolve(path.join(cwd, config.srcFile)),
+    entryPoints: config.entryPoints.map((entryPoint) => path.resolve(path.join(cwd, entryPoint))),
     tsconfig: path.resolve(path.join(cwd, config.tsconfig)),
   };
 

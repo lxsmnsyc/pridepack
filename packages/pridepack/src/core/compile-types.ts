@@ -70,7 +70,7 @@ export default async function compileTypes(noEmit = true): Promise<ts.Diagnostic
   // Prepare and emit the d.ts files
   const configCWD = await readConfigWithCWD();
   const program = ts.createProgram(
-    [configCWD.srcFile],
+    configCWD.entryPoints,
     baseConfig,
     host,
   );
