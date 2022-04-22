@@ -1,6 +1,6 @@
 {
   "name": "pridepack",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "CLI for building TypeScript packages",
   "main": "index.js",
   "author": "Alexis Munsayac <alexis.munsayac@gmail.com>",
@@ -38,8 +38,8 @@
   },
   "peerDependencies": {
     "eslint": "^8.0",
-    "typescript": "^4.0",
-    "tslib": "^2.0"
+    "tslib": "^2.0",
+    "typescript": "^4.0"
   },
   "devDependencies": {
     "@types/degit": "^2.8.3",
