@@ -16,7 +16,6 @@ export default async function runStartCommand(isDev: boolean): Promise<void> {
     );
 
     function startProcess() {
-      console.log(yellow('Restarting...'));
       const instance = execa(
         'node',
         [
@@ -26,7 +25,6 @@ export default async function runStartCommand(isDev: boolean): Promise<void> {
         ],
       );
       instance.stdout?.pipe(process.stdout);
-      console.log(green('Restarted!'));
       return instance;
     }
 
@@ -34,11 +32,18 @@ export default async function runStartCommand(isDev: boolean): Promise<void> {
 
     if (isDev) {
       await runWatchCommand(() => {
+        const isRestarting = !!instance;
         if (instance) {
           instance.cancel();
+          console.log(yellow('Restarting...'));
         }
         instance = startProcess();
+        if (isRestarting) {
+          console.log(green('Restarted!'));
+        }
       });
+    } else {
+      await startProcess();
     }
   }, {
     pending: `Starting package in '${isDev ? 'development' : 'production'}' mode...`,
