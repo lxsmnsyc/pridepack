@@ -1,5 +1,5 @@
 import execa from 'execa';
-import { resolveCJSEntry } from '../core/build-cjs';
+import { resolveCJSEntry } from '../core/resolve-entrypoint';
 import { resolveESMEntry } from '../core/build-esm';
 import { green, yellow } from '../core/colors';
 import readPackage from '../core/read-package';

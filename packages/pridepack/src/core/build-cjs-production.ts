@@ -24,21 +24,24 @@
 import path from 'path';
 import { build, BuildResult } from 'esbuild';
 import { PRODUCTION_ENV } from './read-env-defs';
-import readConfigWithCWD from './read-config-with-cwd';
 import readExternals from './read-externals';
-import readConfig from './read-config';
-import { resolveCJSEntry } from './build-cjs';
+import { PridepackConfig } from './default-config';
+import { getCJSTargetDirectory } from './resolve-entrypoint';
 
-export default async function buildCJSProduction(incremental: boolean): Promise<BuildResult> {
-  const config = await readConfig();
-  const configCWD = await readConfigWithCWD();
+export default async function buildCJSProduction(
+  config: PridepackConfig,
+  moduleEntry: string,
+  entrypoint: string,
+  incremental: boolean,
+): Promise<BuildResult> {
   const externals = await readExternals();
+  const cwd = process.cwd();
   // get outfile
   const parsed = path.parse(
     path.resolve(
       path.join(
-        process.cwd(),
-        await resolveCJSEntry(false),
+        cwd,
+        getCJSTargetDirectory(moduleEntry, false),
       ),
     ),
   );
@@ -50,7 +53,7 @@ export default async function buildCJSProduction(incremental: boolean): Promise<
   // run esbuild
   return build({
     entryPoints: [
-      configCWD.srcFile,
+      path.resolve(path.join(cwd, entrypoint)),
     ],
     outfile,
     bundle: true,
@@ -64,7 +67,7 @@ export default async function buildCJSProduction(incremental: boolean): Promise<
     incremental,
     external: externals,
     target: config.target,
-    tsconfig: configCWD.tsconfig,
+    tsconfig: path.resolve(path.join(cwd, config.tsconfig)),
     jsx: config.jsx,
     jsxFactory: config.jsxFactory,
     jsxFragment: config.jsxFragment,

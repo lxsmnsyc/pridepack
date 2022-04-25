@@ -24,7 +24,6 @@
 import path from 'path';
 import fs from 'fs-extra';
 import ts from 'typescript';
-import readConfigWithCWD from './read-config-with-cwd';
 import readPackage from './read-package';
 import readValidCompilerOptions from './read-valid-compiler-options';
 
@@ -33,7 +32,10 @@ interface OutputFile {
   data: string;
 }
 
-export default async function compileTypes(noEmit = true): Promise<ts.Diagnostic[]> {
+export default async function compileTypes(
+  entrypoint: string,
+  noEmit = true,
+): Promise<ts.Diagnostic[]> {
   const pkg = await readPackage();
 
   if (!pkg.types) {
@@ -41,12 +43,13 @@ export default async function compileTypes(noEmit = true): Promise<ts.Diagnostic
   }
 
   const options = await readValidCompilerOptions();
+  const cwd = process.cwd();
 
   const baseConfig: ts.CompilerOptions = {
     ...options,
     outDir: path.resolve(
       path.join(
-        process.cwd(),
+        cwd,
         path.dirname(pkg.types),
       ),
     ),
@@ -68,9 +71,8 @@ export default async function compileTypes(noEmit = true): Promise<ts.Diagnostic
   };
 
   // Prepare and emit the d.ts files
-  const configCWD = await readConfigWithCWD();
   const program = ts.createProgram(
-    [configCWD.srcFile],
+    [path.resolve(path.join(cwd, entrypoint))],
     baseConfig,
     host,
   );

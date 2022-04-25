@@ -23,7 +23,7 @@
  */
 import path from 'path';
 import fs from 'fs-extra';
-import { getCJSTargetDirectory } from './build-cjs';
+import { getCJSTargetDirectory } from './resolve-entrypoint';
 import { getESMTargetDirectory } from './build-esm';
 import readPackage from './read-package';
 

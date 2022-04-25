@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "@ovyerus/licenses": "^6.4.4",
+    "chokidar": "^3.5.3",
     "degit": "^2.8.4",
     "dotenv": "^10.0.0",
     "esbuild": "^0.14.38",

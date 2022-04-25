@@ -22,48 +22,36 @@
  * SOFTWARE.
  */
 import path from 'path';
-import { legacy, resolve } from 'resolve.exports';
-import readPackage from './read-package';
 
-export const DEFAULT_OUTPUT = 'dist/cjs';
+export const DEFAULT_CJS_OUTPUT = 'dist/cjs';
 export const DEFAULT_CJS_PRODUCTION_ENTRY = 'production/index.js';
 export const DEFAULT_CJS_DEVELOPMENT_ENTRY = 'development/index.js';
-export const DEFAULT_CJS_PROD_ENTRY = `${DEFAULT_OUTPUT}/${DEFAULT_CJS_PRODUCTION_ENTRY}`;
-export const DEFAULT_CJS_DEV_ENTRY = `${DEFAULT_OUTPUT}/${DEFAULT_CJS_DEVELOPMENT_ENTRY}`;
 
-export async function resolveCJSEntry(dev: boolean): Promise<string> {
-  const pkg = await readPackage();
-
-  // Resolve through Export map
-  let result: string | void;
-  try {
-    result = resolve(pkg, dev ? './dev' : '.', {
-      require: true,
-    }) ?? undefined;
-  } catch (err) {
-    result = undefined;
-  }
-
-  // If there is a definition, return it.
-  if (result) {
-    return result;
-  }
-
-  // Otherwise, fallback to legacy.
-  const legacyResult = legacy(pkg, {
-    browser: false,
-    fields: ['main'],
-  });
-
-  if (legacyResult) {
-    return legacyResult;
-  }
-
-  return dev ? DEFAULT_CJS_DEV_ENTRY : DEFAULT_CJS_PROD_ENTRY;
+export function getCJSTargetDirectory(moduleEntry: string, isDev: boolean): string {
+  return path.join(
+    DEFAULT_CJS_OUTPUT,
+    moduleEntry === '.' ? './index' : moduleEntry,
+    isDev ? DEFAULT_CJS_DEVELOPMENT_ENTRY : DEFAULT_CJS_PRODUCTION_ENTRY,
+  );
 }
 
-export async function getCJSTargetDirectory(dev: boolean): Promise<string> {
-  const targetPath = await resolveCJSEntry(dev);
+export const DEFAULT_ESM_OUTPUT = 'dist/esm';
+export const DEFAULT_ESM_PRODUCTION_ENTRY = 'production/index.js';
+export const DEFAULT_ESM_DEVELOPMENT_ENTRY = 'development/index.js';
 
-  return path.dirname(targetPath);
+export function getESMTargetDirectory(moduleEntry: string, isDev: boolean): string {
+  return path.join(
+    DEFAULT_ESM_OUTPUT,
+    moduleEntry === '.' ? './index' : moduleEntry,
+    isDev ? DEFAULT_ESM_DEVELOPMENT_ENTRY : DEFAULT_ESM_PRODUCTION_ENTRY,
+  );
+}
+
+export const DEFAULT_TYPES_OUTPUT = 'dist/types';
+
+export function getTypesTargetDirectory(moduleEntry: string): string {
+  return path.join(
+    DEFAULT_TYPES_OUTPUT,
+    moduleEntry === '.' ? './index' : moduleEntry,
+  );
 }
