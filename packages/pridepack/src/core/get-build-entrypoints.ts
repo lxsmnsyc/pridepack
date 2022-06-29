@@ -19,11 +19,7 @@ export default function getBuildEntrypoints(
         ),
       ),
     );
-    let extension = parsed.ext;
-    if (config.jsx === 'preserve' && extension !== '.jsx') {
-      extension = 'jsx';
-    }
-    const outfile = path.join(parsed.dir, `${parsed.name}${extension}`);
+    const outfile = path.join(parsed.dir, parsed.name);
 
     record[outfile] = path.resolve(path.join(cwd, config.entrypoints[key]));
   }
