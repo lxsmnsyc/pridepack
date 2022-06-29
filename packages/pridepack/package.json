@@ -70,5 +70,8 @@
     "package",
     "scaffolding",
     "bootstrap"
-  ]
+  ],
+  "engines": {
+    "node": ">=10"
+  }
 }
