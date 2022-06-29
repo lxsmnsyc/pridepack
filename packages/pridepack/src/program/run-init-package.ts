@@ -34,16 +34,28 @@ export default async function runInitPackage(name: string, directory?: string): 
     message: 'Issues URL?',
     onState: crash,
   });
-  const { license } = await prompts({
-    type: 'autocomplete',
-    name: 'license',
-    message: 'License?',
-    choices: Object.keys(licenses).map((item) => ({
-      title: item,
-      value: item,
-    })),
+  let license: string | undefined;
+
+  const { licensed } = await prompts({
+    type: 'confirm',
+    name: 'licensed',
+    message: 'Licensed?',
     onState: crash,
   });
+
+  if (licensed) {
+    license = (await prompts({
+      type: 'autocomplete',
+      name: 'license',
+      message: 'Which license?',
+      choices: Object.keys(licenses).map((item) => ({
+        title: item,
+        value: item,
+      })),
+      onState: crash,
+    })).license;
+  }
+
   const { private: isPrivate } = await prompts({
     type: 'confirm',
     name: 'private',
