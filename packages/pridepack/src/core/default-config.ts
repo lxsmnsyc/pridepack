@@ -37,6 +37,7 @@ interface PridepackPluginEnv {
 type PridepackLazyPlugin = (env: PridepackPluginEnv) => Plugin[];
 
 export interface PridepackConfig extends PridepackBaseConfig {
+  startEntrypoint?: string;
   target: string | string[];
   jsx?: 'transform' | 'preserve';
   jsxFactory?: string;
@@ -45,6 +46,7 @@ export interface PridepackConfig extends PridepackBaseConfig {
 }
 
 const DEFAULT_CONFIG: PridepackConfig = {
+  startEntrypoint: '.',
   entrypoints: {
     '.': 'src/index.ts',
   },

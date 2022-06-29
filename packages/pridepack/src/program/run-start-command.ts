@@ -1,18 +1,22 @@
 import execa from 'execa';
-import { resolveCJSEntry } from '../core/resolve-entrypoint';
-import { resolveESMEntry } from '../core/build-esm';
+import {
+  getCJSTargetDirectory,
+  getESMTargetDirectory,
+} from '../core/resolve-entrypoint';
 import { green, yellow } from '../core/colors';
 import readPackage from '../core/read-package';
 import runTask from './run-task';
 import runWatchCommand from './run-watch-command';
+import readConfig from '../core/read-config';
 
 export default async function runStartCommand(isDev: boolean): Promise<void> {
+  const config = await readConfig();
   const task = await runTask(async () => {
     const pkg = await readPackage();
     const entrypoint = (
       pkg.type === 'module'
-        ? await resolveESMEntry(isDev)
-        : await resolveCJSEntry(isDev)
+        ? getESMTargetDirectory(config.startEntrypoint ?? '.', isDev)
+        : getCJSTargetDirectory(config.startEntrypoint ?? '.', isDev)
     );
 
     function startProcess() {
