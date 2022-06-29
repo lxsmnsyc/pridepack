@@ -23,8 +23,8 @@
  */
 
 import path from 'path';
-import fs from 'fs-extra';
-import { CompilerOptions, TypeAcquisition } from 'typescript';
+import ts, { CompilerOptions, TypeAcquisition } from 'typescript';
+import { readFileSync } from 'fs';
 import readConfig from './read-config';
 
 export interface TsConfig {
@@ -50,8 +50,11 @@ export default async function readTSConfig(): Promise<Partial<TsConfig>> {
   }
 
   // Read config
-  const tsconfig = await getTSConfigPath();
-  TSCONFIG = await fs.readJson(tsconfig) as Partial<TsConfig>;
+  const tsconfigPath = await getTSConfigPath();
+  TSCONFIG = ts.readConfigFile(
+    tsconfigPath,
+    (filepath) => readFileSync(filepath, 'utf-8'),
+  ).config as Partial<TsConfig>;
 
   return TSCONFIG;
 }

@@ -22,8 +22,10 @@
  * SOFTWARE.
  */
 import path from 'path';
-import fs from 'fs-extra';
 import ts from 'typescript';
+import { PridepackConfig } from './default-config';
+import { outputFile } from './fs-utils';
+import getTSEntrypoints from './get-ts-entrypoints';
 import readPackage from './read-package';
 import readValidCompilerOptions from './read-valid-compiler-options';
 
@@ -33,7 +35,7 @@ interface OutputFile {
 }
 
 export default async function compileTypes(
-  entrypoint: string,
+  config: PridepackConfig,
   noEmit = true,
 ): Promise<ts.Diagnostic[]> {
   const pkg = await readPackage();
@@ -72,7 +74,7 @@ export default async function compileTypes(
 
   // Prepare and emit the d.ts files
   const program = ts.createProgram(
-    [path.resolve(path.join(cwd, entrypoint))],
+    getTSEntrypoints(config),
     baseConfig,
     host,
   );
@@ -80,7 +82,7 @@ export default async function compileTypes(
   const result = program.emit();
 
   await Promise.all(
-    files.map((file) => fs.outputFile(file.name, file.data)),
+    files.map((file) => outputFile(file.name, file.data)),
   );
 
   return ts.getPreEmitDiagnostics(program)

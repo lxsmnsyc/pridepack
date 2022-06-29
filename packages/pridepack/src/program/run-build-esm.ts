@@ -6,27 +6,25 @@ import { Task } from './run-task';
 
 export default async function runBuildESM(
   config: PridepackConfig,
-  moduleEntry: string,
-  entrypoint: string,
   incremental: boolean,
 ): Promise<{ dev: Task<void>, prod: Task<void> }> {
   return {
     dev: await runESBuild(
-      (inc) => buildESMDevelopment(config, moduleEntry, entrypoint, inc),
+      (inc) => buildESMDevelopment(config, inc),
       incremental,
       {
-        pending: `Building ESM Development output for module entry "${moduleEntry}"...`,
-        success: `Built ESM Development output for module entry "${moduleEntry}"!`,
-        failure: `Failed to build ESM Development output for module entry "${moduleEntry}".`,
+        pending: `Building ESM Development output...`,
+        success: `Built ESM Development output!`,
+        failure: `Failed to build ESM Development output.`,
       },
     ),
     prod: await runESBuild(
-      (inc) => buildESMProduction(config, moduleEntry, entrypoint, inc),
+      (inc) => buildESMProduction(config, inc),
       incremental,
       {
-        pending: `Building ESM Production output for module entry "${moduleEntry}"...`,
-        success: `Built ESM Production output for module entry "${moduleEntry}"!`,
-        failure: `Failed to build ESM Production output for module entry "${moduleEntry}".`,
+        pending: `Building ESM Production output...`,
+        success: `Built ESM Production output!`,
+        failure: `Failed to build ESM Production output.`,
       },
     ),
   };

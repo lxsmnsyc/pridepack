@@ -6,27 +6,25 @@ import { Task } from './run-task';
 
 export default async function runBuildCJS(
   config: PridepackConfig,
-  moduleEntry: string,
-  entrypoint: string,
   incremental: boolean,
 ): Promise<{ dev: Task<void>, prod: Task<void> }> {
   return {
     dev: await runESBuild(
-      (inc) => buildCJSDevelopment(config, moduleEntry, entrypoint, inc),
+      (inc) => buildCJSDevelopment(config, inc),
       incremental,
       {
-        pending: `Building CJS Development output for module entry "${moduleEntry}"...`,
-        success: `Built CJS Development output for module entry "${moduleEntry}"!`,
-        failure: `Failed to build CJS Development output for module entry "${moduleEntry}".`,
+        pending: `Building CJS Development output...`,
+        success: `Built CJS Development output!`,
+        failure: `Failed to build CJS Development output.`,
       },
     ),
     prod: await runESBuild(
-      (inc) => buildCJSProduction(config, moduleEntry, entrypoint, inc),
+      (inc) => buildCJSProduction(config, inc),
       incremental,
       {
-        pending: `Building CJS Production output for module entry "${moduleEntry}"...`,
-        success: `Built CJS Production output for module entry "${moduleEntry}"!`,
-        failure: `Failed to build CJS Production output for module entry "${moduleEntry}".`,
+        pending: `Building CJS Production output...`,
+        success: `Built CJS Production output!`,
+        failure: `Failed to build CJS Production output.`,
       },
     ),
   };

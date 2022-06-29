@@ -26,36 +26,24 @@ import { build, BuildResult } from 'esbuild';
 import { DEVELOPMENT_ENV } from './read-env-defs';
 import readExternals from './read-externals';
 import { PridepackConfig } from './default-config';
-import { getCJSTargetDirectory } from './resolve-entrypoint';
+import getBuildEntrypoints from './get-build-entrypoints';
+
 
 export default async function buildCJSDevelopment(
   config: PridepackConfig,
-  moduleEntry: string,
-  entrypoint: string,
   incremental: boolean,
 ): Promise<BuildResult> {
   const externals = await readExternals();
   const cwd = process.cwd();
   // get outfile
-  const parsed = path.parse(
-    path.resolve(
-      path.join(
-        cwd,
-        getCJSTargetDirectory(moduleEntry, true),
-      ),
-    ),
-  );
-  let extension = parsed.ext;
-  if (config.jsx === 'preserve' && extension !== '.jsx') {
-    extension = 'jsx';
-  }
-  const outfile = path.join(parsed.dir, `${parsed.name}${extension}`);
   // run esbuild
   return build({
-    entryPoints: [
-      path.resolve(path.join(cwd, entrypoint)),
-    ],
-    outfile,
+    entryPoints: getBuildEntrypoints(
+      config,
+      false,
+      true,
+    ),
+    outdir: cwd,
     bundle: true,
     minify: false,
     platform: 'node',

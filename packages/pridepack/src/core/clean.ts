@@ -26,23 +26,7 @@ import {
   getCJSTargetDirectory,
   getESMTargetDirectory,
 } from './resolve-entrypoint';
-import readPackage from './read-package';
 import { removeFile } from './fs-utils';
-
-export async function cleanTypes(): Promise<void> {
-  const pkg = await readPackage();
-  // Remove Types directory
-  if (pkg.types) {
-    await removeFile(
-      path.resolve(
-        path.join(
-          process.cwd(),
-          path.dirname(pkg.types),
-        ),
-      ),
-    );
-  }
-}
 
 export default async function clean(moduleEntry: string): Promise<void> {
   const cwd = process.cwd();
