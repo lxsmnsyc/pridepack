@@ -1,4 +1,3 @@
-import path from 'path';
 import { PridepackConfig } from './default-config';
 import { outputJson } from './fs-utils';
 import getPackagePath from './get-package-path';
@@ -8,6 +7,7 @@ import {
   getESMTargetDirectory,
   getTypesTarget,
 } from './resolve-entrypoint';
+import toPosix from './to-posix';
 
 interface BaseExportEntry {
   require: string;
@@ -17,10 +17,6 @@ interface BaseExportEntry {
 interface ExportEntry extends BaseExportEntry {
   development: BaseExportEntry;
   types: string;
-}
-
-function toPosix(filepath: string): string {
-  return filepath.split(path.sep).join(path.posix.sep);
 }
 
 export default async function patchPackageExports(
