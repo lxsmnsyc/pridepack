@@ -22,11 +22,11 @@
  * SOFTWARE.
  */
 import path from 'path';
-import fs from 'fs-extra';
 import DEFAULT_CONFIG, { PridepackConfig } from './default-config';
 import loadJS from './load-js';
 import { isFile } from './stat';
 import readPackage from './read-package';
+import { readJson } from './fs-utils';
 
 export const CONFIG_NAMES = [
   '.pridepackrc',
@@ -60,7 +60,7 @@ export default async function readConfig(): Promise<PridepackConfig> {
     // Check if config exists
     if (await isFile(filepath)) {
       // Read config
-      const customConfig = await fs.readJson(filepath) as Partial<PridepackConfig>;
+      const customConfig = await readJson<Partial<PridepackConfig>>(filepath);
 
       CONFIG = {
         ...customConfig,

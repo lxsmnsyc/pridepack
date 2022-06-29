@@ -21,12 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-import fs from 'fs-extra';
 import path from 'path';
 import { getLicense } from 'license';
 import { IPackageJson } from 'package-json-type';
 import readPackage from './read-package';
 import getPackagePath from './get-package-path';
+import { outputFile, outputJson } from './fs-utils';
 
 const SCRIPTS = {
   prepublishOnly: 'pridepack clean && pridepack build',
@@ -41,7 +41,7 @@ const SCRIPTS = {
 
 interface Patch {
   name: string;
-  license: string;
+  license?: string;
   author: string;
   description: string;
   repository: string;
@@ -53,16 +53,18 @@ interface Patch {
 export default async function patchPackage(patch: Patch, cwd = '.'): Promise<void> {
   const packageInfo = await readPackage(cwd);
 
-  await fs.outputFile(
-    path.join(cwd, 'LICENSE'),
-    getLicense(patch.license, {
-      author: patch.author,
-      year: new Date().getFullYear().toString(),
-    }),
-    {
-      encoding: 'utf-8',
-    },
-  );
+  if (patch.license) {
+    await outputFile(
+      path.join(cwd, 'LICENSE'),
+      getLicense(patch.license, {
+        author: patch.author,
+        year: new Date().getFullYear().toString(),
+      }),
+      {
+        encoding: 'utf-8',
+      },
+    );
+  }
 
   const newInfo: IPackageJson = {
     ...packageInfo,
@@ -89,7 +91,5 @@ export default async function patchPackage(patch: Patch, cwd = '.'): Promise<voi
     },
   };
 
-  await fs.outputJson(getPackagePath(cwd), newInfo, {
-    spaces: 2,
-  });
+  await outputJson(getPackagePath(cwd), newInfo);
 }

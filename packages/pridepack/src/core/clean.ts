@@ -22,51 +22,18 @@
  * SOFTWARE.
  */
 import path from 'path';
-import fs from 'fs-extra';
-import { getCJSTargetDirectory } from './resolve-entrypoint';
-import { getESMTargetDirectory } from './build-esm';
+import {
+  getCJSTargetDirectory,
+  getESMTargetDirectory,
+} from './resolve-entrypoint';
 import readPackage from './read-package';
+import { removeFile } from './fs-utils';
 
-export default async function clean(): Promise<void> {
-  // Remove CJS directory
-  await fs.remove(
-    path.resolve(
-      path.join(
-        process.cwd(),
-        await getCJSTargetDirectory(true),
-      ),
-    ),
-  );
-  await fs.remove(
-    path.resolve(
-      path.join(
-        process.cwd(),
-        await getCJSTargetDirectory(false),
-      ),
-    ),
-  );
-  // Remove ESM directory
-  await fs.remove(
-    path.resolve(
-      path.join(
-        process.cwd(),
-        await getESMTargetDirectory(false),
-      ),
-    ),
-  );
-  // Remove ESM directory
-  await fs.remove(
-    path.resolve(
-      path.join(
-        process.cwd(),
-        await getESMTargetDirectory(true),
-      ),
-    ),
-  );
+export async function cleanTypes(): Promise<void> {
   const pkg = await readPackage();
   // Remove Types directory
   if (pkg.types) {
-    await fs.remove(
+    await removeFile(
       path.resolve(
         path.join(
           process.cwd(),
@@ -75,4 +42,43 @@ export default async function clean(): Promise<void> {
       ),
     );
   }
+}
+
+export default async function clean(moduleEntry: string): Promise<void> {
+  const cwd = process.cwd();
+  // Remove CJS directory
+  await removeFile(
+    path.resolve(
+      path.join(
+        cwd,
+        getCJSTargetDirectory(moduleEntry, true),
+      ),
+    ),
+  );
+  await removeFile(
+    path.resolve(
+      path.join(
+        cwd,
+        getCJSTargetDirectory(moduleEntry, false),
+      ),
+    ),
+  );
+  // Remove ESM directory
+  await removeFile(
+    path.resolve(
+      path.join(
+        cwd,
+        getESMTargetDirectory(moduleEntry, false),
+      ),
+    ),
+  );
+  // Remove ESM directory
+  await removeFile(
+    path.resolve(
+      path.join(
+        process.cwd(),
+        getESMTargetDirectory(moduleEntry, true),
+      ),
+    ),
+  );
 }

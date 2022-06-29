@@ -21,10 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-import fs from 'fs-extra';
 import { IPackageJson } from 'package-json-type';
+import { readJson } from './fs-utils';
 import getPackagePath from './get-package-path';
 
 export default function readPackage(cwd = '.'): Promise<IPackageJson> {
-  return fs.readJson(getPackagePath(cwd)) as Promise<IPackageJson>;
+  return readJson<IPackageJson>(getPackagePath(cwd));
 }
