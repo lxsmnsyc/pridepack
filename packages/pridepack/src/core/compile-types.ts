@@ -26,8 +26,8 @@ import ts from 'typescript';
 import { PridepackConfig } from './default-config';
 import { outputFile } from './fs-utils';
 import getTSEntrypoints from './get-ts-entrypoints';
-import readPackage from './read-package';
 import readValidCompilerOptions from './read-valid-compiler-options';
+import { DEFAULT_TYPES_OUTPUT } from './resolve-entrypoint';
 
 interface OutputFile {
   name: string;
@@ -38,12 +38,6 @@ export default async function compileTypes(
   config: PridepackConfig,
   noEmit = true,
 ): Promise<ts.Diagnostic[]> {
-  const pkg = await readPackage();
-
-  if (!pkg.types) {
-    throw new Error('Missing "types" field from package.json');
-  }
-
   const options = await readValidCompilerOptions();
   const cwd = process.cwd();
 
@@ -52,7 +46,7 @@ export default async function compileTypes(
     outDir: path.resolve(
       path.join(
         cwd,
-        path.dirname(pkg.types),
+        DEFAULT_TYPES_OUTPUT,
       ),
     ),
     emitDeclarationOnly: !noEmit,
