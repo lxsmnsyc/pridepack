@@ -54,6 +54,9 @@ export default async function buildESMDevelopment(
     define: {
       ...await DEVELOPMENT_ENV,
       'process.env.NODE_ENV': '"development"',
+      'import.meta.env.MODE': '"development"',
+      'import.meta.env.DEV': 'true',
+      'import.meta.env.PROD': 'false',
     },
     external: externals,
     target: config.target,

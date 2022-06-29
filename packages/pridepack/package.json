@@ -9,7 +9,7 @@
   "files": [
     "bin",
     "src",
-    "templates"
+    "env.d.ts"
   ],
   "bin": {
     "pridepack": "./bin/index.js"

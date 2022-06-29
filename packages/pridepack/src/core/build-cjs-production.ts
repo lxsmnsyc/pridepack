@@ -52,6 +52,9 @@ export default async function buildCJSProduction(
     define: {
       ...await PRODUCTION_ENV,
       'process.env.NODE_ENV': '"production"',
+      'import.meta.env.MODE': '"production"',
+      'import.meta.env.DEV': 'false',
+      'import.meta.env.PROD': 'true',
     },
     incremental,
     external: externals,
