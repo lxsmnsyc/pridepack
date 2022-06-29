@@ -41,6 +41,9 @@ export default async function buildCJSProduction(
       false,
       false,
     ),
+    outExtension: {
+      '.js': config.jsx === 'preserve' ? '.jsx' : '.js',
+    },
     outdir: cwd,
     bundle: true,
     minify: true,

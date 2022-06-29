@@ -28,7 +28,6 @@ import readExternals from './read-externals';
 import { PridepackConfig } from './default-config';
 import getBuildEntrypoints from './get-build-entrypoints';
 
-
 export default async function buildCJSDevelopment(
   config: PridepackConfig,
   incremental: boolean,
@@ -43,6 +42,9 @@ export default async function buildCJSDevelopment(
       false,
       true,
     ),
+    outExtension: {
+      '.js': config.jsx === 'preserve' ? '.jsx' : '.js',
+    },
     outdir: cwd,
     bundle: true,
     minify: false,

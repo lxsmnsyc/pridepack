@@ -41,6 +41,9 @@ export default async function buildESMDevelopment(
       true,
       true,
     ),
+    outExtension: {
+      '.js': config.jsx === 'preserve' ? '.jsx' : '.js',
+    },
     outdir: cwd,
     bundle: true,
     minify: false,
