@@ -19,7 +19,7 @@ export async function fileExists(filePath: string): Promise<boolean> {
 
 export function checkPath(filePath: string): void {
   if (process.platform === 'win32') {
-    const pathHasInvalidWinCharacters = /[<>:"|?*]/.test(filePath.replace(path.parse(pth).root, ''));
+    const pathHasInvalidWinCharacters = /[<>:"|?*]/.test(filePath.replace(path.parse(filePath).root, ''));
 
     if (pathHasInvalidWinCharacters) {
       const error = new Error(`Path contains invalid characters: ${filePath}`);
