@@ -22,6 +22,7 @@
  * SOFTWARE.
  */
 import path from 'path';
+import readTSConfig from './read-tsconfig';
 
 export const DEFAULT_CJS_OUTPUT = 'dist/cjs';
 export const DEFAULT_CJS_PRODUCTION_ENTRY = 'production/index.js';
@@ -49,9 +50,20 @@ export function getESMTargetDirectory(moduleEntry: string, isDev: boolean): stri
 
 export const DEFAULT_TYPES_OUTPUT = 'dist/types';
 
-export function getTypesTargetDirectory(moduleEntry: string): string {
+export async function getTypesTarget(entrypoint: string): Promise<string> {
+  const config = await readTSConfig();
+  const root = config.compilerOptions?.rootDir;
+  if (!root) {
+    throw new Error('Missing `rootDir` in tsconfig.json');
+  }
+  const cwd = process.cwd();
+  const targetEntry = path.join(cwd, entrypoint);
+  const targetRoot = path.join(cwd, root);
+  const targetPath = path.relative(targetRoot, targetEntry);
+  const parsed = path.parse(targetPath);
   return path.join(
     DEFAULT_TYPES_OUTPUT,
-    moduleEntry === '.' ? './index' : moduleEntry,
+    parsed.dir,
+    parsed.name,
   );
 }

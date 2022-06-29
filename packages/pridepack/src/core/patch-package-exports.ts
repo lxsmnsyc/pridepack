@@ -3,7 +3,11 @@ import { PridepackConfig } from './default-config';
 import { outputJson } from './fs-utils';
 import getPackagePath from './get-package-path';
 import readPackage from './read-package';
-import { getCJSTargetDirectory, getESMTargetDirectory, getTypesTargetDirectory } from './resolve-entrypoint';
+import {
+  getCJSTargetDirectory,
+  getESMTargetDirectory,
+  getTypesTarget,
+} from './resolve-entrypoint';
 
 interface BaseExportEntry {
   require: string;
@@ -28,6 +32,7 @@ export default async function patchPackageExports(
   const entries: Record<string, ExportEntry> = {};
   // eslint-disable-next-line no-restricted-syntax
   for (const moduleEntry of Object.keys(config.entrypoints)) {
+    const tsPath = await getTypesTarget(config.entrypoints[moduleEntry]);
     entries[moduleEntry] = {
       development: {
         require: `./${toPosix(getCJSTargetDirectory(moduleEntry, true))}${jsx}`,
@@ -35,7 +40,7 @@ export default async function patchPackageExports(
       },
       require: `./${toPosix(getCJSTargetDirectory(moduleEntry, false))}${jsx}`,
       import: `./${toPosix(getESMTargetDirectory(moduleEntry, false))}${jsx}`,
-      types: `./${toPosix(getTypesTargetDirectory(moduleEntry))}.d.ts`,
+      types: `./${toPosix(tsPath)}.d.ts`,
     };
   }
 
