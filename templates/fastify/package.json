@@ -22,7 +22,7 @@
     "vitest": "^0.16.0"
   },
   "dependencies": {
-    "fastify": "^3.27.0"
+    "fastify": "^4.2.0"
   },
   "scripts": {
     "test": "vitest"
