@@ -60,6 +60,28 @@ Runs the index file (based on `package.json`'s `type`) in production mode, respe
 
 Runs the index file in development mode and runs the build in watch mode. Auto-reloads when detecting changes.
 
+## Environment Variables
+
+Pridepack automically loads variables from `.env`, `.env.production` and `.env.development` whenever it is available, and uses the variables during compile-time.
+
+`process.env.NODE_ENV` provides a way to check whether or not the code is being built during production or development mode. The same goes to `import.meta.env.MODE`, `import.meta.env.DEV` and `import.meta.env.PROD`
+
+```js
+if (process.env.NODE_ENV === 'development') {
+  // do stuff
+}
+// the same as
+if (import.meta.env.MODE === 'development') {
+  // do stuff
+}
+if (import.meta.env.DEV) {
+  // ...
+}
+if (!import.meta.env.PROD) {
+  // ...
+}
+```
+
 ## Config
 
 Even though Pridepack encourages zero-config setup, Pridepack also includes config files. Pridepack config files can be either of the following:
