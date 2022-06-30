@@ -1,5 +1,3 @@
-import ora from 'ora';
-
 export interface TaskStatus {
   failure: string;
   success: string;
