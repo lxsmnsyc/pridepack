@@ -1,9 +1,8 @@
 import path from 'path';
 import ts from 'typescript';
-
 import readConfigWithCWD from './read-config-with-cwd';
-import readPackage from './read-package';
 import readValidCompilerOptions from './read-valid-compiler-options';
+import { DEFAULT_TYPES_OUTPUT } from './resolve-entrypoint';
 
 export type EndCompile = () => void;
 export type ReadDiagnostic = (diagnostic: ts.Diagnostic) => void;
@@ -18,13 +17,6 @@ export default function watchCompileTypes(
   let program: ts.WatchOfConfigFile<any>;
 
   async function setup() {
-    const pkg = await readPackage();
-
-    const typesDir = pkg.types;
-    if (!typesDir) {
-      throw new Error('Missing "types" field from package.json');
-    }
-
     if (!ready) {
       return;
     }
@@ -36,7 +28,7 @@ export default function watchCompileTypes(
       outDir: path.resolve(
         path.join(
           process.cwd(),
-          path.dirname(typesDir),
+          DEFAULT_TYPES_OUTPUT,
         ),
       ),
       emitDeclarationOnly: !noEmit,
