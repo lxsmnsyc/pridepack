@@ -59,7 +59,7 @@
     "pridepack": "1.1.1",
     "tslib": "^2.4.0",
     "typescript": "^4.7.4",
-    "vitest": "^0.9.4"
+    "vitest": "^0.16.0"
   },
   "peerDependencies": {
     "preact": "^10.0.0"
