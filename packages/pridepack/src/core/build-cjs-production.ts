@@ -64,9 +64,6 @@ export default async function buildCJSProduction(
     jsxFactory: config.jsxFactory,
     jsxFragment: config.jsxFragment,
     logLevel: 'silent',
-    banner: {
-      js: '"use strict";',
-    },
     charset: 'utf8',
     plugins: (
       typeof config.plugins === 'function'
