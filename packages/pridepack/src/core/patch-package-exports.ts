@@ -20,6 +20,31 @@ interface ExportEntry extends BaseExportEntry {
   types: string;
 }
 
+function createBaseExportEntry(
+  config: PridepackConfig,
+  entry: string,
+  jsx: string,
+  isDev: boolean,
+): BaseExportEntry {
+  return {
+    require: `./${toPosix(getCJSTargetDirectory(config, entry, isDev))}${jsx}`,
+    import: `./${toPosix(getESMTargetDirectory(config, entry, isDev))}${jsx}`,
+  };
+}
+
+function createExportEntry(
+  config: PridepackConfig,
+  entry: string,
+  types: string,
+  jsx: string,
+): ExportEntry {
+  return {
+    development: createBaseExportEntry(config, entry, jsx, true),
+    ...createBaseExportEntry(config, entry, jsx, false),
+    types,
+  };
+}
+
 export default async function patchPackageExports(
   config: PridepackConfig,
   cwd = '.',
@@ -32,15 +57,12 @@ export default async function patchPackageExports(
   for (const moduleEntry of Object.keys(config.entrypoints)) {
     const tsPath = await getTypesTarget(config.entrypoints[moduleEntry]);
     const typesPath = `./${toPosix(tsPath)}.d.ts`;
-    entries[moduleEntry] = {
-      development: {
-        require: `./${toPosix(getCJSTargetDirectory(moduleEntry, true))}${jsx}`,
-        import: `./${toPosix(getESMTargetDirectory(moduleEntry, true))}${jsx}`,
-      },
-      require: `./${toPosix(getCJSTargetDirectory(moduleEntry, false))}${jsx}`,
-      import: `./${toPosix(getESMTargetDirectory(moduleEntry, false))}${jsx}`,
-      types: typesPath,
-    };
+    entries[moduleEntry] = createExportEntry(
+      config,
+      moduleEntry,
+      typesPath,
+      jsx,
+    );
     const targetPath = moduleEntry === '.' ? '*' : path.relative('.', moduleEntry);
     targetTSPaths[targetPath] = [typesPath];
   }

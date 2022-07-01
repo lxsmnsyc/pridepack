@@ -22,56 +22,18 @@
  * SOFTWARE.
  */
 import path from 'path';
-import {
-  DEFAULT_TYPES_OUTPUT,
-  getCJSTargetDirectory,
-  getESMTargetDirectory,
-} from './resolve-entrypoint';
 import { removeFile } from './fs-utils';
+import readConfig from './read-config';
 
-export default async function clean(moduleEntry: string): Promise<void> {
+export default async function clean(): Promise<void> {
+  const config = await readConfig();
   const cwd = process.cwd();
   // Remove CJS directory
   await removeFile(
     path.resolve(
       path.join(
         cwd,
-        getCJSTargetDirectory(moduleEntry, true),
-      ),
-    ),
-  );
-  await removeFile(
-    path.resolve(
-      path.join(
-        cwd,
-        getCJSTargetDirectory(moduleEntry, false),
-      ),
-    ),
-  );
-  // Remove ESM directory
-  await removeFile(
-    path.resolve(
-      path.join(
-        cwd,
-        getESMTargetDirectory(moduleEntry, false),
-      ),
-    ),
-  );
-  // Remove ESM directory
-  await removeFile(
-    path.resolve(
-      path.join(
-        cwd,
-        getESMTargetDirectory(moduleEntry, true),
-      ),
-    ),
-  );
-  // Remove types
-  await removeFile(
-    path.resolve(
-      path.join(
-        cwd,
-        DEFAULT_TYPES_OUTPUT,
+        config.outputDir,
       ),
     ),
   );

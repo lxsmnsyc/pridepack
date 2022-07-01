@@ -46,6 +46,7 @@ export default async function compileTypes(
     outDir: path.resolve(
       path.join(
         cwd,
+        config.outputDir,
         DEFAULT_TYPES_OUTPUT,
       ),
     ),

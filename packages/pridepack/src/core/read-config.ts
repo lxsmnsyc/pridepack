@@ -67,6 +67,7 @@ export default async function readConfig(): Promise<PridepackConfig> {
         entrypoints: customConfig.entrypoints || DEFAULT_CONFIG.entrypoints,
         tsconfig: customConfig.tsconfig || DEFAULT_CONFIG.tsconfig,
         target: customConfig.target || DEFAULT_CONFIG.target,
+        outputDir: customConfig.outputDir || DEFAULT_CONFIG.outputDir,
       };
 
       return CONFIG;
@@ -84,6 +85,7 @@ export default async function readConfig(): Promise<PridepackConfig> {
         entrypoints: customConfig.entrypoints || DEFAULT_CONFIG.entrypoints,
         tsconfig: customConfig.tsconfig || DEFAULT_CONFIG.tsconfig,
         target: customConfig.target || DEFAULT_CONFIG.target,
+        outputDir: customConfig.outputDir || DEFAULT_CONFIG.outputDir,
       };
 
       return CONFIG;

@@ -104,6 +104,8 @@ JS Config files are also supported, useful for loading environment variables and
 ```js
 // pridepack config fields and their default values.
 {
+  // Directory where the bundled output is going to be generated
+  "outputDir": "dist",
   // Path to the tsconfig.json
   "tsconfig": "tsconfig.json",
   // Optional, maps the subpackage entrypoint to the source file

@@ -15,8 +15,8 @@ export default async function runStartCommand(isDev: boolean): Promise<void> {
     const pkg = await readPackage();
     const entrypoint = (
       pkg.type === 'module'
-        ? getESMTargetDirectory(config.startEntrypoint ?? '.', isDev)
-        : getCJSTargetDirectory(config.startEntrypoint ?? '.', isDev)
+        ? getESMTargetDirectory(config, config.startEntrypoint ?? '.', isDev)
+        : getCJSTargetDirectory(config, config.startEntrypoint ?? '.', isDev)
     );
 
     function startProcess() {

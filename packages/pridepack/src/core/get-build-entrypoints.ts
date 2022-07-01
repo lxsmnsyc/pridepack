@@ -11,11 +11,14 @@ export default function getBuildEntrypoints(
   const record: Record<string, string> = {};
 
   for (const key of Object.keys(config.entrypoints)) {
+    const targetDir = esm
+      ? getESMTargetDirectory(config, key, dev)
+      : getCJSTargetDirectory(config, key, dev);
     const parsed = path.parse(
       path.resolve(
         path.join(
           cwd,
-          esm ? getESMTargetDirectory(key, dev) : getCJSTargetDirectory(key, dev),
+          targetDir,
         ),
       ),
     );

@@ -1,6 +1,6 @@
 import path from 'path';
 import ts from 'typescript';
-import readConfigWithCWD from './read-config-with-cwd';
+import { getTSConfigPath } from './read-tsconfig';
 import readValidCompilerOptions from './read-valid-compiler-options';
 import { DEFAULT_TYPES_OUTPUT } from './resolve-entrypoint';
 
@@ -37,14 +37,13 @@ export default function watchCompileTypes(
     };
 
     // Create a Program with an in-memory emit
-    const cwdConfig = await readConfigWithCWD();
 
     if (!ready) {
       return;
     }
 
     const host = ts.createWatchCompilerHost(
-      cwdConfig.tsconfig,
+      await getTSConfigPath(),
       baseConfig,
       ts.sys,
       ts.createSemanticDiagnosticsBuilderProgram,
