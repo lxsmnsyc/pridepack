@@ -27,11 +27,11 @@ async function readEnvDefinitions(
   isProduction: boolean,
 ): Promise<Record<string, string>> {
   const env = await readEnv(isProduction);
-  const container:Record<string, string> = {};
+  const container: Record<string, string> = {};
 
-  Object.keys(env).forEach((key) => {
+  for (const key of Object.keys(env)) {
     container[`process.env.${key}`] = JSON.stringify(env[key]);
-  });
+  }
 
   return container;
 }
