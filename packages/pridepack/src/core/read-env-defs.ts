@@ -30,7 +30,9 @@ export default async function readEnvDefinitions(
   const container: Record<string, string> = {};
 
   for (const key of Object.keys(env)) {
-    container[`process.env.${key}`] = JSON.stringify(env[key]);
+    const value = JSON.stringify(env[key]);
+    container[`process.env.${key}`] = value;
+    container[`import.meta.env.${key}`] = value;
   }
 
   return container;

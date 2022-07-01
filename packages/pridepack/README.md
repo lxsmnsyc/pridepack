@@ -62,7 +62,7 @@ Runs the index file in development mode and runs the build in watch mode. Auto-r
 
 ## Environment Variables
 
-Pridepack automically loads variables from `.env`, `.env.production` and `.env.development` whenever it is available, and uses the variables during compile-time.
+Pridepack automically loads variables from `.env`, `.env.production` and `.env.development` whenever it is available, and uses the variables during compile-time. Variables are going to be registered under `process.env` or `import.meta.env`.
 
 `process.env.NODE_ENV` provides a way to check whether or not the code is being built during production or development mode. The same goes to `import.meta.env.MODE`, `import.meta.env.DEV` and `import.meta.env.PROD`
 
@@ -104,6 +104,8 @@ JS Config files are also supported, useful for loading environment variables and
 ```js
 // pridepack config fields and their default values.
 {
+  // Directory where the bundled output is going to be generated
+  "outputDir": "dist",
   // Path to the tsconfig.json
   "tsconfig": "tsconfig.json",
   // Optional, maps the subpackage entrypoint to the source file
