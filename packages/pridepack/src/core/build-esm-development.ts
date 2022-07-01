@@ -47,7 +47,7 @@ export default async function buildESMDevelopment(
     outdir: cwd,
     bundle: true,
     minify: false,
-    platform: 'node',
+    platform: 'neutral',
     format: 'esm',
     sourcemap: true,
     incremental,

@@ -47,7 +47,7 @@ export default async function buildESMProduction(
     outdir: cwd,
     bundle: true,
     minify: true,
-    platform: 'node',
+    platform: 'neutral',
     format: 'esm',
     sourcemap: true,
     define: {

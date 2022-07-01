@@ -47,7 +47,7 @@ export default async function buildCJSProduction(
     outdir: cwd,
     bundle: true,
     minify: true,
-    platform: 'node',
+    platform: 'neutral',
     sourcemap: true,
     define: {
       ...await PRODUCTION_ENV,

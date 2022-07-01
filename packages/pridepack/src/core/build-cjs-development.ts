@@ -48,7 +48,7 @@ export default async function buildCJSDevelopment(
     outdir: cwd,
     bundle: true,
     minify: false,
-    platform: 'node',
+    platform: 'neutral',
     sourcemap: true,
     define: {
       ...await DEVELOPMENT_ENV,
