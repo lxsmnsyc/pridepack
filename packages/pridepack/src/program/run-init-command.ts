@@ -1,5 +1,5 @@
+import path from 'path';
 import copyFromTemplate from '../core/copy-from-template';
-import getCWDName from '../core/get-cwd-name';
 import chooseTemplate from './choose-template';
 import runInitPackage from './run-init-package';
 import runInstall from './run-install';
@@ -13,6 +13,6 @@ export default async function runInitCommand(): Promise<void> {
     failure: `Failed to copy from template '${templateName.template}'.`,
   });
   await task.start();
-  await runInitPackage(getCWDName());
+  await runInitPackage(path.basename(path.resolve(process.cwd())));
   await runInstall('.');
 }
