@@ -23,6 +23,7 @@
  */
 import path from 'path';
 import {
+  DEFAULT_TYPES_OUTPUT,
   getCJSTargetDirectory,
   getESMTargetDirectory,
 } from './resolve-entrypoint';
@@ -60,8 +61,17 @@ export default async function clean(moduleEntry: string): Promise<void> {
   await removeFile(
     path.resolve(
       path.join(
-        process.cwd(),
+        cwd,
         getESMTargetDirectory(moduleEntry, true),
+      ),
+    ),
+  );
+  // Remove types
+  await removeFile(
+    path.resolve(
+      path.join(
+        cwd,
+        DEFAULT_TYPES_OUTPUT,
       ),
     ),
   );
