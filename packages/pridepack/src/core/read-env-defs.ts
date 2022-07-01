@@ -23,7 +23,7 @@
  */
 import readEnv from './read-env';
 
-async function readEnvDefinitions(
+export default async function readEnvDefinitions(
   isProduction: boolean,
 ): Promise<Record<string, string>> {
   const env = await readEnv(isProduction);
@@ -35,6 +35,3 @@ async function readEnvDefinitions(
 
   return container;
 }
-
-export const PRODUCTION_ENV = readEnvDefinitions(true);
-export const DEVELOPMENT_ENV = readEnvDefinitions(false);
