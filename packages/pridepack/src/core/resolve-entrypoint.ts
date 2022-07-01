@@ -25,26 +25,26 @@ import path from 'path';
 import readTSConfig from './read-tsconfig';
 
 export const DEFAULT_CJS_OUTPUT = 'dist/cjs';
-export const DEFAULT_CJS_PRODUCTION_ENTRY = 'production/index.js';
-export const DEFAULT_CJS_DEVELOPMENT_ENTRY = 'development/index.js';
+export const DEFAULT_CJS_PRODUCTION_ENTRY = 'production';
+export const DEFAULT_CJS_DEVELOPMENT_ENTRY = 'development';
 
 export function getCJSTargetDirectory(moduleEntry: string, isDev: boolean): string {
   return path.join(
     DEFAULT_CJS_OUTPUT,
-    moduleEntry === '.' ? './index' : moduleEntry,
     isDev ? DEFAULT_CJS_DEVELOPMENT_ENTRY : DEFAULT_CJS_PRODUCTION_ENTRY,
+    moduleEntry === '.' ? './index' : moduleEntry,
   );
 }
 
 export const DEFAULT_ESM_OUTPUT = 'dist/esm';
-export const DEFAULT_ESM_PRODUCTION_ENTRY = 'production/index.js';
-export const DEFAULT_ESM_DEVELOPMENT_ENTRY = 'development/index.js';
+export const DEFAULT_ESM_PRODUCTION_ENTRY = 'production';
+export const DEFAULT_ESM_DEVELOPMENT_ENTRY = 'development';
 
 export function getESMTargetDirectory(moduleEntry: string, isDev: boolean): string {
   return path.join(
     DEFAULT_ESM_OUTPUT,
-    moduleEntry === '.' ? './index' : moduleEntry,
     isDev ? DEFAULT_ESM_DEVELOPMENT_ENTRY : DEFAULT_ESM_PRODUCTION_ENTRY,
+    moduleEntry === '.' ? './index' : moduleEntry,
   );
 }
 
