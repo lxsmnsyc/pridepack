@@ -24,8 +24,7 @@
 import path from 'path';
 import dotenv from 'dotenv';
 import { readFile } from 'fs/promises';
-import { isFile } from './stat';
-import { pathExists } from './fs-utils';
+import { pathExists, isFile } from './fs-utils';
 
 const ENV = '.env';
 const ENV_PRODUCTION = '.env.production';
