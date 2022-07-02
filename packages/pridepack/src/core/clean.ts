@@ -22,57 +22,19 @@
  * SOFTWARE.
  */
 import path from 'path';
-import fs from 'fs-extra';
-import { getCJSTargetDirectory } from './build-cjs';
-import { getESMTargetDirectory } from './build-esm';
-import readPackage from './read-package';
+import { removeFile } from './fs-utils';
+import readConfig from './read-config';
 
 export default async function clean(): Promise<void> {
+  const config = await readConfig();
+  const cwd = process.cwd();
   // Remove CJS directory
-  await fs.remove(
+  await removeFile(
     path.resolve(
       path.join(
-        process.cwd(),
-        await getCJSTargetDirectory(true),
+        cwd,
+        config.outputDir,
       ),
     ),
   );
-  await fs.remove(
-    path.resolve(
-      path.join(
-        process.cwd(),
-        await getCJSTargetDirectory(false),
-      ),
-    ),
-  );
-  // Remove ESM directory
-  await fs.remove(
-    path.resolve(
-      path.join(
-        process.cwd(),
-        await getESMTargetDirectory(false),
-      ),
-    ),
-  );
-  // Remove ESM directory
-  await fs.remove(
-    path.resolve(
-      path.join(
-        process.cwd(),
-        await getESMTargetDirectory(true),
-      ),
-    ),
-  );
-  const pkg = await readPackage();
-  // Remove Types directory
-  if (pkg.types) {
-    await fs.remove(
-      path.resolve(
-        path.join(
-          process.cwd(),
-          path.dirname(pkg.types),
-        ),
-      ),
-    );
-  }
 }

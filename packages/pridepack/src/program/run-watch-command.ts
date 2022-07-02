@@ -1,22 +1,26 @@
-import runBuildCJS from './run-build-cjs';
-import runBuildESM from './run-build-esm';
 import generateTSDiagnostics from './generate-ts-diagnostics';
-import watchCompileTypes from '../core/watch-compile-types';
 import runTask from './run-task';
+import readConfig from '../core/read-config';
+import watchCompileTypes from '../core/watch-compile-types';
+import runBuild from './run-build';
 
 export default async function runWatchCommand(
   onRebuild?: () => void,
 ): Promise<void> {
+  const config = await readConfig();
+
   let stopTS: () => void;
   const task = await runTask(async () => {
-    const cjs = await runBuildCJS(true);
-    const esm = await runBuildESM(true);
+    const esmDev = await runBuild(config, true, true, true);
+    const esmProd = await runBuild(config, true, false, true);
+    const cjsDev = await runBuild(config, true, true, false);
+    const cjsProd = await runBuild(config, true, false, false);
 
     async function rebuild() {
-      await cjs.dev.start();
-      await cjs.prod.start();
-      await esm.dev.start();
-      await esm.prod.start();
+      await esmDev.start();
+      await esmProd.start();
+      await cjsDev.start();
+      await cjsProd.start();
     }
 
     stopTS = watchCompileTypes(

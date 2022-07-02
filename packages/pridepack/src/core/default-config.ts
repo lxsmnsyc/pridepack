@@ -23,11 +23,6 @@
  */
 import { Plugin } from 'esbuild';
 
-export interface PridepackBaseConfig {
-  srcFile: string;
-  tsconfig: string;
-}
-
 interface PridepackPluginEnv {
   isDev: boolean;
   isESM: boolean;
@@ -36,8 +31,12 @@ interface PridepackPluginEnv {
 
 type PridepackLazyPlugin = (env: PridepackPluginEnv) => Plugin[];
 
-export interface PridepackConfig extends PridepackBaseConfig {
+export interface PridepackConfig {
+  entrypoints: Record<string, string>;
+  tsconfig: string;
   target: string | string[];
+  outputDir: string;
+  startEntrypoint?: string;
   jsx?: 'transform' | 'preserve';
   jsxFactory?: string;
   jsxFragment?: string;
@@ -45,9 +44,13 @@ export interface PridepackConfig extends PridepackBaseConfig {
 }
 
 const DEFAULT_CONFIG: PridepackConfig = {
-  srcFile: 'src/index.ts',
+  startEntrypoint: '.',
+  entrypoints: {
+    '.': 'src/index.ts',
+  },
   target: 'es2017',
   tsconfig: 'tsconfig.json',
+  outputDir: 'dist',
 };
 
 export default DEFAULT_CONFIG;

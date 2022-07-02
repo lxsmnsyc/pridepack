@@ -22,32 +22,32 @@
  * SOFTWARE.
  */
 import path from 'path';
-import fs from 'fs-extra';
 import ts from 'typescript';
-import readConfigWithCWD from './read-config-with-cwd';
-import readPackage from './read-package';
+import { PridepackConfig } from './default-config';
+import { outputFile } from './fs-utils';
+import getTSEntrypoints from './get-ts-entrypoints';
 import readValidCompilerOptions from './read-valid-compiler-options';
+import { DEFAULT_TYPES_OUTPUT } from './resolve-entrypoint';
 
 interface OutputFile {
   name: string;
   data: string;
 }
 
-export default async function compileTypes(noEmit = true): Promise<ts.Diagnostic[]> {
-  const pkg = await readPackage();
-
-  if (!pkg.types) {
-    throw new Error('Missing "types" field from package.json');
-  }
-
+export default async function compileTypes(
+  config: PridepackConfig,
+  noEmit = true,
+): Promise<ts.Diagnostic[]> {
   const options = await readValidCompilerOptions();
+  const cwd = process.cwd();
 
   const baseConfig: ts.CompilerOptions = {
     ...options,
     outDir: path.resolve(
       path.join(
-        process.cwd(),
-        path.dirname(pkg.types),
+        cwd,
+        config.outputDir,
+        DEFAULT_TYPES_OUTPUT,
       ),
     ),
     emitDeclarationOnly: !noEmit,
@@ -68,9 +68,8 @@ export default async function compileTypes(noEmit = true): Promise<ts.Diagnostic
   };
 
   // Prepare and emit the d.ts files
-  const configCWD = await readConfigWithCWD();
   const program = ts.createProgram(
-    [configCWD.srcFile],
+    getTSEntrypoints(config),
     baseConfig,
     host,
   );
@@ -78,7 +77,7 @@ export default async function compileTypes(noEmit = true): Promise<ts.Diagnostic
   const result = program.emit();
 
   await Promise.all(
-    files.map((file) => fs.outputFile(file.name, file.data)),
+    files.map((file) => outputFile(file.name, file.data)),
   );
 
   return ts.getPreEmitDiagnostics(program)

@@ -9,7 +9,7 @@
   "files": [
     "bin",
     "src",
-    "templates"
+    "env.d.ts"
   ],
   "bin": {
     "pridepack": "./bin/index.js"
@@ -25,16 +25,15 @@
   "dependencies": {
     "@ovyerus/licenses": "^6.4.4",
     "degit": "^2.8.4",
-    "dotenv": "^10.0.0",
-    "esbuild": "^0.14.38",
+    "dotenv": "^16.0.1",
+    "esbuild": "^0.14.48",
     "execa": "^5.1.1",
-    "fs-extra": "^10.0.0",
     "license": "^1.0.3",
-    "ora": "^6.0.1",
+    "ora": "^6.1.2",
     "package-json-type": "^1.0.3",
     "prompts": "^2.4.2",
     "resolve.exports": "^1.1.0",
-    "yargs": "^17.2.1"
+    "yargs": "^17.5.1"
   },
   "peerDependencies": {
     "eslint": "^8.0",
@@ -43,15 +42,14 @@
   },
   "devDependencies": {
     "@types/degit": "^2.8.3",
-    "@types/eslint": "^8.2.2",
-    "@types/fs-extra": "^9.0.13",
+    "@types/eslint": "^8.4.3",
     "@types/node": "^17.0.25",
     "@types/prompts": "^2.0.14",
-    "@types/yargs": "^17.0.2",
-    "eslint": "^8.13.0",
-    "eslint-config-lxsmnsyc": "^0.4.0",
+    "@types/yargs": "^17.0.10",
+    "eslint": "^8.18.0",
+    "eslint-config-lxsmnsyc": "^0.4.1",
     "tslib": "^2.4.0",
-    "typescript": "^4.6.3"
+    "typescript": "^4.7.4"
   },
   "publishConfig": {
     "access": "public"
@@ -71,5 +69,8 @@
     "package",
     "scaffolding",
     "bootstrap"
-  ]
+  ],
+  "engines": {
+    "node": ">=10"
+  }
 }

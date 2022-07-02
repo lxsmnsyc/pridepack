@@ -60,6 +60,28 @@ Runs the index file (based on `package.json`'s `type`) in production mode, respe
 
 Runs the index file in development mode and runs the build in watch mode. Auto-reloads when detecting changes.
 
+## Environment Variables
+
+Pridepack automically loads variables from `.env`, `.env.production` and `.env.development` whenever it is available, and uses the variables during compile-time. Variables are going to be registered under `process.env` or `import.meta.env`.
+
+`process.env.NODE_ENV` provides a way to check whether or not the code is being built during production or development mode. The same goes to `import.meta.env.MODE`, `import.meta.env.DEV` and `import.meta.env.PROD`
+
+```js
+if (process.env.NODE_ENV === 'development') {
+  // do stuff
+}
+// the same as
+if (import.meta.env.MODE === 'development') {
+  // do stuff
+}
+if (import.meta.env.DEV) {
+  // ...
+}
+if (!import.meta.env.PROD) {
+  // ...
+}
+```
+
 ## Config
 
 Even though Pridepack encourages zero-config setup, Pridepack also includes config files. Pridepack config files can be either of the following:
@@ -79,78 +101,44 @@ JS Config files are also supported, useful for loading environment variables and
 
 ### Fields
 
-- `srcFile`: path of the entry source file. Defaults to `src/index.ts`.
-- `target`: ECMAScript version target. Defaults to `esnext`.
-- `tsconfig`: path of Typescript config file. Defaults to `tsconfig.json`.
-- `jsx`: How JSX expressions should be interpreted. Defaults to `react`. Use `preserve` to preserve JSX syntax.
-- `jsxFactory`: JSX pragma.
-- `jsxFragment`: JSX Fragment expression pragma.
-- `plugins`: ESBuild plugins to be used for bundling. You can check the official [ESBuild Community Plugins](https://github.com/esbuild/community-plugins).
-
-### Exports Map
-
-Build files are automatically inferred from exports map. `pridepack` prioritizes the `"exports"` field for resolving target CJS and ESM builds. If the `"exports"` field isn't defined, it will use the `"module"` and `"main"` field, respectively.
-
-For types, the output file is inferred from the `"types"` field.
+```js
+// pridepack config fields and their default values.
+{
+  // Directory where the bundled output is going to be generated
+  "outputDir": "dist",
+  // Path to the tsconfig.json
+  "tsconfig": "tsconfig.json",
+  // Optional, maps the subpackage entrypoint to the source file
+  // This is used for generating the `exports` field and constructing
+  // the subpackages. The default value is below.
+  "entrypoints": {
+    ".": "src/index.ts", // Maps to `my-package`
+    // Example other entrypoint (not a default value)
+    "./example": "src/example.ts" // Maps to `my-package/example`
+  },
+  // Refers to the target entrypoint to be used for `start` and `dev` commands
+  // Value is mapped from `entrypoints`
+  "startEntrypoint": ".",
+  // Target ES version or Browser versions, see https://esbuild.github.io/api/#target
+  "target": "es2017",
+  // What to do with JSX expressions, see https://esbuild.github.io/api/#jsx
+  "jsx": "transform",
+  // See https://esbuild.github.io/api/#jsx-factory
+  "jsxFactory": "React.createElement",
+  // See https://esbuild.github.io/api/#jsx-fragment
+  "jsxFragment": "React.Fragment",
+  // Can only be used on JS config files, allows usage of ESBuild plugins
+  // This field can also accept a callback that receives the current compilation mode
+  // 
+  "plugins": ({ isDev, isESM, isCJS }) => [
+    somePlugin({ isDev }),
+  ],
+}
+```
 
 ## Soon
 
 - Code-splitting (requires ESBuild)
-
-## Migrating to `1.0.0`
-
-### `package.json`
-
-The following entrypoints must now be provided.  `./esm` and  `./cjs` entrypoints are optional.
-
-```json
-{
-  "types": "dist/types/index.d.ts",
-  "main": "dist/cjs/production/index.js",
-  "module": "dist/esm/production/index.js",
-  "exports": {
-    ".": {
-      "development": {
-        "require": "./dist/cjs/development/index.js",
-        "import": "./dist/esm/development/index.js"
-      },
-      "require": "./dist/cjs/production/index.js",
-      "import": "./dist/esm/production/index.js",
-      "types": "./dist/types/index.d.ts"
-    },
-    "./dev": {
-      "production": {
-        "require": "./dist/cjs/production/index.js",
-        "import": "./dist/esm/production/index.js"
-      },
-      "require": "./dist/cjs/development/index.js",
-      "import": "./dist/esm/development/index.js",
-      "types": "./dist/types/index.d.ts"
-    },
-    "./esm": {
-      "development": "./dist/esm/development/index.js",
-      "production": "./dist/esm/production/index.js",
-      "default": "./dist/esm/production/index.js",
-      "types": "./dist/types/index.d.ts"
-    },
-    "./cjs": {
-      "development": "./dist/cjs/development/index.js",
-      "production": "./dist/cjs/production/index.js",
-      "default": "./dist/cjs/production/index.js",
-      "types": "./dist/types/index.d.ts"
-    }
-  }
-}
-```
-
-For scripts, if you are using a start command for running the index file (e.g. fastify-based templates), you may add the following to the `scripts` field:
-
-```json
-{
-  "start": "pridepack start",
-  "dev": "pridepack dev",
-}
-```
 
 ## License
 

@@ -26,32 +26,30 @@ import readPackage from './read-package';
 
 let EXTERNALS: string[];
 
+function pushExternal(
+  set: Set<string>,
+  record?: Record<string, string>,
+) {
+  if (record) {
+    for (const key of Object.keys(record)) {
+      set.add(key);
+    }
+  }
+}
+
 export default async function readExternals(): Promise<string[]> {
   if (EXTERNALS) {
     return EXTERNALS;
   }
 
-  const {
-    dependencies,
-    devDependencies,
-    peerDependencies,
-    optionalDependencies,
-  } = await readPackage();
+  const pkg = await readPackage();
 
-  const external = new Set<string>();
+  const external = new Set<string>([pkg.name ?? '']);
 
-  Object.keys(dependencies || {}).forEach((key) => {
-    external.add(key);
-  });
-  Object.keys(devDependencies || {}).forEach((key) => {
-    external.add(key);
-  });
-  Object.keys(peerDependencies || {}).forEach((key) => {
-    external.add(key);
-  });
-  Object.keys(optionalDependencies || {}).forEach((key) => {
-    external.add(key);
-  });
+  pushExternal(external, pkg.dependencies);
+  pushExternal(external, pkg.devDependencies);
+  pushExternal(external, pkg.peerDependencies);
+  pushExternal(external, pkg.optionalDependencies);
 
   EXTERNALS = [
     ...builtinModules,

@@ -22,35 +22,37 @@
  * SOFTWARE.
  */
 import path from 'path';
-import fs from 'fs-extra';
 import dotenv from 'dotenv';
-import { isFile } from './stat';
+import { readFile } from 'fs/promises';
+import { isFile } from './fs-utils';
 
 const ENV = '.env';
 const ENV_PRODUCTION = '.env.production';
 const ENV_DEVELOPMENT = '.env.development';
 
 export default async function readEnv(
-  isProduction: boolean,
+  isDev: boolean,
 ): Promise<Partial<Record<string, string>>> {
   const cwd = process.cwd();
 
-  if (isProduction) {
-    const productionPath = path.resolve(path.join(cwd, ENV_PRODUCTION));
-    if (await isFile(productionPath)) {
-      return dotenv.parse(await fs.readFile(productionPath));
-    }
-  } else {
+  const record = {};
+
+  if (isDev) {
     const developmentPath = path.resolve(path.join(cwd, ENV_DEVELOPMENT));
     if (await isFile(developmentPath)) {
-      return dotenv.parse(await fs.readFile(developmentPath));
+      Object.assign(record, dotenv.parse(await readFile(developmentPath, 'utf-8')));
+    }
+  } else {
+    const productionPath = path.resolve(path.join(cwd, ENV_PRODUCTION));
+    if (await isFile(productionPath)) {
+      Object.assign(record, dotenv.parse(await readFile(productionPath, 'utf-8')));
     }
   }
 
   const defaultPath = path.resolve(path.join(cwd, ENV));
 
-  if (await fs.pathExists(defaultPath)) {
-    return dotenv.parse(await fs.readFile(defaultPath));
+  if (await isFile(defaultPath)) {
+    Object.assign(record, dotenv.parse(await readFile(defaultPath, 'utf-8')));
   }
-  return {};
+  return record;
 }
