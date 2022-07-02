@@ -24,7 +24,7 @@
 import path from 'path';
 import dotenv from 'dotenv';
 import { readFile } from 'fs/promises';
-import { pathExists, isFile } from './fs-utils';
+import { isFile } from './fs-utils';
 
 const ENV = '.env';
 const ENV_PRODUCTION = '.env.production';
@@ -35,22 +35,24 @@ export default async function readEnv(
 ): Promise<Partial<Record<string, string>>> {
   const cwd = process.cwd();
 
+  const record = {};
+
   if (isProduction) {
     const productionPath = path.resolve(path.join(cwd, ENV_PRODUCTION));
     if (await isFile(productionPath)) {
-      return dotenv.parse(await readFile(productionPath, 'utf-8'));
+      Object.assign(record, dotenv.parse(await readFile(productionPath, 'utf-8')));
     }
   } else {
     const developmentPath = path.resolve(path.join(cwd, ENV_DEVELOPMENT));
     if (await isFile(developmentPath)) {
-      return dotenv.parse(await readFile(developmentPath, 'utf-8'));
+      Object.assign(record, dotenv.parse(await readFile(developmentPath, 'utf-8')));
     }
   }
 
   const defaultPath = path.resolve(path.join(cwd, ENV));
 
-  if (await pathExists(defaultPath)) {
-    return dotenv.parse(await readFile(defaultPath, 'utf-8'));
+  if (await isFile(defaultPath)) {
+    Object.assign(record, dotenv.parse(await readFile(defaultPath, 'utf-8')));
   }
-  return {};
+  return record;
 }
