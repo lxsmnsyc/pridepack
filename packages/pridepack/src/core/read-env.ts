@@ -31,21 +31,21 @@ const ENV_PRODUCTION = '.env.production';
 const ENV_DEVELOPMENT = '.env.development';
 
 export default async function readEnv(
-  isProduction: boolean,
+  isDev: boolean,
 ): Promise<Partial<Record<string, string>>> {
   const cwd = process.cwd();
 
   const record = {};
 
-  if (isProduction) {
-    const productionPath = path.resolve(path.join(cwd, ENV_PRODUCTION));
-    if (await isFile(productionPath)) {
-      Object.assign(record, dotenv.parse(await readFile(productionPath, 'utf-8')));
-    }
-  } else {
+  if (isDev) {
     const developmentPath = path.resolve(path.join(cwd, ENV_DEVELOPMENT));
     if (await isFile(developmentPath)) {
       Object.assign(record, dotenv.parse(await readFile(developmentPath, 'utf-8')));
+    }
+  } else {
+    const productionPath = path.resolve(path.join(cwd, ENV_PRODUCTION));
+    if (await isFile(productionPath)) {
+      Object.assign(record, dotenv.parse(await readFile(productionPath, 'utf-8')));
     }
   }
 

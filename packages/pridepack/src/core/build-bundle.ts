@@ -13,8 +13,6 @@ export default async function buildBundle(
 ): Promise<BuildResult> {
   const externals = await readExternals();
   const cwd = process.cwd();
-  // get outfile
-  // run esbuild
   return build({
     entryPoints: getBuildEntrypoints(
       config,
@@ -30,13 +28,7 @@ export default async function buildBundle(
     platform: 'neutral',
     format: isESM ? 'esm' : 'cjs',
     sourcemap: isDev,
-    define: {
-      ...await readEnvDefinitions(!isDev),
-      'process.env.NODE_ENV': isDev ? '"development"' : '"production"',
-      'import.meta.env.MODE': isDev ? '"development"' : '"production"',
-      'import.meta.env.DEV': isDev ? 'true' : 'false',
-      'import.meta.env.PROD': isDev ? 'false' : 'true',
-    },
+    define: await readEnvDefinitions(!isDev),
     incremental,
     external: externals,
     target: config.target,

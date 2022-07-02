@@ -23,17 +23,25 @@
  */
 import readEnv from './read-env';
 
+const CJS_ENV = 'process.env';
+const ESM_ENV = 'import.meta.env';
+
 export default async function readEnvDefinitions(
-  isProduction: boolean,
+  isDev: boolean,
 ): Promise<Record<string, string>> {
-  const env = await readEnv(isProduction);
+  const env = await readEnv(isDev);
   const container: Record<string, string> = {};
 
   for (const key of Object.keys(env)) {
     const value = JSON.stringify(env[key]);
-    container[`process.env.${key}`] = value;
-    container[`import.meta.env.${key}`] = value;
+    container[`${CJS_ENV}.${key}`] = value;
+    container[`${ESM_ENV}.${key}`] = value;
   }
+
+  container[`${CJS_ENV}.NODE_ENV`] = isDev ? '"development"' : '"production"';
+  container[`${ESM_ENV}.MODE`] = isDev ? '"development"' : '"production"';
+  container[`${ESM_ENV}.DEV`] = isDev ? 'true' : 'false';
+  container[`${ESM_ENV}.PROD`] = isDev ? 'false' : 'true';
 
   return container;
 }
