@@ -50,7 +50,7 @@ export default async function patchPackageExports(
   cwd = '.',
 ): Promise<void> {
   const packageInfo = await readPackage(cwd);
-  const jsx = config.jsx === 'preserve' ? 'x' : '';
+  const jsx = config.jsx === 'preserve' ? '.jsx' : '.js';
   const entries: Record<string, ExportEntry> = {};
   const targetTSPaths: Record<string, [string]> = {};
   // eslint-disable-next-line no-restricted-syntax
