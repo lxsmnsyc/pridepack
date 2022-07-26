@@ -29,8 +29,8 @@ function createBaseExportEntry(
   isDev: boolean,
 ): BaseExportEntry {
   return {
-    require: `./${toPosix(getCJSTargetDirectory(config, entry, isDev))}${getExtensionJS(isModule, isJSX, true)}`,
-    import: `./${toPosix(getESMTargetDirectory(config, entry, isDev))}${getExtensionJS(isModule, isJSX, false)}`,
+    require: `./${toPosix(getCJSTargetDirectory(config, entry, isDev))}${getExtensionJS(isModule, isJSX, false)}`,
+    import: `./${toPosix(getESMTargetDirectory(config, entry, isDev))}${getExtensionJS(isModule, isJSX, true)}`,
   };
 }
 
