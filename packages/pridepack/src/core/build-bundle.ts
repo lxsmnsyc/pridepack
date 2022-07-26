@@ -4,6 +4,8 @@ import readEnvDefinitions from './read-env-defs';
 import readExternals from './read-externals';
 import { PridepackConfig } from './default-config';
 import getBuildEntrypoints from './get-build-entrypoints';
+import getExtensionJS from './get-extension-js';
+import readPackage from './read-package';
 
 export default async function buildBundle(
   config: PridepackConfig,
@@ -11,8 +13,9 @@ export default async function buildBundle(
   isDev: boolean,
   isESM: boolean,
 ): Promise<BuildResult> {
-  const externals = await readExternals();
   const cwd = process.cwd();
+  const externals = await readExternals();
+  const pkg = await readPackage(cwd);
   return build({
     entryPoints: getBuildEntrypoints(
       config,
@@ -20,7 +23,11 @@ export default async function buildBundle(
       isDev,
     ),
     outExtension: {
-      '.js': config.jsx === 'preserve' ? '.jsx' : '.js',
+      '.js': getExtensionJS(
+        pkg.type === 'module',
+        config.jsx === 'preserve',
+        isESM,
+      ),
     },
     outdir: cwd,
     bundle: true,

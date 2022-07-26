@@ -1,6 +1,7 @@
 import path from 'path';
 import { PridepackConfig } from './default-config';
 import { outputJson } from './fs-utils';
+import getExtensionJS from './get-extension-js';
 import getPackagePath from './get-package-path';
 import readPackage from './read-package';
 import {
@@ -23,12 +24,13 @@ interface ExportEntry extends BaseExportEntry {
 function createBaseExportEntry(
   config: PridepackConfig,
   entry: string,
-  jsx: string,
+  isModule: boolean,
+  isJSX: boolean,
   isDev: boolean,
 ): BaseExportEntry {
   return {
-    require: `./${toPosix(getCJSTargetDirectory(config, entry, isDev))}${jsx}`,
-    import: `./${toPosix(getESMTargetDirectory(config, entry, isDev))}${jsx}`,
+    require: `./${toPosix(getCJSTargetDirectory(config, entry, isDev))}${getExtensionJS(isModule, isJSX, true)}`,
+    import: `./${toPosix(getESMTargetDirectory(config, entry, isDev))}${getExtensionJS(isModule, isJSX, false)}`,
   };
 }
 
@@ -36,11 +38,12 @@ function createExportEntry(
   config: PridepackConfig,
   entry: string,
   types: string,
-  jsx: string,
+  isModule: boolean,
+  isJSX: boolean,
 ): ExportEntry {
   return {
-    development: createBaseExportEntry(config, entry, jsx, true),
-    ...createBaseExportEntry(config, entry, jsx, false),
+    development: createBaseExportEntry(config, entry, isModule, isJSX, true),
+    ...createBaseExportEntry(config, entry, isModule, isJSX, false),
     types,
   };
 }
@@ -50,7 +53,8 @@ export default async function patchPackageExports(
   cwd = '.',
 ): Promise<void> {
   const packageInfo = await readPackage(cwd);
-  const jsx = config.jsx === 'preserve' ? '.jsx' : '.js';
+  const isModule = packageInfo.type === 'module';
+  const isJSX = config.jsx === 'preserve';
   const entries: Record<string, ExportEntry> = {};
   const targetTSPaths: Record<string, [string]> = {};
   // eslint-disable-next-line no-restricted-syntax
@@ -61,7 +65,8 @@ export default async function patchPackageExports(
       config,
       moduleEntry,
       typesPath,
-      jsx,
+      isModule,
+      isJSX,
     );
     const targetPath = moduleEntry === '.' ? '*' : path.relative('.', moduleEntry);
     targetTSPaths[targetPath] = [typesPath];
