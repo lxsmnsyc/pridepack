@@ -15,7 +15,7 @@ export default async function buildBundle(
 ): Promise<BuildResult> {
   const cwd = process.cwd();
   const externals = await readExternals();
-  const pkg = await readPackage(cwd);
+  const pkg = await readPackage();
   return build({
     entryPoints: getBuildEntrypoints(
       config,
