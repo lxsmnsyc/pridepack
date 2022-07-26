@@ -28,7 +28,7 @@ export default async function buildBundle(
     platform: 'neutral',
     format: isESM ? 'esm' : 'cjs',
     sourcemap: isDev,
-    define: await readEnvDefinitions(!isDev),
+    define: await readEnvDefinitions(isDev),
     incremental,
     external: externals,
     target: config.target,
