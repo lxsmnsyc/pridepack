@@ -19,14 +19,21 @@ export default async function runStartCommand(isDev: boolean): Promise<void> {
         : getCJSTargetDirectory(config, config.startEntrypoint ?? '.', isDev)
     );
 
+    const args = isDev
+      ? [
+        'NODE_ENV=development',
+        '--enable-source-maps',
+        ...process.argv.slice(3),
+      ]
+      : [
+        'NODE_ENV=production',
+        ...process.argv.slice(3),
+      ];
+
     function startProcess() {
-      const instance = execa(
-        'node',
-        [
-          entrypoint,
-          `NODE_ENV=${isDev ? 'development' : 'production'}`,
-          ...process.argv.slice(3),
-        ],
+      const instance = execa.node(
+        entrypoint,
+        args,
       );
       instance.stdout?.pipe(process.stdout);
       return instance;
