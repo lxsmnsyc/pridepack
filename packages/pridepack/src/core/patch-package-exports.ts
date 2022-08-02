@@ -57,6 +57,8 @@ export default async function patchPackageExports(
   const isJSX = config.jsx === 'preserve';
   const entries: Record<string, ExportEntry> = {};
   const targetTSPaths: Record<string, [string]> = {};
+  let types: string | undefined;
+
   // eslint-disable-next-line no-restricted-syntax
   for (const moduleEntry of Object.keys(config.entrypoints)) {
     const tsPath = await getTypesTarget(config.entrypoints[moduleEntry]);
@@ -68,14 +70,19 @@ export default async function patchPackageExports(
       isModule,
       isJSX,
     );
-    const targetPath = moduleEntry === '.' ? '*' : path.relative('.', moduleEntry);
-    targetTSPaths[targetPath] = [typesPath];
+    if (moduleEntry === '.') {
+      types = typesPath;
+    } else {
+      const targetPath = path.relative('.', moduleEntry);
+      targetTSPaths[targetPath] = [typesPath];
+    }
   }
 
   await outputJson(
     getPackagePath(cwd),
     {
       ...packageInfo,
+      types,
       exports: entries,
       typesVersions: {
         '*': targetTSPaths,
