@@ -51,5 +51,6 @@ export default async function buildBundle(
         : config.plugins
     ),
     legalComments: 'eof',
+    metafile: true,
   });
 }
