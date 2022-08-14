@@ -59,6 +59,9 @@ export default async function patchPackageExports(
   const targetTSPaths: Record<string, [string]> = {};
   let types: string | undefined;
 
+  let mainTarget: string | undefined;
+  let moduleTarget: string | undefined;
+
   // eslint-disable-next-line no-restricted-syntax
   for (const moduleEntry of Object.keys(config.entrypoints)) {
     const tsPath = await getTypesTarget(config.entrypoints[moduleEntry]);
@@ -72,6 +75,8 @@ export default async function patchPackageExports(
     );
     if (moduleEntry === '.') {
       types = typesPath;
+      mainTarget = entries[moduleEntry].require;
+      moduleTarget = entries[moduleEntry].import;
     } else {
       const targetPath = path.relative('.', moduleEntry);
       targetTSPaths[targetPath] = [typesPath];
@@ -83,6 +88,8 @@ export default async function patchPackageExports(
     {
       ...packageInfo,
       types,
+      main: mainTarget,
+      module: moduleTarget,
       exports: entries,
       typesVersions: {
         '*': targetTSPaths,
