@@ -10,5 +10,5 @@ export default async function runBuildCommand(): Promise<void> {
   await (await runBuild(config, false, true, false)).start();
   await (await runBuild(config, false, false, false)).start();
   await patchPackageExports(config);
-  await runCompile(config, false);
+  await runCompile(false);
 }

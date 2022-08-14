@@ -1,12 +1,12 @@
 import generateTSDiagnostics from './generate-ts-diagnostics';
 import compileTypes from '../core/compile-types';
 import runTask from './run-task';
-import { PridepackConfig } from '../core/default-config';
+import readConfig from '../core/read-config';
 
 export default async function runCompile(
-  config: PridepackConfig,
   noEmit: boolean,
 ): Promise<void> {
+  const config = await readConfig();
   const task = await runTask(async (runSuccess) => {
     const result = await compileTypes(config, noEmit);
     runSuccess();
