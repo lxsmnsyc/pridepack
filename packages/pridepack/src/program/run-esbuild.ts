@@ -35,7 +35,7 @@ export default async function runESBuild(
         generateESBuildDiagnostics(true, result.warnings);
 
         if (result.metafile && !incremental) {
-          processMetafile(result.metafile);
+          await processMetafile(result.metafile);
         }
       } catch (err) {
         if (isBuildFailure(err)) {
