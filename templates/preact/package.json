@@ -1,6 +1,6 @@
 {
   "name": "preact-template",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "files": [
     "dist",
     "src"
@@ -20,7 +20,7 @@
     "eslint-config-lxsmnsyc": "^0.4.8",
     "jsdom": "^20.0.3",
     "preact": "^10.11.3",
-    "pridepack": "2.3.0",
+    "pridepack": "2.3.1",
     "tslib": "^2.4.1",
     "typescript": "^4.9.3",
     "vitest": "^0.25.3"
