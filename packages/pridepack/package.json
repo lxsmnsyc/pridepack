@@ -33,7 +33,6 @@
     "package-json-type": "^1.0.3",
     "pretty-bytes": "^6.0.0",
     "prompts": "^2.4.2",
-    "resolve.exports": "^2.0.0",
     "yargs": "^17.6.2"
   },
   "peerDependencies": {

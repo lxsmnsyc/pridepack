@@ -33,7 +33,6 @@ importers:
       package-json-type: ^1.0.3
       pretty-bytes: ^6.0.0
       prompts: ^2.4.2
-      resolve.exports: ^2.0.0
       tslib: ^2.4.1
       typescript: ^4.9.4
       yargs: ^17.6.2
@@ -48,7 +47,6 @@ importers:
       package-json-type: 1.0.3
       pretty-bytes: 6.0.0
       prompts: 2.4.2
-      resolve.exports: 2.0.0
       yargs: 17.6.2
     devDependencies:
       '@types/degit': 2.8.3
@@ -7111,11 +7109,6 @@ packages:
     resolution: {integrity: sha512-qYg9KP24dD5qka9J47d0aVky0N+b4fTU89LN9iDnjB5waksiC49rvMB0PrUJQGoTmH50XPiqOvAjDfaijGxYZw==}
     engines: {node: '>=8'}
     dev: true
-
-  /resolve.exports/2.0.0:
-    resolution: {integrity: sha512-6K/gDlqgQscOlg9fSRpWstA8sYe8rbELsSTNpx+3kTrsVCzvSl0zIvRErM7fdl9ERWDsKnrLnwB+Ne89918XOg==}
-    engines: {node: '>=10'}
-    dev: false
 
   /resolve/1.22.1:
     resolution: {integrity: sha512-nBpuuYuY5jFsli/JIs1oldw6fOQCBioohqWZg/2hiaOybXOft4lonv85uDOKXdf8rhyK159cxU5cDcK/NKk8zw==}

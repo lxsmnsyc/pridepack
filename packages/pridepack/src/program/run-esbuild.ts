@@ -1,4 +1,4 @@
-import { BuildFailure, BuildIncremental, BuildResult } from 'esbuild';
+import { BuildContext, BuildFailure, BuildResult } from 'esbuild';
 import generateESBuildDiagnostics from './generate-esbuild-diagnostics';
 import processMetafile from './process-metafile';
 import runTask, { Task, TaskStatus } from './run-task';
@@ -7,22 +7,23 @@ function isBuildFailure(error: unknown): error is BuildFailure {
   return !!((error as BuildFailure).errors && (error as BuildFailure).warnings);
 }
 
+interface BuildCall {
+  (incremental: false): Promise<BuildResult>;
+  (incremental: true): Promise<BuildContext>;
+}
+
 export default async function runESBuild(
-  buildCall: (incremental: boolean) => Promise<BuildResult | BuildIncremental>,
+  buildCall: BuildCall,
   incremental: boolean,
   status: TaskStatus,
 ): Promise<Task<void>> {
-  let current: BuildIncremental | undefined;
+  let current: BuildContext | undefined;
   async function getResult(): Promise<BuildResult> {
     if (incremental) {
-      if (current) {
-        return current.rebuild();
+      if (!current) {
+        current = await buildCall(true);
       }
-      const result = await buildCall(true);
-      if (result.rebuild) {
-        current = result as BuildIncremental;
-      }
-      return result;
+      return current.rebuild();
     }
     return buildCall(false);
   }

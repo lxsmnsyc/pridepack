@@ -1,5 +1,10 @@
 import path from 'path';
-import { build, BuildResult } from 'esbuild';
+import {
+  build,
+  context,
+  BuildResult,
+  BuildContext,
+} from 'esbuild';
 import readEnvDefinitions from './read-env-defs';
 import readExternals from './read-externals';
 import { PridepackConfig } from './default-config';
@@ -12,11 +17,11 @@ export default async function buildBundle(
   incremental: boolean,
   isDev: boolean,
   isESM: boolean,
-): Promise<BuildResult> {
+): Promise<BuildResult | BuildContext> {
   const cwd = process.cwd();
   const externals = await readExternals();
   const pkg = await readPackage();
-  return build({
+  const options = {
     entryPoints: getBuildEntrypoints(
       config,
       isESM,
@@ -36,7 +41,6 @@ export default async function buildBundle(
     format: isESM ? 'esm' : 'cjs',
     sourcemap: isDev,
     define: await readEnvDefinitions(isDev),
-    incremental,
     external: externals,
     target: config.target,
     tsconfig: path.resolve(path.join(cwd, config.tsconfig)),
@@ -52,5 +56,10 @@ export default async function buildBundle(
     ),
     legalComments: 'eof',
     metafile: true,
-  });
+  } as const;
+
+  if (incremental) {
+    return context(options);
+  }
+  return build(options);
 }
