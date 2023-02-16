@@ -1,5 +1,4 @@
-import prompts from 'prompts';
-import crash from './graceful-crash';
+import { select } from '@clack/prompts';
 
 const TEMPLATES = [
   'basic',
@@ -11,16 +10,12 @@ const TEMPLATES = [
   'solid-js',
 ];
 
-export default async function chooseTemplate(): Promise<{ template: string }> {
-  return prompts({
-    type: 'select',
-    name: 'template',
+export default function chooseTemplate() {
+  return select({
     message: 'Choose your template',
-    choices: TEMPLATES.map((item) => ({
-      title: item,
+    options: TEMPLATES.map((item) => ({
+      label: item,
       value: item,
     })),
-    initial: 0,
-    onState: crash,
   });
 }

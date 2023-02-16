@@ -1,30 +1,37 @@
-import prompts from 'prompts';
+import { confirm, text } from '@clack/prompts';
 import generateESLintDiagnostics from './generate-eslint-diagnostics';
 import runLinter from '../core/run-linter';
 import runTask from './run-task';
-import crash from './graceful-crash';
+import stopProgram from './stop-program';
 
-export default async function runLintCommand(): Promise<void> {
-  const { files } = await prompts({
-    type: 'list',
-    name: 'files',
+interface LintOptions {
+  file?: string;
+  fix?: boolean;
+  cache?: boolean;
+}
+
+export default async function runLintCommand(options: LintOptions): Promise<void> {
+  const file = options.file ?? await text({
     message: 'Which files to lint?',
-    onState: crash,
+    placeholder: 'src/**',
   });
-  const { fix } = await prompts({
-    type: 'confirm',
-    name: 'fix',
+  if (stopProgram(file)) {
+    return;
+  }
+  const fix = options.fix ?? await confirm({
     message: 'Do you want to fix the files?',
-    onState: crash,
   });
-  const { cache } = await prompts({
-    type: 'confirm',
-    name: 'cache',
+  if (stopProgram(fix)) {
+    return;
+  }
+  const cache = options.cache ?? await confirm({
     message: 'Do you want to only check the changed files?',
-    onState: crash,
   });
-  const task = await runTask(async (runSuccess) => {
-    const result = await runLinter({ files, fix, cache });
+  if (stopProgram(cache)) {
+    return;
+  }
+  const task = runTask(async (runSuccess) => {
+    const result = await runLinter({ file, fix, cache });
     runSuccess();
     generateESLintDiagnostics(result);
   }, {

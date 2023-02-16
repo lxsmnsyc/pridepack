@@ -7,7 +7,7 @@ export default async function runCompile(
   noEmit: boolean,
 ): Promise<void> {
   const config = await readConfig();
-  const task = await runTask(async (runSuccess) => {
+  const task = runTask(async (runSuccess) => {
     const result = await compileTypes(config, noEmit);
     runSuccess();
     generateTSDiagnostics(result);

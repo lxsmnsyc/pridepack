@@ -1,5 +1,6 @@
 {
   "name": "pridepack",
+  "type": "module",
   "version": "2.4.0",
   "description": "CLI for building TypeScript packages",
   "main": "index.js",
@@ -12,7 +13,7 @@
     "env.d.ts"
   ],
   "bin": {
-    "pridepack": "./bin/index.js"
+    "pridepack": "./bin/index.mjs"
   },
   "contributors": [
     "TheoryOfNekomata <allan.crisostomo@outlook.com> (https://modal.sh)"
@@ -23,16 +24,15 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
+    "@clack/prompts": "^0.2.2",
     "@ovyerus/licenses": "^6.4.4",
     "degit": "^2.8.4",
     "dotenv": "^16.0.3",
     "esbuild": "^0.17.4",
     "execa": "^5.1.1",
     "license": "^1.0.3",
-    "ora": "^6.1.2",
     "package-json-type": "^1.0.3",
     "pretty-bytes": "^6.0.0",
-    "prompts": "^2.4.2",
     "yargs": "^17.6.2"
   },
   "peerDependencies": {

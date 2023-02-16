@@ -1,21 +1,23 @@
-const esbuild = require('esbuild');
-const packageJSON = require('./package.json');
+import { build } from "esbuild";
+import fs from 'fs/promises';
 
-esbuild.buildSync({
+const packageJSON = JSON.parse(await fs.readFile('./package.json', 'utf-8'));
+
+await build({
   entryPoints: [
     './src/index.ts',
   ],
-  outfile: './bin/index.js',
+  outfile: './bin/index.mjs',
   bundle: true,
-  minify: true,
+  // minify: true,
   sourcemap: false,
-  format: 'cjs',
+  format: 'esm',
   platform: 'node',
   tsconfig: './tsconfig.json',
   external: [
     ...Object.keys(packageJSON.dependencies),
     ...Object.keys(packageJSON.devDependencies),
   ],
-  target: "es2017",
+  target: "es2018",
   legalComments: 'eof',
 });

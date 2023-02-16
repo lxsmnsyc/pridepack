@@ -1,3 +1,5 @@
+import { cancel, spinner } from '@clack/prompts';
+
 export interface TaskStatus {
   failure: string;
   success: string;
@@ -14,11 +16,11 @@ export interface Task<T> {
   stop(): void;
 }
 
-export default async function runTask<T>(
+export default function runTask<T>(
   callback: (prelog: () => void) => Promise<T>,
   status: TaskStatus,
   setting?: TaskSetting,
-): Promise<Task<T>> {
+): Task<T> {
   if (setting?.silent) {
     return {
       async start() {
@@ -32,10 +34,8 @@ export default async function runTask<T>(
       },
     };
   }
-  const ora = (await import('ora')).default;
-  const task = ora({
-    spinner: 'aesthetic' as any,
-  });
+
+  const task = spinner();
 
   return {
     async start() {
@@ -45,15 +45,15 @@ export default async function runTask<T>(
         const result = await callback(() => {
           if (!called) {
             called = true;
-            task.succeed(status.success);
+            task.stop(status.success);
           }
         });
         if (!called) {
-          task.succeed(status.success);
+          task.stop(status.success);
         }
         return result;
       } catch (error) {
-        task.fail(status.failure);
+        cancel(status.failure);
         throw error;
       }
     },

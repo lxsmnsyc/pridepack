@@ -4,13 +4,21 @@ import chooseTemplate from './choose-template';
 import runInitPackage from './run-init-package';
 import runInstall from './run-install';
 import runTask from './run-task';
+import stopProgram from './stop-program';
 
-export default async function runInitCommand(): Promise<void> {
-  const templateName = await chooseTemplate();
-  const task = await runTask(() => copyFromTemplate(templateName.template, '.'), {
-    pending: `Copying from template '${templateName.template}'...`,
-    success: `Copied from template '${templateName.template}'!`,
-    failure: `Failed to copy from template '${templateName.template}'.`,
+interface InitOptions {
+  template?: string;
+}
+
+export default async function runInitCommand(options: InitOptions): Promise<void> {
+  const templateName = options.template ?? await chooseTemplate();
+  if (stopProgram(templateName)) {
+    return;
+  }
+  const task = runTask(() => copyFromTemplate(templateName, '.'), {
+    pending: `Copying from template '${templateName}'...`,
+    success: `Copied from template '${templateName}'!`,
+    failure: `Failed to copy from template '${templateName}'.`,
   });
   await task.start();
   await runInitPackage(path.basename(path.resolve(process.cwd())));

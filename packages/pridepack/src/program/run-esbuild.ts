@@ -12,11 +12,11 @@ interface BuildCall {
   (incremental: true): Promise<BuildContext>;
 }
 
-export default async function runESBuild(
+export default function runESBuild(
   buildCall: BuildCall,
   incremental: boolean,
   status: TaskStatus,
-): Promise<Task<void>> {
+): Task<void> {
   let current: BuildContext | undefined;
   async function getResult(): Promise<BuildResult> {
     if (incremental) {

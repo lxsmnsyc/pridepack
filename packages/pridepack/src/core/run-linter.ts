@@ -24,7 +24,7 @@
 import { ESLint } from 'eslint';
 
 export interface LintOptions {
-  files?: string[];
+  file?: string;
   fix?: boolean;
   cache?: boolean;
 }
@@ -37,7 +37,7 @@ export default async function runLinter(
     cache: options.cache,
   });
 
-  const results = await linter.lintFiles(options.files ?? '');
+  const results = await linter.lintFiles(options.file ?? '');
 
   return results;
 }

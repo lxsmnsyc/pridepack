@@ -1,22 +1,22 @@
-import prompts from 'prompts';
+import { select } from '@clack/prompts';
 import installDeps from '../core/install-deps';
-import crash from './graceful-crash';
 import runTask from './run-task';
+import stopProgram from './stop-program';
 
 export default async function runInstall(directory: string): Promise<void> {
-  const packageManager = await prompts({
-    type: 'select',
-    name: 'command',
+  const packageManager = await select({
     message: 'Choose your preferred package manager tool',
-    choices: [
-      { title: 'NPM', value: 'npm' },
-      { title: 'Yarn v1 (Legacy)', value: 'yarn' },
-      { title: 'PNPM', value: 'pnpm' },
+    options: [
+      { label: 'NPM', value: 'npm' },
+      { label: 'Yarn v1 (Legacy)', value: 'yarn' },
+      { label: 'PNPM', value: 'pnpm' },
     ],
-    initial: 0,
-    onState: crash,
+    initialValue: 'npm',
   });
-  const task = await runTask(() => installDeps(packageManager.command, directory), {
+  if (stopProgram(packageManager)) {
+    return;
+  }
+  const task = runTask(() => installDeps(packageManager, directory), {
     pending: 'Installing dependencies...',
     success: 'Installed dependencies!',
     failure: 'Failed to install dependencies.',

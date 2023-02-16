@@ -11,7 +11,7 @@ import readConfig from '../core/read-config';
 
 export default async function runStartCommand(isDev: boolean): Promise<void> {
   const config = await readConfig();
-  const task = await runTask(async () => {
+  const task = runTask(async () => {
     const pkg = await readPackage();
     const entrypoint = (
       pkg.type === 'module'

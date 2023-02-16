@@ -1,67 +1,71 @@
-import prompts from 'prompts';
 import licenses from '@ovyerus/licenses';
+import { text, confirm } from '@clack/prompts';
 import patchPackage from '../core/patch-package';
-import crash from './graceful-crash';
+import stopProgram from './stop-program';
 
 export default async function runInitPackage(name: string, directory?: string): Promise<void> {
-  const { description } = await prompts({
-    type: 'text',
-    name: 'description',
+  const description = await text({
     message: 'Your package\'s description?',
-    onState: crash,
+    placeholder: 'This is an example description.',
   });
-  const { author } = await prompts({
-    type: 'text',
-    name: 'author',
+  if (stopProgram(description)) {
+    return;
+  }
+  const author = await text({
     message: 'Author name?',
-    onState: crash,
+    placeholder: 'John Doe',
   });
-  const { repository } = await prompts({
-    type: 'text',
-    name: 'repository',
+  if (stopProgram(author)) {
+    return;
+  }
+  const repository = await text({
     message: 'Repository URL?',
-    onState: crash,
+    initialValue: 'https://github.com/username/repo',
   });
-  const { homepage } = await prompts({
-    type: 'text',
-    name: 'homepage',
+  if (stopProgram(repository)) {
+    return;
+  }
+  const homepage = await text({
     message: 'Home URL?',
-    onState: crash,
+    initialValue: 'https://github.com/username/repo',
   });
-  const { issues } = await prompts({
-    type: 'text',
-    name: 'issues',
+  if (stopProgram(homepage)) {
+    return;
+  }
+  const issues = await text({
     message: 'Issues URL?',
-    onState: crash,
+    initialValue: 'https://github.com/username/repo/issues',
   });
-  let license: string | undefined;
-
-  const { licensed } = await prompts({
-    type: 'confirm',
-    name: 'licensed',
-    message: 'Licensed?',
-    onState: crash,
-  });
-
-  if (licensed) {
-    license = (await prompts({
-      type: 'autocomplete',
-      name: 'license',
-      message: 'Which license?',
-      choices: Object.keys(licenses).map((item) => ({
-        title: item,
-        value: item,
-      })),
-      onState: crash,
-    })).license;
+  if (stopProgram(issues)) {
+    return;
   }
 
-  const { private: isPrivate } = await prompts({
-    type: 'confirm',
-    name: 'private',
-    message: 'Is your package private?',
-    onState: crash,
+  const licensed = await confirm({
+    message: 'Licensed?',
   });
+  if (stopProgram(licensed)) {
+    return;
+  }
+  const license = licensed && await text({
+    message: 'Which license?',
+    initialValue: 'MIT',
+    validate(value) {
+      if (value in licenses) {
+        return undefined;
+      }
+      return 'invalid license';
+    },
+  });
+  if (!license || stopProgram(license)) {
+    return;
+  }
+
+  const isPrivate = await confirm({
+    message: 'Is your package private?',
+  });
+  if (stopProgram(isPrivate)) {
+    return;
+  }
   await patchPackage({
     name,
     license,
