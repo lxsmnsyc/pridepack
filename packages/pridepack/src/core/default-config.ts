@@ -48,7 +48,7 @@ const DEFAULT_CONFIG: PridepackConfig = {
   entrypoints: {
     '.': 'src/index.ts',
   },
-  target: 'es2017',
+  target: 'es2018',
   tsconfig: 'tsconfig.json',
   outputDir: 'dist',
 };

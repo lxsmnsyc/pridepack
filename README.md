@@ -120,7 +120,7 @@ JS Config files are also supported, useful for loading environment variables and
   // Value is mapped from `entrypoints`
   "startEntrypoint": ".",
   // Target ES version or Browser versions, see https://esbuild.github.io/api/#target
-  "target": "es2017",
+  "target": "es2018",
   // What to do with JSX expressions, see https://esbuild.github.io/api/#jsx
   "jsx": "transform",
   // See https://esbuild.github.io/api/#jsx-factory
