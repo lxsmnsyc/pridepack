@@ -1,6 +1,6 @@
 {
   "name": "react-template",
-  "version": "2.4.2",
+  "version": "2.4.3",
   "files": [
     "dist",
     "src"
@@ -20,7 +20,7 @@
     "eslint": "^8.35.0",
     "eslint-config-lxsmnsyc": "^0.5.0",
     "jsdom": "^21.1.0",
-    "pridepack": "2.4.2",
+    "pridepack": "2.4.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-test-renderer": "^18.2.0",
