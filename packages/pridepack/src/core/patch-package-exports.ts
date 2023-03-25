@@ -1,3 +1,4 @@
+import path from 'path';
 import { PridepackConfig } from './default-config';
 import { outputJson } from './fs-utils';
 import getExtensionJS from './get-extension-js';
@@ -77,7 +78,8 @@ export default async function patchPackageExports(
       mainTarget = entries[moduleEntry].require;
       moduleTarget = entries[moduleEntry].import;
     } else {
-      targetTSPaths[moduleEntry] = [typesPath];
+      const resolved = path.posix.relative('.', moduleEntry);
+      targetTSPaths[resolved] = [typesPath];
     }
   }
 
