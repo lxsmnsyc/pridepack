@@ -8,16 +8,20 @@ import readPackage from '../core/read-package';
 import runTask from './run-task';
 import runWatchCommand from './run-watch-command';
 import readConfig from '../core/read-config';
+import getExtensionJS from '../core/get-extension-js';
 
 export default async function runStartCommand(isDev: boolean): Promise<void> {
   const config = await readConfig();
   const task = runTask(async () => {
     const pkg = await readPackage();
+    const isESM = pkg.type === 'module';
     const entrypoint = (
-      pkg.type === 'module'
+      isESM
         ? getESMTargetDirectory(config, config.startEntrypoint ?? '.', isDev)
         : getCJSTargetDirectory(config, config.startEntrypoint ?? '.', isDev)
     );
+
+    const ext = getExtensionJS(isESM, false, isESM);
 
     const args = isDev
       ? [
@@ -32,7 +36,7 @@ export default async function runStartCommand(isDev: boolean): Promise<void> {
 
     function startProcess() {
       const instance = execa.node(
-        entrypoint,
+        `${entrypoint}${ext}`,
         args,
       );
       instance.stdout?.pipe(process.stdout);

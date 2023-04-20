@@ -1,7 +1,7 @@
 {
   "name": "pridepack",
   "type": "module",
-  "version": "2.4.0",
+  "version": "2.4.4",
   "description": "CLI for building TypeScript packages",
   "main": "index.js",
   "author": "Alexis Munsayac <alexis.munsayac@gmail.com>",
@@ -24,32 +24,32 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@clack/prompts": "^0.2.2",
+    "@clack/prompts": "^0.6.3",
     "@ovyerus/licenses": "^6.4.4",
     "degit": "^2.8.4",
     "dotenv": "^16.0.3",
-    "esbuild": "^0.17.4",
-    "execa": "^5.1.1",
+    "esbuild": "^0.17.17",
+    "execa": "^7.1.1",
     "license": "^1.0.3",
     "package-json-type": "^1.0.3",
-    "pretty-bytes": "^6.0.0",
-    "yargs": "^17.6.2"
+    "pretty-bytes": "^6.1.0",
+    "yargs": "^17.7.1"
   },
   "peerDependencies": {
     "eslint": "^8.0",
     "tslib": "^2.0",
-    "typescript": "^4.0"
+    "typescript": "^5.0"
   },
   "devDependencies": {
     "@types/degit": "^2.8.3",
     "@types/eslint": "^8.4.10",
-    "@types/node": "^18.11.18",
+    "@types/node": "^18.15.12",
     "@types/prompts": "^2.4.2",
     "@types/yargs": "^17.0.20",
-    "eslint": "^8.32.0",
-    "eslint-config-lxsmnsyc": "^0.4.8",
-    "tslib": "^2.4.1",
-    "typescript": "^4.9.4"
+    "eslint": "^8.38.0",
+    "eslint-config-lxsmnsyc": "^0.5.1",
+    "tslib": "^2.5.0",
+    "typescript": "^5.0.4"
   },
   "publishConfig": {
     "access": "public"
@@ -71,6 +71,6 @@
     "bootstrap"
   ],
   "engines": {
-    "node": ">=12.12.0"
+    "node": ">=16"
   }
 }

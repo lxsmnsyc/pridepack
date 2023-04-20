@@ -78,8 +78,8 @@ export default async function patchPackageExports(
       mainTarget = entries[moduleEntry].require;
       moduleTarget = entries[moduleEntry].import;
     } else {
-      const targetPath = path.relative('.', moduleEntry);
-      targetTSPaths[targetPath] = [typesPath];
+      const resolved = path.posix.relative('.', moduleEntry);
+      targetTSPaths[resolved] = [typesPath];
     }
   }
 
