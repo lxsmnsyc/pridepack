@@ -47,7 +47,7 @@
     "@types/prompts": "^2.4.2",
     "@types/yargs": "^17.0.20",
     "eslint": "^8.38.0",
-    "eslint-config-lxsmnsyc": "^0.5.1",
+    "eslint-config-lxsmnsyc": "^0.6.3",
     "tslib": "^2.5.0",
     "typescript": "^5.0.4"
   },
