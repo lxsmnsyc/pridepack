@@ -39,6 +39,7 @@ export default async function runStartCommand(isDev: boolean): Promise<void> {
         `${entrypoint}${ext}`,
         args,
       );
+      instance.stderr?.pipe(process.stderr);
       instance.stdout?.pipe(process.stdout);
       return instance;
     }
