@@ -142,4 +142,4 @@ JS Config files are also supported, useful for loading environment variables and
 
 ## License
 
-MIT © [Lyon Software Technologies, Inc.](https://github.com/LyonInc)
+MIT © [lxsmnsyc](https://github.com/lxsmnsyc)
