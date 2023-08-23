@@ -1,5 +1,5 @@
 import path from 'path';
-import { PridepackConfig } from './default-config';
+import type { PridepackConfig } from './default-config';
 import { getCJSTargetDirectory, getESMTargetDirectory } from './resolve-entrypoint';
 
 export default function getBuildEntrypoints(

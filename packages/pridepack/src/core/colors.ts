@@ -1,5 +1,5 @@
 const format = (startCode: number, endCode: number) => (
-  (string: string) => `\u001B[${startCode}m${string}\u001B[${endCode}m`
+  (string: string): string => `\u001B[${startCode}m${string}\u001B[${endCode}m`
 );
 
 export const reset = /* @__PURE__ */format(0, 0);

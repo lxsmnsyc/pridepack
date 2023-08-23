@@ -1,5 +1,5 @@
 import path from 'path';
-import { PridepackConfig } from './default-config';
+import type { PridepackConfig } from './default-config';
 import { outputJson } from './fs-utils';
 import getExtensionJS from './get-extension-js';
 import getPackagePath from './get-package-path';

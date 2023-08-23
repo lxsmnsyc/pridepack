@@ -1,13 +1,15 @@
 import path from 'path';
-import {
-  build,
-  context,
+import type {
   BuildResult,
   BuildContext,
 } from 'esbuild';
+import {
+  build,
+  context,
+} from 'esbuild';
 import readEnvDefinitions from './read-env-defs';
 import readExternals from './read-externals';
-import { PridepackConfig } from './default-config';
+import type { PridepackConfig } from './default-config';
 import getBuildEntrypoints from './get-build-entrypoints';
 import getExtensionJS from './get-extension-js';
 import readPackage from './read-package';

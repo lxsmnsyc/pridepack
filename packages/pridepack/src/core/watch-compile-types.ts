@@ -14,9 +14,9 @@ export default function watchCompileTypes(
 ): EndCompile {
   let ready = true;
 
-  let program: ts.WatchOfConfigFile<any>;
+  let program: ts.WatchOfConfigFile<any> | undefined;
 
-  async function setup() {
+  async function setup(): Promise<void> {
     if (!ready) {
       return;
     }
@@ -58,9 +58,11 @@ export default function watchCompileTypes(
   }
 
   setup().catch((err) => {
-    program.close();
     console.error(err);
-    process.exit(1);
+    if (program) {
+      program.close();
+      process.exit(1);
+    }
   });
 
   return () => {
