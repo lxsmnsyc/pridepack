@@ -16,7 +16,7 @@ export default async function runWatchCommand(
     const cjsDev = await runBuild(config, true, true, false);
     const cjsProd = await runBuild(config, true, false, false);
 
-    async function rebuild() {
+    async function rebuild(): Promise<void> {
       await esmDev.start();
       await esmProd.start();
       await cjsDev.start();

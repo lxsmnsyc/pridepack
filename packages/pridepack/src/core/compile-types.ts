@@ -1,6 +1,6 @@
 import path from 'path';
 import ts from 'typescript';
-import { PridepackConfig } from './default-config';
+import type { PridepackConfig } from './default-config';
 import { outputFile } from './fs-utils';
 import getTSEntrypoints from './get-ts-entrypoints';
 import readValidCompilerOptions from './read-valid-compiler-options';
@@ -37,7 +37,7 @@ export default async function compileTypes(
 
   const files: OutputFile[] = [];
 
-  host.writeFile = (name, data) => {
+  host.writeFile = (name, data): void => {
     files.push({
       name,
       data,
@@ -54,7 +54,7 @@ export default async function compileTypes(
   const result = program.emit();
 
   await Promise.all(
-    files.map((file) => outputFile(file.name, file.data)),
+    files.map(async (file) => outputFile(file.name, file.data)),
   );
 
   return ts.getPreEmitDiagnostics(program)

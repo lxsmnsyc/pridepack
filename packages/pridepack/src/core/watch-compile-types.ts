@@ -16,7 +16,7 @@ export default function watchCompileTypes(
 
   let program: ts.WatchOfConfigFile<any>;
 
-  async function setup() {
+  async function setup(): Promise<void> {
     if (!ready) {
       return;
     }

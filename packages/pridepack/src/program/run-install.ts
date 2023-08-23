@@ -16,7 +16,7 @@ export default async function runInstall(directory: string): Promise<void> {
     initial: 0,
     onState: crash,
   });
-  const task = await runTask(() => installDeps(packageManager.command, directory), {
+  const task = await runTask(async () => installDeps(packageManager.command, directory), {
     pending: 'Installing dependencies...',
     success: 'Installed dependencies!',
     failure: 'Failed to install dependencies.',

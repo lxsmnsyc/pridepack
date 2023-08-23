@@ -6,7 +6,7 @@ let EXTERNALS: string[];
 function pushExternal(
   set: Set<string>,
   record?: Record<string, string>,
-) {
+): void {
   if (record) {
     for (const key of Object.keys(record)) {
       set.add(key);

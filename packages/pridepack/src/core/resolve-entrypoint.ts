@@ -1,5 +1,5 @@
 import path from 'path';
-import { PridepackConfig } from './default-config';
+import type { PridepackConfig } from './default-config';
 import readConfig from './read-config';
 import readTSConfig from './read-tsconfig';
 

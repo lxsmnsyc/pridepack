@@ -1,6 +1,6 @@
 import path from 'path';
 import { getLicense } from 'license';
-import { IPackageJson } from 'package-json-type';
+import type { IPackageJson } from 'package-json-type';
 import readPackage from './read-package';
 import getPackagePath from './get-package-path';
 import { outputFile, outputJson } from './fs-utils';

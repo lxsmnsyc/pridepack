@@ -1,5 +1,5 @@
 import path from 'path';
-import { PridepackConfig } from './default-config';
+import type { PridepackConfig } from './default-config';
 import { outputJson } from './fs-utils';
 import getExtensionJS from './get-extension-js';
 import getPackagePath from './get-package-path';
@@ -62,7 +62,6 @@ export default async function patchPackageExports(
   let mainTarget: string | undefined;
   let moduleTarget: string | undefined;
 
-  // eslint-disable-next-line no-restricted-syntax
   for (const moduleEntry of Object.keys(config.entrypoints)) {
     const tsPath = await getTypesTarget(config.entrypoints[moduleEntry]);
     const typesPath = `./${toPosix(tsPath)}.d.ts`;

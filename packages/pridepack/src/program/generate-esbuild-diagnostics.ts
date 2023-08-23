@@ -1,4 +1,4 @@
-import { Message } from 'esbuild';
+import type { Message } from 'esbuild';
 import ts from 'typescript';
 import { blue, yellow } from '../core/colors';
 import createDiagnosticMessage from './create-diagnostic-message';

@@ -1,5 +1,6 @@
 import path from 'path';
-import DEFAULT_CONFIG, { PridepackConfig } from './default-config';
+import type { PridepackConfig } from './default-config';
+import DEFAULT_CONFIG from './default-config';
 import loadJS from './load-js';
 import readPackage from './read-package';
 import { readJson, isFile } from './fs-utils';

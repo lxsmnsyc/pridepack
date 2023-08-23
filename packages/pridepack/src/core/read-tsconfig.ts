@@ -1,5 +1,6 @@
 import path from 'path';
-import ts, { CompilerOptions, TypeAcquisition } from 'typescript';
+import type { CompilerOptions, TypeAcquisition } from 'typescript';
+import ts from 'typescript';
 import { readFileSync } from 'fs';
 import readConfig from './read-config';
 
