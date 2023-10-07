@@ -27,14 +27,14 @@
     "@ovyerus/licenses": "^6.4.4",
     "degit": "^2.8.4",
     "dotenv": "^16.3.1",
-    "esbuild": "^0.19.2",
+    "esbuild": "^0.19.4",
     "execa": "^8.0.1",
     "license": "^1.0.3",
     "ora": "^7.0.1",
     "package-json-type": "^1.0.3",
     "pretty-bytes": "^6.1.1",
     "prompts": "^2.4.2",
-    "yargs": "^17.6.2"
+    "yargs": "^17.7.2"
   },
   "peerDependencies": {
     "eslint": "^8.0",
@@ -43,10 +43,10 @@
   },
   "devDependencies": {
     "@types/degit": "^2.8.3",
-    "@types/eslint": "^8.44.2",
+    "@types/eslint": "^8.44.3",
     "@types/node": "^20.8.3",
-    "@types/prompts": "^2.4.4",
-    "@types/yargs": "^17.0.24",
+    "@types/prompts": "^2.4.5",
+    "@types/yargs": "^17.0.28",
     "eslint": "^8.51.0",
     "eslint-config-lxsmnsyc": "^0.6.5",
     "tslib": "^2.6.2",
