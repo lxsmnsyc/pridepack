@@ -20,7 +20,7 @@ yarn global add pridepack
 
 ### Templates
 
-See [templates](https://github.com/LyonInc/pridepack/tree/master/templates)
+See [templates](https://github.com/lxsmnsyc/pridepack/tree/master/templates)
 
 ## Usage
 

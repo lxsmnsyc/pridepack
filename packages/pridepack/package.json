@@ -55,12 +55,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "homepage": "https://github.com/LyonInc/pridepack",
+  "homepage": "https://github.com/lxsmnsyc/pridepack",
   "bugs": {
-    "url": "https://github.com/LyonInc/pridepack/issues"
+    "url": "https://github.com/lxsmnsyc/pridepack/issues"
   },
   "repository": {
-    "url": "https://github.com/LyonInc/pridepack.git",
+    "url": "https://github.com/lxsmnsyc/pridepack.git",
     "type": "git"
   },
   "keywords": [
