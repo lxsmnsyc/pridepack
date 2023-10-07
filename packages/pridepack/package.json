@@ -1,5 +1,6 @@
 {
   "name": "pridepack",
+  "type": "module",
   "version": "2.4.4",
   "description": "CLI for building TypeScript packages",
   "main": "index.js",
@@ -12,7 +13,7 @@
     "env.d.ts"
   ],
   "bin": {
-    "pridepack": "./bin/index.js"
+    "pridepack": "./bin/index.mjs"
   },
   "contributors": [
     "TheoryOfNekomata <allan.crisostomo@outlook.com> (https://modal.sh)"
@@ -25,41 +26,41 @@
   "dependencies": {
     "@ovyerus/licenses": "^6.4.4",
     "degit": "^2.8.4",
-    "dotenv": "^16.0.3",
-    "esbuild": "^0.17.4",
-    "execa": "^5.1.1",
+    "dotenv": "^16.3.1",
+    "esbuild": "^0.19.4",
+    "execa": "^8.0.1",
     "license": "^1.0.3",
-    "ora": "^6.1.2",
+    "ora": "^7.0.1",
     "package-json-type": "^1.0.3",
-    "pretty-bytes": "^6.0.0",
+    "pretty-bytes": "^6.1.1",
     "prompts": "^2.4.2",
-    "yargs": "^17.6.2"
+    "yargs": "^17.7.2"
   },
   "peerDependencies": {
     "eslint": "^8.0",
     "tslib": "^2.0",
-    "typescript": "^4.0"
+    "typescript": "^5.0"
   },
   "devDependencies": {
     "@types/degit": "^2.8.3",
-    "@types/eslint": "^8.4.10",
-    "@types/node": "^18.14.1",
-    "@types/prompts": "^2.4.2",
-    "@types/yargs": "^17.0.20",
-    "eslint": "^8.35.0",
-    "eslint-config-lxsmnsyc": "^0.5.0",
-    "tslib": "^2.5.0",
-    "typescript": "^4.9.5"
+    "@types/eslint": "^8.44.3",
+    "@types/node": "^20.8.3",
+    "@types/prompts": "^2.4.5",
+    "@types/yargs": "^17.0.28",
+    "eslint": "^8.51.0",
+    "eslint-config-lxsmnsyc": "^0.6.5",
+    "tslib": "^2.6.2",
+    "typescript": "^5.2.2"
   },
   "publishConfig": {
     "access": "public"
   },
-  "homepage": "https://github.com/LyonInc/pridepack",
+  "homepage": "https://github.com/lxsmnsyc/pridepack",
   "bugs": {
-    "url": "https://github.com/LyonInc/pridepack/issues"
+    "url": "https://github.com/lxsmnsyc/pridepack/issues"
   },
   "repository": {
-    "url": "https://github.com/LyonInc/pridepack.git",
+    "url": "https://github.com/lxsmnsyc/pridepack.git",
     "type": "git"
   },
   "keywords": [
@@ -71,6 +72,6 @@
     "bootstrap"
   ],
   "engines": {
-    "node": ">=12.12.0"
+    "node": ">=16"
   }
 }

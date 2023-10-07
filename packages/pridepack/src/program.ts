@@ -9,7 +9,7 @@ import runStartCommand from './program/run-start-command';
 import runCompile from './program/run-compile';
 import crash from './program/graceful-crash';
 
-async function runCommand() {
+async function runCommand(): Promise<void> {
   const response = await prompts({
     type: 'select',
     name: '_',

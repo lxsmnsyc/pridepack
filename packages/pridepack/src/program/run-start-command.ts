@@ -1,4 +1,5 @@
-import execa from 'execa';
+import type { ExecaChildProcess } from 'execa';
+import { execaNode } from 'execa';
 import {
   getCJSTargetDirectory,
   getESMTargetDirectory,
@@ -34,8 +35,8 @@ export default async function runStartCommand(isDev: boolean): Promise<void> {
         ...process.argv.slice(3),
       ];
 
-    function startProcess() {
-      const instance = execa.node(
+    function startProcess(): ExecaChildProcess {
+      const instance = execaNode(
         `${entrypoint}${ext}`,
         args,
       );
@@ -44,7 +45,7 @@ export default async function runStartCommand(isDev: boolean): Promise<void> {
       return instance;
     }
 
-    let instance: execa.ExecaChildProcess<string> | undefined;
+    let instance: ExecaChildProcess | undefined;
 
     if (isDev) {
       await runWatchCommand(() => {

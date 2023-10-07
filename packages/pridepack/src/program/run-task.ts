@@ -21,13 +21,13 @@ export default async function runTask<T>(
 ): Promise<Task<T>> {
   if (setting?.silent) {
     return {
-      async start() {
+      async start(): Promise<Awaited<T>> {
         const result = await callback(() => {
           // no-op
         });
         return result;
       },
-      stop() {
+      stop(): void {
         setting?.onStop?.();
       },
     };
@@ -38,7 +38,7 @@ export default async function runTask<T>(
   });
 
   return {
-    async start() {
+    async start(): Promise<T> {
       task.start(status.pending);
       try {
         let called = false;
@@ -57,7 +57,7 @@ export default async function runTask<T>(
         throw error;
       }
     },
-    stop() {
+    stop(): void {
       setting?.onStop?.();
       task.stop();
     },

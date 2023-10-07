@@ -1,4 +1,4 @@
-import { ESLint, Linter } from 'eslint';
+import type { ESLint, Linter } from 'eslint';
 import path from 'path';
 import ts from 'typescript';
 import { blue, yellow } from '../core/colors';

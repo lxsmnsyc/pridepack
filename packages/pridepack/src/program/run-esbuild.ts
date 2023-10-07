@@ -1,7 +1,8 @@
-import { BuildContext, BuildFailure, BuildResult } from 'esbuild';
+import type { BuildContext, BuildFailure, BuildResult } from 'esbuild';
 import generateESBuildDiagnostics from './generate-esbuild-diagnostics';
 import processMetafile from './process-metafile';
-import runTask, { Task, TaskStatus } from './run-task';
+import type { Task, TaskStatus } from './run-task';
+import runTask from './run-task';
 
 function isBuildFailure(error: unknown): error is BuildFailure {
   return !!((error as BuildFailure).errors && (error as BuildFailure).warnings);

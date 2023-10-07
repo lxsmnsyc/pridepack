@@ -20,7 +20,7 @@ yarn global add pridepack
 
 ### Templates
 
-See [templates](https://github.com/LyonInc/pridepack/tree/master/templates)
+See [templates](https://github.com/lxsmnsyc/pridepack/tree/master/templates)
 
 ## Usage
 
@@ -142,4 +142,4 @@ JS Config files are also supported, useful for loading environment variables and
 
 ## License
 
-MIT © [Lyon Software Technologies, Inc.](https://github.com/LyonInc)
+MIT © [lxsmnsyc](https://github.com/lxsmnsyc)
