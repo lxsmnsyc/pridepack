@@ -5,7 +5,7 @@ import yargs from 'yargs';
 import runProgram from './program';
 import './program/graceful-crash';
 
-const { argv } = yargs
+const { argv } = yargs(process.argv.slice(2))
   .scriptName('pridepack')
   .usage('Usage: $0 <command> [options]')
   .command(
