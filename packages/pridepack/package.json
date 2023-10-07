@@ -44,13 +44,13 @@
   "devDependencies": {
     "@types/degit": "^2.8.3",
     "@types/eslint": "^8.44.2",
-    "@types/node": "^20.5.3",
+    "@types/node": "^20.8.3",
     "@types/prompts": "^2.4.4",
     "@types/yargs": "^17.0.24",
-    "eslint": "^8.47.0",
+    "eslint": "^8.51.0",
     "eslint-config-lxsmnsyc": "^0.6.5",
     "tslib": "^2.6.2",
-    "typescript": "^5.1.6"
+    "typescript": "^5.2.2"
   },
   "publishConfig": {
     "access": "public"
