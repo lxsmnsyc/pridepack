@@ -32,7 +32,7 @@ export default function watchCompileTypes(
         ),
       ),
       emitDeclarationOnly: !noEmit,
-      moduleResolution: 2,
+      moduleResolution: 100,
       noEmit,
     };
 

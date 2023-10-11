@@ -28,7 +28,7 @@ export default async function compileTypes(
       ),
     ),
     emitDeclarationOnly: !noEmit,
-    moduleResolution: 2,
+    moduleResolution: 100,
     noEmit,
   };
 
