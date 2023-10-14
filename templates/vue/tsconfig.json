@@ -17,6 +17,8 @@
     "jsx": "react",
     "esModuleInterop": true,
     "target": "es2018",
-    "jsxFactory": "h"
+    "jsxFactory": "h",
+    "useDefineForClassFields": false,
+    "declarationMap": true
   }
 }

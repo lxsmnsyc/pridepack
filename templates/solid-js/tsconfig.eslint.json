@@ -17,6 +17,8 @@
     "jsx": "preserve",
     "jsxImportSource": "solid-js",
     "esModuleInterop": true,
-    "target": "es2018"
+    "target": "es2018",
+    "useDefineForClassFields": false,
+    "declarationMap": true
   }
 }
