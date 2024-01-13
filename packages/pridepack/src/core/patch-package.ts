@@ -9,7 +9,6 @@ const SCRIPTS = {
   prepublishOnly: 'pridepack clean && pridepack build',
   build: 'pridepack build',
   'type-check': 'pridepack check',
-  lint: 'pridepack lint',
   clean: 'pridepack clean',
   watch: 'pridepack watch',
   start: 'pridepack start',

@@ -59,25 +59,6 @@ const { argv } = yargs(process.argv.slice(2))
     'dev',
     'Runs the package in development mode.',
   )
-  .command(
-    'lint',
-    'Performs linting',
-    (args) => (
-      args
-        .option('files', {
-          type: 'array',
-          description: 'Pattern of files to lint',
-        })
-        .option('fix', {
-          type: 'boolean',
-          description: 'Automatically fix problems.',
-        })
-        .option('cache', {
-          type: 'boolean',
-          description: 'Only check changed files.',
-        })
-    ),
-  )
   .demandCommand(1)
   .help();
 

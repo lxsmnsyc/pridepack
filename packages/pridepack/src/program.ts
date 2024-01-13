@@ -3,7 +3,6 @@ import runBuildCommand from './program/run-build-command';
 import runCleanCommand from './program/run-clean-command';
 import runCreateCommand from './program/run-create-command';
 import runInitCommand from './program/run-init-command';
-import runLintCommand from './program/run-lint-command';
 import runWatchCommand from './program/run-watch-command';
 import runStartCommand from './program/run-start-command';
 import runCompile from './program/run-compile';
@@ -20,7 +19,6 @@ async function runCommand(): Promise<void> {
       { title: 'check', value: 'check' },
       { title: 'create', value: 'create' },
       { title: 'init', value: 'init' },
-      { title: 'lint', value: 'lint' },
       { title: 'watch', value: 'watch' },
       { title: 'start', value: 'start' },
       { title: 'dev', value: 'dev' },
@@ -29,7 +27,6 @@ async function runCommand(): Promise<void> {
     onState: crash,
   });
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   switch (response._[0]) {
     case 'create':
       await runCreateCommand();
@@ -45,9 +42,6 @@ async function runCommand(): Promise<void> {
       break;
     case 'check':
       await runCompile(true);
-      break;
-    case 'lint':
-      await runLintCommand();
       break;
     case 'watch':
       await runWatchCommand();
