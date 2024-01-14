@@ -1,5 +1,5 @@
 {
-  "jsxFactory": "h",
-  "jsxFragment": "Fragment",
+  "jsx": "automatic",
+  "jsxImportSource": "preact",
   "target": "es2018"
 }

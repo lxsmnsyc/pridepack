@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import { getLicense } from 'license';
 import type { IPackageJson } from 'package-json-type';
 import readPackage from './read-package';
@@ -26,7 +26,10 @@ interface Patch {
   isPrivate: boolean;
 }
 
-export default async function patchPackage(patch: Patch, cwd = '.'): Promise<void> {
+export default async function patchPackage(
+  patch: Patch,
+  cwd = '.',
+): Promise<void> {
   const packageInfo = await readPackage(cwd);
 
   if (patch.license) {

@@ -28,8 +28,8 @@ export default async function runESBuild(
     }
     return buildCall(false);
   }
-  return runTask(
-    async (runSuccess) => {
+  return await runTask(
+    async runSuccess => {
       try {
         const result = await getResult();
         runSuccess();

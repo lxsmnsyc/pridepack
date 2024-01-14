@@ -1,6 +1,6 @@
-import path from 'path';
+import path from 'node:path';
 import dotenv from 'dotenv';
-import { readFile } from 'fs/promises';
+import { readFile } from 'node:fs/promises';
 import { isFile } from './fs-utils';
 
 const ENV = '.env';
@@ -17,12 +17,18 @@ export default async function readEnv(
   if (isDev) {
     const developmentPath = path.resolve(path.join(cwd, ENV_DEVELOPMENT));
     if (await isFile(developmentPath)) {
-      Object.assign(record, dotenv.parse(await readFile(developmentPath, 'utf-8')));
+      Object.assign(
+        record,
+        dotenv.parse(await readFile(developmentPath, 'utf-8')),
+      );
     }
   } else {
     const productionPath = path.resolve(path.join(cwd, ENV_PRODUCTION));
     if (await isFile(productionPath)) {
-      Object.assign(record, dotenv.parse(await readFile(productionPath, 'utf-8')));
+      Object.assign(
+        record,
+        dotenv.parse(await readFile(productionPath, 'utf-8')),
+      );
     }
   }
 

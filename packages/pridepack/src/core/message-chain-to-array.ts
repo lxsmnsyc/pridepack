@@ -12,13 +12,13 @@ export default function messageChainToArray(
   const result: DiagnosticMessageSimple[] = [];
 
   if (messageChain) {
-    messageChain.forEach((message) => {
+    for (const message of messageChain) {
       result.push(message);
       const results = messageChainToArray(message.next);
-      results.forEach((innerMessage) => {
+      for (const innerMessage of results) {
         result.push(innerMessage);
-      });
-    });
+      }
+    }
   }
 
   return result;

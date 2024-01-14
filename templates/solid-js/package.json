@@ -1,17 +1,12 @@
 {
   "name": "solid-js-template",
   "version": "2.5.1",
-  "files": [
-    "dist",
-    "src"
-  ],
+  "files": ["dist", "src"],
   "engines": {
     "node": ">=16"
   },
   "license": "MIT",
-  "keywords": [
-    "pridepack"
-  ],
+  "keywords": ["pridepack"],
   "devDependencies": {
     "@types/node": "^20.11.0",
     "pridepack": "2.5.1",

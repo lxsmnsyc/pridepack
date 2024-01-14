@@ -7,11 +7,7 @@
   "author": "Alexis Munsayac <alexis.munsayac@gmail.com>",
   "license": "MIT",
   "private": false,
-  "files": [
-    "bin",
-    "src",
-    "env.d.ts"
-  ],
+  "files": ["bin", "src", "env.d.ts"],
   "bin": {
     "pridepack": "./bin/index.mjs"
   },

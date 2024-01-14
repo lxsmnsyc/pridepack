@@ -13,60 +13,59 @@ import getExtensionJS from '../core/get-extension-js';
 
 export default async function runStartCommand(isDev: boolean): Promise<void> {
   const config = await readConfig();
-  const task = await runTask(async () => {
-    const pkg = await readPackage();
-    const isESM = pkg.type === 'module';
-    const entrypoint = (
-      isESM
+  const task = await runTask(
+    async () => {
+      const pkg = await readPackage();
+      const isESM = pkg.type === 'module';
+      const entrypoint = isESM
         ? getESMTargetDirectory(config, config.startEntrypoint ?? '.', isDev)
-        : getCJSTargetDirectory(config, config.startEntrypoint ?? '.', isDev)
-    );
+        : getCJSTargetDirectory(config, config.startEntrypoint ?? '.', isDev);
 
-    const ext = getExtensionJS(isESM, false, isESM);
+      const ext = getExtensionJS(isESM, false, isESM);
 
-    const args = isDev
-      ? [
-        'NODE_ENV=development',
-        '--enable-source-maps',
-        ...process.argv.slice(3),
-      ]
-      : [
-        'NODE_ENV=production',
-        ...process.argv.slice(3),
-      ];
+      const args = isDev
+        ? [
+            'NODE_ENV=development',
+            '--enable-source-maps',
+            ...process.argv.slice(3),
+          ]
+        : ['NODE_ENV=production', ...process.argv.slice(3)];
 
-    function startProcess(): ExecaChildProcess {
-      const instance = execaNode(
-        `${entrypoint}${ext}`,
-        args,
-      );
-      instance.stderr?.pipe(process.stderr);
-      instance.stdout?.pipe(process.stdout);
-      return instance;
-    }
+      function startProcess(): ExecaChildProcess {
+        const instance = execaNode(`${entrypoint}${ext}`, args);
+        instance.stderr?.pipe(process.stderr);
+        instance.stdout?.pipe(process.stdout);
+        return instance;
+      }
 
-    let instance: ExecaChildProcess | undefined;
+      let instance: ExecaChildProcess | undefined;
 
-    if (isDev) {
-      await runWatchCommand(() => {
-        const isRestarting = !!instance;
-        if (instance) {
-          instance.cancel();
-          console.log(yellow('Restarting...'));
-        }
-        instance = startProcess();
-        if (isRestarting) {
-          console.log(green('Restarted!'));
-        }
-      });
-    } else {
-      await startProcess();
-    }
-  }, {
-    pending: `Starting package in '${isDev ? 'development' : 'production'}' mode...`,
-    success: `Started in '${isDev ? 'development' : 'production'}' mode!`,
-    failure: `Failed to start package in '${isDev ? 'development' : 'production'}' mode.`,
-  });
+      if (isDev) {
+        await runWatchCommand(() => {
+          const isRestarting = !!instance;
+          if (instance) {
+            instance.cancel();
+            console.log(yellow('Restarting...'));
+          }
+          instance = startProcess();
+          if (isRestarting) {
+            console.log(green('Restarted!'));
+          }
+        });
+      } else {
+        await startProcess();
+      }
+    },
+    {
+      pending: `Starting package in '${
+        isDev ? 'development' : 'production'
+      }' mode...`,
+      success: `Started in '${isDev ? 'development' : 'production'}' mode!`,
+      failure: `Failed to start package in '${
+        isDev ? 'development' : 'production'
+      }' mode.`,
+    },
+  );
 
   await task.start();
 }

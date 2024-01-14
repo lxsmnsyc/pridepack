@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import ts from 'typescript';
 import type { PridepackConfig } from './default-config';
 import { outputFile } from './fs-utils';
@@ -21,11 +21,7 @@ export default async function compileTypes(
   const baseConfig: ts.CompilerOptions = {
     ...options,
     outDir: path.resolve(
-      path.join(
-        cwd,
-        config.outputDir,
-        DEFAULT_TYPES_OUTPUT,
-      ),
+      path.join(cwd, config.outputDir, DEFAULT_TYPES_OUTPUT),
     ),
     emitDeclarationOnly: !noEmit,
     moduleResolution: 100,
@@ -45,18 +41,11 @@ export default async function compileTypes(
   };
 
   // Prepare and emit the d.ts files
-  const program = ts.createProgram(
-    getTSEntrypoints(config),
-    baseConfig,
-    host,
-  );
+  const program = ts.createProgram(getTSEntrypoints(config), baseConfig, host);
 
   const result = program.emit();
 
-  await Promise.all(
-    files.map(async (file) => outputFile(file.name, file.data)),
-  );
+  await Promise.all(files.map(async file => outputFile(file.name, file.data)));
 
-  return ts.getPreEmitDiagnostics(program)
-    .concat(result.diagnostics);
+  return ts.getPreEmitDiagnostics(program).concat(result.diagnostics);
 }

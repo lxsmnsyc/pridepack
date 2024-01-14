@@ -1,6 +1,6 @@
 import CLIENT from '../client';
 
-CLIENT.on('messageCreate', async (message) => {
+CLIENT.on('messageCreate', async message => {
   if (!CLIENT.user) {
     return;
   }

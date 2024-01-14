@@ -1,10 +1,5 @@
 import ts from 'typescript';
-import {
-  cyan,
-  green,
-  red,
-  yellow,
-} from '../core/colors';
+import { cyan, green, red, yellow } from '../core/colors';
 
 interface DiagnosticDisplay {
   symbol: string;

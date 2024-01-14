@@ -28,37 +28,43 @@ async function runCommand(): Promise<void> {
   });
 
   switch (response._[0]) {
-    case 'create':
+    case 'create': {
       await runCreateCommand();
       break;
-    case 'init':
+    }
+    case 'init': {
       await runInitCommand();
       break;
-    case 'clean':
+    }
+    case 'clean': {
       await runCleanCommand();
       break;
-    case 'build':
+    }
+    case 'build': {
       await runBuildCommand();
       break;
-    case 'check':
+    }
+    case 'check': {
       await runCompile(true);
       break;
-    case 'watch':
+    }
+    case 'watch': {
       await runWatchCommand();
       break;
-    case 'start':
+    }
+    case 'start': {
       await runStartCommand(false);
       break;
-    case 'dev':
+    }
+    case 'dev': {
       await runStartCommand(true);
       break;
-    default:
-      break;
+    }
   }
 }
 
 export default function runProgram(): void {
-  runCommand().catch((err) => {
+  runCommand().catch(err => {
     console.error(err);
     process.exit(1);
   });

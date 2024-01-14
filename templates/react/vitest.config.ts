@@ -1,8 +1,8 @@
 /// <reference types="vitest" />
 
-export default ({
+export default {
   test: {
     global: true,
     environment: 'jsdom',
   },
-});
+};

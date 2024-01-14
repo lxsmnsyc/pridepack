@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import type { PridepackConfig } from './default-config';
 import DEFAULT_CONFIG from './default-config';
 import loadJS from './load-js';
@@ -55,7 +55,10 @@ export default async function readConfig(): Promise<PridepackConfig> {
     const filepath = path.resolve(path.join(cwd, CONFIG_JS[i]));
 
     if (await isFile(filepath)) {
-      const customConfig: Partial<PridepackConfig> = await loadJS(pkg.type === 'module', filepath);
+      const customConfig: Partial<PridepackConfig> = await loadJS(
+        pkg.type === 'module',
+        filepath,
+      );
 
       CONFIG = {
         ...customConfig,

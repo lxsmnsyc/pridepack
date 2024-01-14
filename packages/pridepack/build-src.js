@@ -1,12 +1,10 @@
-import { build } from "esbuild";
-import fs from 'fs/promises';
+import { build } from 'esbuild';
+import fs from 'node:fs/promises';
 
 const packageJSON = JSON.parse(await fs.readFile('./package.json', 'utf-8'));
 
 await build({
-  entryPoints: [
-    './src/index.ts',
-  ],
+  entryPoints: ['./src/index.ts'],
   outfile: './bin/index.mjs',
   bundle: true,
   minify: true,
@@ -18,6 +16,6 @@ await build({
     ...Object.keys(packageJSON.dependencies),
     ...Object.keys(packageJSON.devDependencies),
   ],
-  target: "es2018",
+  target: 'es2018',
   legalComments: 'eof',
 });

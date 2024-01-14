@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import { execa } from 'execa';
 
 export type CMD = 'yarn' | 'npm' | 'pnpm';
@@ -16,7 +16,10 @@ function getCommand(cmd: CMD): string[] {
   }
 }
 
-export default async function installPackage(command: CMD, cwd = '.'): Promise<void> {
+export default async function installPackage(
+  command: CMD,
+  cwd = '.',
+): Promise<void> {
   await execa(command, getCommand(command), {
     cwd: path.resolve(path.join(process.cwd(), cwd)),
   });
