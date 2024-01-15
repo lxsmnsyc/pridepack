@@ -1,19 +1,24 @@
 {
   "name": "react-template",
-  "version": "2.5.1",
-  "files": ["dist", "src"],
+  "version": "2.6.0",
+  "files": [
+    "dist",
+    "src"
+  ],
   "engines": {
     "node": ">=16"
   },
   "license": "MIT",
-  "keywords": ["pridepack"],
+  "keywords": [
+    "pridepack"
+  ],
   "devDependencies": {
     "@testing-library/jest-dom": "^6.2.0",
     "@testing-library/react": "^14.1.2",
     "@types/node": "^20.11.0",
     "@types/react": "^18.2.25",
     "jsdom": "^23.2.0",
-    "pridepack": "2.5.1",
+    "pridepack": "2.6.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-test-renderer": "^18.2.0",

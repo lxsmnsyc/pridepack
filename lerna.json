@@ -1,14 +1,21 @@
 {
   "npmClient": "pnpm",
-  "packages": ["packages/*", "templates/*", "examples/*"],
+  "packages": [
+    "packages/*",
+    "templates/*",
+    "examples/*"
+  ],
   "command": {
     "version": {
       "exact": true
     },
     "publish": {
-      "allowBranch": ["master", "rework"],
+      "allowBranch": [
+        "master",
+        "rework"
+      ],
       "registry": "https://registry.npmjs.org/"
     }
   },
-  "version": "2.5.1"
+  "version": "2.6.0"
 }

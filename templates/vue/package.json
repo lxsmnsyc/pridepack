@@ -1,18 +1,23 @@
 {
   "name": "vue-template",
-  "version": "2.5.1",
-  "files": ["dist", "src"],
+  "version": "2.6.0",
+  "files": [
+    "dist",
+    "src"
+  ],
   "engines": {
     "node": ">=16"
   },
   "license": "MIT",
-  "keywords": ["pridepack"],
+  "keywords": [
+    "pridepack"
+  ],
   "devDependencies": {
     "@testing-library/jest-dom": "^6.2.0",
     "@testing-library/vue": "^8.0.1",
     "@types/node": "^20.11.0",
     "jsdom": "^23.2.0",
-    "pridepack": "2.5.1",
+    "pridepack": "2.6.0",
     "tslib": "^2.6.2",
     "typescript": "^5.3.3",
     "vitest": "^1.2.0",
