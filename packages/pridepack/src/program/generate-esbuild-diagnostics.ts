@@ -16,7 +16,10 @@ function createEsbuildDiagnosticString(message: Message): string {
   return baseMessage;
 }
 
-export default function generateESBuildDiagnostics(isWarning: boolean, messages: Message[]): void {
+export default function generateESBuildDiagnostics(
+  isWarning: boolean,
+  messages: Message[],
+): void {
   for (let i = 0, len = messages.length; i < len; i += 1) {
     createDiagnosticMessage(
       isWarning ? ts.DiagnosticCategory.Warning : ts.DiagnosticCategory.Error,

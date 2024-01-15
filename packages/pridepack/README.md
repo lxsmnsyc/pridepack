@@ -44,10 +44,6 @@ Builds the source directory using ESBuild and emits type declaration files.
 
 Builds the source directory in watch mode.
 
-### `pridepack lint`
-
-Lints the project using ESLint and the provided ESLint config.
-
 ### `pridepack check`
 
 Runs no-emit type-checking.

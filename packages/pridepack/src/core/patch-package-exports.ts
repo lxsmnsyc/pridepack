@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import type { PridepackConfig } from './default-config';
 import { outputJson } from './fs-utils';
 import getExtensionJS from './get-extension-js';
@@ -29,8 +29,12 @@ function createBaseExportEntry(
   isDev: boolean,
 ): BaseExportEntry {
   return {
-    require: `./${toPosix(getCJSTargetDirectory(config, entry, isDev))}${getExtensionJS(isModule, isJSX, false)}`,
-    import: `./${toPosix(getESMTargetDirectory(config, entry, isDev))}${getExtensionJS(isModule, isJSX, true)}`,
+    require: `./${toPosix(
+      getCJSTargetDirectory(config, entry, isDev),
+    )}${getExtensionJS(isModule, isJSX, false)}`,
+    import: `./${toPosix(
+      getESMTargetDirectory(config, entry, isDev),
+    )}${getExtensionJS(isModule, isJSX, true)}`,
   };
 }
 
@@ -82,17 +86,14 @@ export default async function patchPackageExports(
     }
   }
 
-  await outputJson(
-    getPackagePath(cwd),
-    {
-      ...packageInfo,
-      types,
-      main: mainTarget,
-      module: moduleTarget,
-      exports: entries,
-      typesVersions: {
-        '*': targetTSPaths,
-      },
+  await outputJson(getPackagePath(cwd), {
+    ...packageInfo,
+    types,
+    main: mainTarget,
+    module: moduleTarget,
+    exports: entries,
+    typesVersions: {
+      '*': targetTSPaths,
     },
-  );
+  });
 }

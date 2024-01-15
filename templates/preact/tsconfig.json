@@ -14,11 +14,10 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "moduleResolution": "bundler",
-    "jsx": "react",
+    "jsx": "react-jsx",
+    "jsxImportSource": "preact",
     "esModuleInterop": true,
     "target": "es2018",
-    "jsxFactory": "h",
-    "jsxFragmentFactory": "Fragment",
     "useDefineForClassFields": false,
     "declarationMap": true
   }

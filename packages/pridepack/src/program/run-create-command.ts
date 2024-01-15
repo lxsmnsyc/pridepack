@@ -11,16 +11,19 @@ export default async function runCreateCommand(): Promise<void> {
   const packageName = await prompts({
     type: 'text',
     name: 'name',
-    message: 'What\'s your package name?',
+    message: "What's your package name?",
     onState: crash,
   });
   const directory = getSafePackageName(packageName.name);
   const templateName = await chooseTemplate();
-  const task = await runTask(async () => copyFromTemplate(templateName.template, directory), {
-    pending: `Copying from template '${templateName.template}'...`,
-    success: `Copied from template '${templateName.template}'!`,
-    failure: `Failed to copy from template '${templateName.template}'.`,
-  });
+  const task = await runTask(
+    async () => copyFromTemplate(templateName.template, directory),
+    {
+      pending: `Copying from template '${templateName.template}'...`,
+      success: `Copied from template '${templateName.template}'!`,
+      failure: `Failed to copy from template '${templateName.template}'.`,
+    },
+  );
   await task.start();
   await runInitPackage(packageName.name, directory);
   await runInstall(directory);

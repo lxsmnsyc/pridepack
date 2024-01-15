@@ -1,6 +1,9 @@
-import path from 'path';
+import path from 'node:path';
 import type { PridepackConfig } from './default-config';
-import { getCJSTargetDirectory, getESMTargetDirectory } from './resolve-entrypoint';
+import {
+  getCJSTargetDirectory,
+  getESMTargetDirectory,
+} from './resolve-entrypoint';
 
 export default function getBuildEntrypoints(
   config: PridepackConfig,
@@ -14,14 +17,7 @@ export default function getBuildEntrypoints(
     const targetDir = esm
       ? getESMTargetDirectory(config, key, dev)
       : getCJSTargetDirectory(config, key, dev);
-    const parsed = path.parse(
-      path.resolve(
-        path.join(
-          cwd,
-          targetDir,
-        ),
-      ),
-    );
+    const parsed = path.parse(path.resolve(path.join(cwd, targetDir)));
     const outfile = path.join(parsed.dir, parsed.name);
 
     record[outfile] = path.resolve(path.join(cwd, config.entrypoints[key]));

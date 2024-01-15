@@ -11,9 +11,9 @@ describe('Example', () => {
     const Component = defineComponent({
       setup() {
         return () => <Hello greeting={greeting} />;
-      }
+      },
     });
-  
+
     render(Component);
 
     expect(screen.getByText(`Hello ${greeting}`)).toBeInTheDocument();

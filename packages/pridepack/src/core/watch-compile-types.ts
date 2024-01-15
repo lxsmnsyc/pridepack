@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import ts from 'typescript';
 import { getTSConfigPath } from './read-tsconfig';
 import readValidCompilerOptions from './read-valid-compiler-options';
@@ -25,12 +25,7 @@ export default function watchCompileTypes(
 
     const baseConfig: ts.CompilerOptions = {
       ...options,
-      outDir: path.resolve(
-        path.join(
-          process.cwd(),
-          DEFAULT_TYPES_OUTPUT,
-        ),
-      ),
+      outDir: path.resolve(path.join(process.cwd(), DEFAULT_TYPES_OUTPUT)),
       emitDeclarationOnly: !noEmit,
       moduleResolution: 100,
       noEmit,
@@ -52,12 +47,10 @@ export default function watchCompileTypes(
     );
 
     // Prepare and emit the d.ts files
-    program = ts.createWatchProgram(
-      host,
-    );
+    program = ts.createWatchProgram(host);
   }
 
-  setup().catch((err) => {
+  setup().catch(err => {
     program.close();
     console.error(err);
     process.exit(1);

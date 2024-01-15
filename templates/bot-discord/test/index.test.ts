@@ -1,11 +1,4 @@
-import {
-  describe,
-  beforeEach,
-  afterEach,
-  it,
-  expect,
-  vi,
-} from 'vitest';
+import { describe, beforeEach, afterEach, it, expect, vi } from 'vitest';
 import { EventEmitter } from 'events';
 import CLIENT from '../src/client';
 import '../src/handlers';
@@ -29,7 +22,7 @@ vi.mock('discord.js', () => ({
         id: '0',
         tag: 'User#0000',
       };
-      return Promise.resolve(token);
+      return await Promise.resolve(token);
     }
   },
 }));
@@ -72,10 +65,13 @@ describe('Example', () => {
       content: 'Test content.',
       mentions: {
         users: new Map([
-          ['0', {
-            id: '0',
-            tag: 'User#0000',
-          }],
+          [
+            '0',
+            {
+              id: '0',
+              tag: 'User#0000',
+            },
+          ],
         ]),
       },
       reply: vi.fn(),

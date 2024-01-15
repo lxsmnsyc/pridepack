@@ -1,9 +1,7 @@
-import path from 'path';
+import path from 'node:path';
 import type { PridepackConfig } from './default-config';
 
-export default function getTSEntrypoints(
-  config: PridepackConfig,
-): string[] {
+export default function getTSEntrypoints(config: PridepackConfig): string[] {
   const cwd = process.cwd();
   const result = [];
   for (const value of Object.values(config.entrypoints)) {

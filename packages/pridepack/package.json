@@ -7,11 +7,7 @@
   "author": "Alexis Munsayac <alexis.munsayac@gmail.com>",
   "license": "MIT",
   "private": false,
-  "files": [
-    "bin",
-    "src",
-    "env.d.ts"
-  ],
+  "files": ["bin", "src", "env.d.ts"],
   "bin": {
     "pridepack": "./bin/index.mjs"
   },
@@ -27,7 +23,7 @@
     "@ovyerus/licenses": "^6.4.4",
     "degit": "^2.8.4",
     "dotenv": "^16.3.1",
-    "esbuild": "^0.19.4",
+    "esbuild": "^0.19.11",
     "execa": "^8.0.1",
     "license": "^1.0.3",
     "ora": "^7.0.1",
@@ -37,20 +33,16 @@
     "yargs": "^17.7.2"
   },
   "peerDependencies": {
-    "eslint": "^8.0",
     "tslib": "^2.0",
     "typescript": "^5.0"
   },
   "devDependencies": {
-    "@types/degit": "^2.8.3",
-    "@types/eslint": "^8.44.3",
-    "@types/node": "^20.8.3",
-    "@types/prompts": "^2.4.5",
-    "@types/yargs": "^17.0.28",
-    "eslint": "^8.51.0",
-    "eslint-config-lxsmnsyc": "^0.6.5",
+    "@types/degit": "^2.8.6",
+    "@types/node": "^20.11.0",
+    "@types/prompts": "^2.4.9",
+    "@types/yargs": "^17.0.32",
     "tslib": "^2.6.2",
-    "typescript": "^5.2.2"
+    "typescript": "^5.3.3"
   },
   "publishConfig": {
     "access": "public"

@@ -17,8 +17,8 @@ export default async function runBuild(
 ): Promise<Task<void>> {
   const format = isESM ? 'ESM' : 'CommonJS';
   const mode = isDev ? 'Development' : 'Production';
-  return runESBuild(
-    (async (inc) => buildBundle(config, inc, isDev, isESM)) as BuildCall,
+  return await runESBuild(
+    (async inc => buildBundle(config, inc, isDev, isESM)) as BuildCall,
     incremental,
     {
       pending: `Building ${format} ${mode} output...`,

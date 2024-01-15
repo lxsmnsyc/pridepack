@@ -1,12 +1,6 @@
-import path from 'path';
-import type {
-  BuildResult,
-  BuildContext,
-} from 'esbuild';
-import {
-  build,
-  context,
-} from 'esbuild';
+import path from 'node:path';
+import type { BuildResult, BuildContext, BuildOptions } from 'esbuild';
+import { build, context } from 'esbuild';
 import readEnvDefinitions from './read-env-defs';
 import readExternals from './read-externals';
 import type { PridepackConfig } from './default-config';
@@ -23,12 +17,8 @@ export default async function buildBundle(
   const cwd = process.cwd();
   const externals = await readExternals();
   const pkg = await readPackage();
-  const options = {
-    entryPoints: getBuildEntrypoints(
-      config,
-      isESM,
-      isDev,
-    ),
+  const options: BuildOptions = {
+    entryPoints: getBuildEntrypoints(config, isESM, isDev),
     outExtension: {
       '.js': getExtensionJS(
         pkg.type === 'module',
@@ -49,13 +39,14 @@ export default async function buildBundle(
     jsx: config.jsx,
     jsxFactory: config.jsxFactory,
     jsxFragment: config.jsxFragment,
+    jsxImportSource: config.jsxImportSource,
+    jsxDev: isDev,
     logLevel: 'silent',
     charset: 'utf8',
-    plugins: (
+    plugins:
       typeof config.plugins === 'function'
         ? config.plugins({ isDev, isCJS: !isESM, isESM })
-        : config.plugins
-    ),
+        : config.plugins,
     legalComments: 'eof',
     metafile: true,
   } as const;

@@ -1,7 +1,7 @@
-import path from 'path';
+import path from 'node:path';
 import type { CompilerOptions, TypeAcquisition } from 'typescript';
 import ts from 'typescript';
-import { readFileSync } from 'fs';
+import { readFileSync } from 'node:fs';
 import readConfig from './read-config';
 
 export interface TsConfig {
@@ -28,9 +28,8 @@ export default async function readTSConfig(): Promise<Partial<TsConfig>> {
 
   // Read config
   const tsconfigPath = await getTSConfigPath();
-  TSCONFIG = ts.readConfigFile(
-    tsconfigPath,
-    (filepath) => readFileSync(filepath, 'utf-8'),
+  TSCONFIG = ts.readConfigFile(tsconfigPath, filepath =>
+    readFileSync(filepath, 'utf-8'),
   ).config as Partial<TsConfig>;
 
   return TSCONFIG;

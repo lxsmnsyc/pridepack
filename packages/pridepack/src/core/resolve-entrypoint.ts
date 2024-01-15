@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import type { PridepackConfig } from './default-config';
 import readConfig from './read-config';
 import readTSConfig from './read-tsconfig';

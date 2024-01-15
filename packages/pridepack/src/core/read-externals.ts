@@ -29,6 +29,7 @@ export default async function readExternals(): Promise<string[]> {
   pushExternal(external, pkg.optionalDependencies);
 
   EXTERNALS = [
+    'node:*',
     ...builtinModules,
     ...Array.from(external),
   ];

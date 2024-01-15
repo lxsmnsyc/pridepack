@@ -1,3 +1,5 @@
 {
+  "jsx": "automatic",
+  "jsxImportSource": "react",
   "target": "es2018"
 }

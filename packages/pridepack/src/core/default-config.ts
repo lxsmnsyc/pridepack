@@ -1,4 +1,4 @@
-import type { Plugin } from 'esbuild';
+import type * as esbuild from 'esbuild';
 
 interface PridepackPluginEnv {
   isDev: boolean;
@@ -6,7 +6,7 @@ interface PridepackPluginEnv {
   isCJS: boolean;
 }
 
-type PridepackLazyPlugin = (env: PridepackPluginEnv) => Plugin[];
+type PridepackLazyPlugin = (env: PridepackPluginEnv) => esbuild.Plugin[];
 
 export interface PridepackConfig {
   entrypoints: Record<string, string>;
@@ -14,10 +14,11 @@ export interface PridepackConfig {
   target: string | string[];
   outputDir: string;
   startEntrypoint?: string;
-  jsx?: 'transform' | 'preserve';
+  jsx?: esbuild.CommonOptions['jsx'];
   jsxFactory?: string;
   jsxFragment?: string;
-  plugins?: Plugin[] | PridepackLazyPlugin;
+  jsxImportSource?: string;
+  plugins?: esbuild.Plugin[] | PridepackLazyPlugin;
 }
 
 const DEFAULT_CONFIG: PridepackConfig = {

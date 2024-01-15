@@ -16,7 +16,7 @@ export default async function chooseTemplate(): Promise<{ template: string }> {
     type: 'select',
     name: 'template',
     message: 'Choose your template',
-    choices: TEMPLATES.map((item) => ({
+    choices: TEMPLATES.map(item => ({
       title: item,
       value: item,
     })),
