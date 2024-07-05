@@ -1,8 +1,8 @@
 import type { Abortable } from 'node:events';
 import type { Mode, ObjectEncodingOptions, OpenMode } from 'node:fs';
-import type { Stream } from 'node:stream';
-import path from 'node:path';
 import fs from 'node:fs/promises';
+import path from 'node:path';
+import type { Stream } from 'node:stream';
 
 export async function removeFile(filePath: string): Promise<void> {
   await fs.rm(filePath, { recursive: true, force: true });

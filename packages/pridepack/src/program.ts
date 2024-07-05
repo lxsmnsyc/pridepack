@@ -1,12 +1,12 @@
 import prompts from 'prompts';
+import crash from './program/graceful-crash';
 import runBuildCommand from './program/run-build-command';
 import runCleanCommand from './program/run-clean-command';
+import runCompile from './program/run-compile';
 import runCreateCommand from './program/run-create-command';
 import runInitCommand from './program/run-init-command';
-import runWatchCommand from './program/run-watch-command';
 import runStartCommand from './program/run-start-command';
-import runCompile from './program/run-compile';
-import crash from './program/graceful-crash';
+import runWatchCommand from './program/run-watch-command';
 
 async function runCommand(): Promise<void> {
   const response = await prompts({

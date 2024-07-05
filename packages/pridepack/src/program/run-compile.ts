@@ -1,7 +1,7 @@
-import generateTSDiagnostics from './generate-ts-diagnostics';
 import compileTypes from '../core/compile-types';
-import runTask from './run-task';
 import readConfig from '../core/read-config';
+import generateTSDiagnostics from './generate-ts-diagnostics';
+import runTask from './run-task';
 
 export default async function runCompile(noEmit: boolean): Promise<void> {
   const config = await readConfig();

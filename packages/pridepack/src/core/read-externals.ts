@@ -1,12 +1,9 @@
-import { builtinModules } from 'module';
+import { builtinModules } from 'node:module';
 import readPackage from './read-package';
 
 let EXTERNALS: string[];
 
-function pushExternal(
-  set: Set<string>,
-  record?: Record<string, string>,
-): void {
+function pushExternal(set: Set<string>, record?: Record<string, string>): void {
   if (record) {
     for (const key of Object.keys(record)) {
       set.add(key);
@@ -28,11 +25,7 @@ export default async function readExternals(): Promise<string[]> {
   pushExternal(external, pkg.peerDependencies);
   pushExternal(external, pkg.optionalDependencies);
 
-  EXTERNALS = [
-    'node:*',
-    ...builtinModules,
-    ...Array.from(external),
-  ];
+  EXTERNALS = ['node:*', ...builtinModules, ...Array.from(external)];
 
   return EXTERNALS;
 }

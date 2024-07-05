@@ -101,6 +101,7 @@
         "noUnreachableSuper": "error",
         "noUnsafeFinally": "error",
         "noUnsafeOptionalChaining": "error",
+        "noUnusedImports": "error",
         "noUnusedLabels": "error",
         "noUnusedPrivateClassMembers": "error",
         "noUnusedVariables": "error",
@@ -216,9 +217,6 @@
         "useIsArray": "error",
         "useNamespaceKeyword": "error",
         "useValidTypeof": "error"
-      },
-      "nursery": {
-        "noUnusedImports": "error"
       }
     }
   },

@@ -1,6 +1,6 @@
-import path from 'node:path';
 import dotenv from 'dotenv';
 import { readFile } from 'node:fs/promises';
+import path from 'node:path';
 import { isFile } from './fs-utils';
 
 const ENV = '.env';

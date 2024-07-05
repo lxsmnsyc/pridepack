@@ -1,5 +1,5 @@
-import prompts from 'prompts';
 import licenses from '@ovyerus/licenses';
+import prompts from 'prompts';
 import patchPackage from '../core/patch-package';
 import crash from './graceful-crash';
 

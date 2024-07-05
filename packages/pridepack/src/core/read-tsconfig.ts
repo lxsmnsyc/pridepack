@@ -1,7 +1,7 @@
+import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import type { CompilerOptions, TypeAcquisition } from 'typescript';
 import ts from 'typescript';
-import { readFileSync } from 'node:fs';
 import readConfig from './read-config';
 
 export interface TsConfig {

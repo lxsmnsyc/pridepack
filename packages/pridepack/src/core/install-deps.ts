@@ -1,5 +1,5 @@
-import path from 'node:path';
 import { execa } from 'execa';
+import path from 'node:path';
 
 export type CMD = 'yarn' | 'npm' | 'pnpm';
 

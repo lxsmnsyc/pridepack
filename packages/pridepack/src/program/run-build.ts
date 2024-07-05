@@ -1,4 +1,4 @@
-import type { BuildResult, BuildContext } from 'esbuild';
+import type { BuildContext, BuildResult } from 'esbuild';
 import buildBundle from '../core/build-bundle';
 import type { PridepackConfig } from '../core/default-config';
 import runESBuild from './run-esbuild';

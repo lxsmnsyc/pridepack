@@ -1,11 +1,11 @@
 import prompts from 'prompts';
-import getSafePackageName from '../core/get-safe-package-name';
 import copyFromTemplate from '../core/copy-from-template';
+import getSafePackageName from '../core/get-safe-package-name';
 import chooseTemplate from './choose-template';
+import crash from './graceful-crash';
 import runInitPackage from './run-init-package';
 import runInstall from './run-install';
 import runTask from './run-task';
-import crash from './graceful-crash';
 
 export default async function runCreateCommand(): Promise<void> {
   const packageName = await prompts({

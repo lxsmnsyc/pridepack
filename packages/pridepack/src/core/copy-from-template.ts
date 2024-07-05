@@ -1,5 +1,5 @@
-import path from 'node:path';
 import degit from 'degit';
+import path from 'node:path';
 
 const SOURCE = 'github:lxsmnsyc/pridepack';
 

@@ -1,9 +1,9 @@
-import path from 'node:path';
 import { getLicense } from 'license';
+import path from 'node:path';
 import type { IPackageJson } from 'package-json-type';
-import readPackage from './read-package';
-import getPackagePath from './get-package-path';
 import { outputFile, outputJson } from './fs-utils';
+import getPackagePath from './get-package-path';
+import readPackage from './read-package';
 
 const SCRIPTS = {
   prepublishOnly: 'pridepack clean && pridepack build',

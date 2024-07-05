@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import copyFromTemplate from '../core/copy-from-template';
 import chooseTemplate from './choose-template';
 import runInitPackage from './run-init-package';

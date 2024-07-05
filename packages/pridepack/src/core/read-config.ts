@@ -1,9 +1,9 @@
 import path from 'node:path';
 import type { PridepackConfig } from './default-config';
 import DEFAULT_CONFIG from './default-config';
+import { isFile, readJson } from './fs-utils';
 import loadJS from './load-js';
 import readPackage from './read-package';
-import { readJson, isFile } from './fs-utils';
 
 export const CONFIG_NAMES = [
   '.pridepackrc',
