@@ -1,6 +1,6 @@
 {
   "name": "solid-js-template",
-  "version": "2.6.1",
+  "version": "2.6.0",
   "files": ["dist", "src"],
   "engines": {
     "node": ">=16"
