@@ -1,15 +1,22 @@
 {
   "npmClient": "npm",
-  "packages": ["packages/*", "templates/*", "examples/*"],
+  "packages": [
+    "packages/*",
+    "templates/*",
+    "examples/*"
+  ],
   "command": {
     "version": {
       "exact": true
     },
     "publish": {
-      "allowBranch": ["master", "rework"],
+      "allowBranch": [
+        "master",
+        "rework"
+      ],
       "registry": "https://registry.npmjs.org/"
     }
   },
-  "version": "2.6.0",
+  "version": "2.6.1",
   "$schema": "node_modules/lerna/schemas/lerna-schema.json"
 }
