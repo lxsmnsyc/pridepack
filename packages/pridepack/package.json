@@ -7,11 +7,7 @@
   "author": "Alexis Munsayac <alexis.munsayac@gmail.com>",
   "license": "MIT",
   "private": false,
-  "files": [
-    "bin",
-    "src",
-    "env.d.ts"
-  ],
+  "files": ["bin", "src", "env.d.ts"],
   "bin": {
     "pridepack": "./bin/index.mjs"
   },
@@ -28,9 +24,9 @@
     "degit": "^2.8.4",
     "dotenv": "^16.3.1",
     "esbuild": "^0.19.11",
-    "execa": "^8.0.1",
+    "execa": "^9.3.0",
     "license": "^1.0.3",
-    "ora": "^7.0.1",
+    "ora": "^8.0.1",
     "package-json-type": "^1.0.3",
     "pretty-bytes": "^6.1.1",
     "prompts": "^2.4.2",
@@ -42,11 +38,11 @@
   },
   "devDependencies": {
     "@types/degit": "^2.8.6",
-    "@types/node": "^20.11.0",
+    "@types/node": "^20.14.9",
     "@types/prompts": "^2.4.9",
     "@types/yargs": "^17.0.32",
-    "tslib": "^2.6.2",
-    "typescript": "^5.3.3"
+    "tslib": "^2.6.3",
+    "typescript": "^5.5.3"
   },
   "publishConfig": {
     "access": "public"
