@@ -247,7 +247,7 @@
       "quoteProperties": "asNeeded",
       "quoteStyle": "single",
       "semicolons": "always",
-      "trailingComma": "all"
+      "trailingCommas": "all"
     },
     "globals": [],
     "parser": {
