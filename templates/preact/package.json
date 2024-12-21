@@ -1,6 +1,6 @@
 {
   "name": "preact-template",
-  "version": "2.6.2",
+  "version": "2.6.3",
   "files": [
     "dist",
     "src"
@@ -19,7 +19,7 @@
     "@types/node": "^22.10.2",
     "jsdom": "^25.0.1",
     "preact": "^10.25.3",
-    "pridepack": "2.6.2",
+    "pridepack": "2.6.3",
     "tslib": "^2.8.1",
     "typescript": "^5.7.2",
     "vitest": "^2.1.8"

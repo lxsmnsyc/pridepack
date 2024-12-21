@@ -1,6 +1,6 @@
 {
   "name": "react-template",
-  "version": "2.6.2",
+  "version": "2.6.3",
   "files": [
     "dist",
     "src"
@@ -19,7 +19,7 @@
     "@types/node": "^22.10.2",
     "@types/react": "^19.0.2",
     "jsdom": "^25.0.1",
-    "pridepack": "2.6.2",
+    "pridepack": "2.6.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-test-renderer": "^19.0.0",
