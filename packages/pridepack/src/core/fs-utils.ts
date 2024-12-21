@@ -73,7 +73,7 @@ export async function outputFile(
         mode?: Mode | undefined;
         flag?: OpenMode | undefined;
       } & Abortable)
-    | BufferEncoding
+    | NodeJS.BufferEncoding
     | null,
 ): Promise<void> {
   const dir = path.dirname(file);
