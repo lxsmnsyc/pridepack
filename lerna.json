@@ -1,5 +1,5 @@
 {
-  "npmClient": "pnpm",
+  "npmClient": "npm",
   "packages": ["packages/*", "templates/*", "examples/*"],
   "command": {
     "version": {
@@ -10,6 +10,6 @@
       "registry": "https://registry.npmjs.org/"
     }
   },
-  "version": "2.6.1",
+  "version": "2.6.2",
   "$schema": "node_modules/lerna/schemas/lerna-schema.json"
 }
