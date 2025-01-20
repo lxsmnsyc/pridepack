@@ -46,9 +46,9 @@ function createExportEntry(
   isJSX: boolean,
 ): ExportEntry {
   return {
+    types,
     development: createBaseExportEntry(config, entry, isModule, isJSX, true),
     ...createBaseExportEntry(config, entry, isModule, isJSX, false),
-    types,
   };
 }
 
