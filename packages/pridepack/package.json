@@ -1,7 +1,7 @@
 {
   "name": "pridepack",
   "type": "module",
-  "version": "2.6.3",
+  "version": "2.6.4",
   "description": "CLI for building TypeScript packages",
   "main": "index.js",
   "author": "Alexis Munsayac <alexis.munsayac@gmail.com>",
